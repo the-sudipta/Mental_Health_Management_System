@@ -1,15 +1,10 @@
 <?php
 
 require_once __DIR__ . '/../model/db_connect.php';
-require '../routes.php';
-require '../utils/system_functions.php';
-
 
 
 function findAllDiagnosis()
 {
-    global $system_routes;
-    $error_page = $system_routes['error_500'];
     $conn = db_conn();
     $selectQuery = 'SELECT * FROM `diagnosis`';
 
@@ -35,9 +30,7 @@ function findAllDiagnosis()
 
         return $rows;
     } catch (Exception $e) {
-        $error_message = $e->getMessage();
-        http_response_code(500);
-        navigate($error_page . "?error_message=" . urlencode($error_message));
+        echo 'DiagnosisRepo Error = ' . $e->getMessage();
         return null;
     } finally {
         // Close the database connection
@@ -47,8 +40,6 @@ function findAllDiagnosis()
 
 function findDiagnosisByID($id)
 {
-    global $system_routes;
-    $error_page = $system_routes['error_500'];
     $conn = db_conn();
     $selectQuery = 'SELECT * FROM `diagnosis` WHERE `id` = ?';
 
@@ -74,7 +65,7 @@ function findDiagnosisByID($id)
 
         // Check for an empty result set
         if (!$user) {
-            throw new Exception("No user found with ID: " . $id);
+            throw new Exception("No diagnosis found with ID: " . $id);
         }
 
         // Close the statement
@@ -82,9 +73,7 @@ function findDiagnosisByID($id)
 
         return $user;
     } catch (Exception $e) {
-        $error_message = $e->getMessage();
-        http_response_code(500);
-        navigate($error_page . "?error_message=" . urlencode($error_message));
+        echo 'DiagnosisRepo Error = ' . $e->getMessage();
         return null;
     } finally {
         // Close the database connection
@@ -94,8 +83,6 @@ function findDiagnosisByID($id)
 
 function findAllDiagnosisByPatientID($id)
 {
-    global $system_routes;
-    $error_page = $system_routes['error_500'];
     $conn = db_conn();
     $selectQuery = 'SELECT * FROM `diagnosis` WHERE `patient_id` = '.$id;
 
@@ -116,14 +103,13 @@ function findAllDiagnosisByPatientID($id)
 
         // Check for an empty result set
         if (empty($rows)) {
-            throw new Exception("No rows found in the 'user' table.");
+            throw new Exception("No rows found in the 'diagnosis' table.");
         }
 
         return $rows;
     } catch (Exception $e) {
-        $error_message = $e->getMessage();
-        http_response_code(500);
-        navigate($error_page . "?error_message=" . urlencode($error_message));
+       echo 'DiagnosisRepo Error = '. $e->getMessage();
+
         return null;
     } finally {
         // Close the database connection
@@ -133,8 +119,6 @@ function findAllDiagnosisByPatientID($id)
 
 function updateDiagnosis($diagnosis_name, $id)
 {
-    global $system_routes;
-    $error_page = $system_routes['error_500'];
     $conn = db_conn();
 
     // Construct the SQL query
@@ -161,9 +145,7 @@ function updateDiagnosis($diagnosis_name, $id)
         return true;
     } catch (Exception $e) {
         // Handle the exception, you might want to log it or return false
-        $error_message = $e->getMessage();
-        http_response_code(500);
-        navigate($error_page . "?error_message=" . urlencode($error_message));
+        echo 'diagnosisRepo Error = ' . $e->getMessage();
         return false;
     } finally {
         // Close the statement
@@ -174,13 +156,8 @@ function updateDiagnosis($diagnosis_name, $id)
     }
 }
 
-
-
-
 function deleteDiagnosis($id) {
 
-    global $system_routes;
-    $error_page = $system_routes['error_500'];
     $conn = db_conn();
 
     // Construct the SQL query
@@ -205,9 +182,8 @@ function deleteDiagnosis($id) {
         return true;
     } catch (Exception $e) {
         // Handle the exception, you might want to log it or return false
-        $error_message = $e->getMessage();
-        http_response_code(500);
-        navigate($error_page . "?error_message=" . urlencode($error_message));
+        echo 'DiagnosisRepo Error = ' . $e->getMessage();
+
         return false;
     } finally {
         // Close the statement
@@ -218,11 +194,8 @@ function deleteDiagnosis($id) {
     }
 }
 
-
 function createDiagnosis($diagnosis_name, $patient_id) {
 
-    global $system_routes;
-    $error_page = $system_routes['error_500'];
     $conn = db_conn();
 
     // Construct the SQL query
@@ -252,10 +225,7 @@ function createDiagnosis($diagnosis_name, $patient_id) {
 
         return $newUserId;
     } catch (Exception $e) {
-        // Handle the exception, you might want to log it or return false
-        $error_message = $e->getMessage();
-        http_response_code(500);
-        navigate($error_page . "?error_message=" . urlencode($error_message));
+        echo 'DiagnosisRepo Error = '.$e->getMessage();
         return -1;
     } finally {
         // Close the database connection

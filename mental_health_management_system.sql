@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2024 at 11:55 AM
+-- Generation Time: May 16, 2024 at 03:58 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -30,24 +30,25 @@ SET time_zone = "+00:00";
 CREATE TABLE `diagnosis` (
   `id` int(50) NOT NULL,
   `diagnosis_name` varchar(50) NOT NULL,
-  `patient_id` int(50) NOT NULL
+  `patient_id` int(50) NOT NULL,
+  `date` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `diagnosis`
 --
 
-INSERT INTO `diagnosis` (`id`, `diagnosis_name`, `patient_id`) VALUES
-(1, 'Depression', 1),
-(2, 'Anxiety', 2),
-(3, 'Bipolar Disorder', 3),
-(4, 'Schizophrenia', 4),
-(5, 'Obsessive Compulsive Disorder', 5),
-(6, 'Post-Traumatic Stress Disorder', 6),
-(7, 'Eating Disorders', 7),
-(8, 'Borderline Personality Disorder', 8),
-(9, 'Attention Deficit Hyperactivity Disorder', 9),
-(10, 'Substance Use Disorder', 10);
+INSERT INTO `diagnosis` (`id`, `diagnosis_name`, `patient_id`, `date`) VALUES
+(1, 'Depression', 1, '2024-01-12'),
+(2, 'Anxiety', 2, '2024-01-12'),
+(3, 'Bipolar Disorder', 3, '2024-01-12'),
+(4, 'Schizophrenia', 4, '2024-02-12'),
+(5, 'Obsessive Compulsive Disorder', 5, '2024-03-12'),
+(6, 'Post-Traumatic Stress Disorder', 6, '2024-01-12'),
+(7, 'Eating Disorders', 7, '2024-04-12'),
+(8, 'Borderline Personality Disorder', 8, '2024-01-15'),
+(9, 'Attention Deficit Hyperactivity Disorder', 9, '2024-01-18'),
+(10, 'Substance Use Disorder', 10, '2024-05-15');
 
 -- --------------------------------------------------------
 
@@ -118,24 +119,25 @@ CREATE TABLE `progress` (
   `mood` varchar(50) NOT NULL,
   `medicine` varchar(50) NOT NULL,
   `therapy_name` varchar(50) NOT NULL,
-  `patient_id` int(50) NOT NULL
+  `patient_id` int(50) NOT NULL,
+  `date` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `progress`
 --
 
-INSERT INTO `progress` (`id`, `mood`, `medicine`, `therapy_name`, `patient_id`) VALUES
-(1, 'Stable', 'Sertraline', 'Cognitive Behavioral Therapy', 1),
-(2, 'Improved', 'Lorazepam', 'Exposure Therapy', 2),
-(3, 'Worsened', 'Lithium', 'Dialectical Behavior Therapy', 3),
-(4, 'Stable', 'Olanzapine', 'Interpersonal Therapy', 4),
-(5, 'Improved', 'Fluoxetine', 'Mindfulness-Based Therapy', 5),
-(6, 'Worsened', 'Paroxetine', 'Psychodynamic Therapy', 6),
-(7, 'Stable', 'Quetiapine', 'Group Therapy', 7),
-(8, 'Improved', 'Venlafaxine', 'Family Therapy', 8),
-(9, 'Worsened', 'Methylphenidate', 'Art Therapy', 9),
-(10, 'Stable', 'Buprenorphine', 'Music Therapy', 10);
+INSERT INTO `progress` (`id`, `mood`, `medicine`, `therapy_name`, `patient_id`, `date`) VALUES
+(1, 'Stable', 'Sertraline', 'Cognitive Behavioral Therapy', 1, '2024-01-12'),
+(2, 'Improved', 'Lorazepam', 'Exposure Therapy', 2, '2024-01-12'),
+(3, 'Worsened', 'Lithium', 'Dialectical Behavior Therapy', 3, '2024-01-18'),
+(4, 'Stable', 'Olanzapine', 'Interpersonal Therapy', 4, '2024-01-12'),
+(5, 'Improved', 'Fluoxetine', 'Mindfulness-Based Therapy', 5, '2024-02-12'),
+(6, 'Worsened', 'Paroxetine', 'Psychodynamic Therapy', 6, '2024-04-22'),
+(7, 'Stable', 'Quetiapine', 'Group Therapy', 7, '2024-01-12'),
+(8, 'Improved', 'Venlafaxine', 'Family Therapy', 8, '2024-02-12'),
+(9, 'Worsened', 'Methylphenidate', 'Art Therapy', 9, '2024-03-17'),
+(10, 'Stable', 'Buprenorphine', 'Music Therapy', 10, '2024-04-11');
 
 -- --------------------------------------------------------
 

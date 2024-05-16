@@ -1,11 +1,13 @@
 <?php
 
 //include_once '../Navigation_Links.php';
-global $routes;
-require '../routes.php';
-
-
 require_once __DIR__ . '/../model/UserRepo.php';
+global $routes, $system_routes, $error_page;
+require '../routes.php';
+require '../utils/system_functions.php';
+
+$error_page = $system_routes['error_500'];
+$error_message = '';
 
 
 session_start();
@@ -19,7 +21,7 @@ $everythingOKCounter = 0;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    echo "Got Req";
+    echo "<br>Got Req</br>";
 
 //* Email Validation
     $email = $_POST['email'];
@@ -72,12 +74,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo '<br>Returning to Login page because ID Password did not matched<br>';
 //            header("Location: {$Login_page}");
 //            exit;
+
         }
     } else {
         echo '<br>Returning to Login page because The data user provided is not properly validated like 
                 in password: 1-upper_case, 1-lower_case, 1-number, 1-special_character and at least 8 character long it must be provided <br>';
 //        header("Location: {$Login_page}");
 //        exit;
+
     }
 
 

@@ -11,13 +11,17 @@ $routes = [
 
 $backend_routes = [
     'login_controller' => '/Mental_Health_Management_System/controller/loginController.php',
+    'care_giver_signup_controller' => '/Mental_Health_Management_System/controller/care_giver/signupController.php',
     'logout_controller' => '/Mental_Health_Management_System/controller/logoutController.php',
-    'signup_controller' => '/Mental_Health_Management_System/controller/care_giver/signupController.php',
 ];
 
 
 $image_routes = [
+
     'user_icon' => '/Mental_Health_Management_System/img/user.png',
+    'sign_in_icon' => '/Mental_Health_Management_System/img/signin-image.jpg',
+    'sign_up_icon' => '/Mental_Health_Management_System/img/signup.png',
+    'support_bg_icon' => '/Mental_Health_Management_System/img/supportbg.png',
 ];
 
 

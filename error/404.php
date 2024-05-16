@@ -19,7 +19,7 @@ $go_back_to = $routes['login']
 
     <meta charset="UTF-8" />
 
-    <title>Hello, world!</title>
+    <title>PAGE NOT FOUND</title>
 
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 

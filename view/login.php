@@ -1,6 +1,6 @@
 <?php
 
-global $routes, $backend_routes;
+global $routes, $backend_routes, $image_routes;
 //include_once '../Navigation_Links.php';
 require '../routes.php';
 
@@ -8,6 +8,10 @@ require '../routes.php';
 
 $loginController_file = $backend_routes['login_controller'];
 $signup_decider = '';
+
+$sign_in_icon = $image_routes['sign_in_icon'];
+
+
 
 
 ?>
@@ -87,7 +91,7 @@ $signup_decider = '';
                     <div class="col-lg-8 col-md-12 offset-lg-2 offset-md-0">
                         <div class="signup-content box bg-white d-lg-flex justify-content-between p-5 border shadow-sm p-3 mb-5 bg-body rounded cust-box-shadow">
                             <div class="signin-image text-center w-100">
-                                <figure><img src="../img/signin-image.jpg" class="img-fluid" alt="sign in image"></figure>
+                                <figure><img src="<?php echo $sign_in_icon; ?>" class="img-fluid" alt="sign in image"></figure>
                             </div>
 
                             <div class="signin-form w-100">

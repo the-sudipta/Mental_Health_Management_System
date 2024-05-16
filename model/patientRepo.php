@@ -2,10 +2,10 @@
 
 require_once __DIR__ . '/../model/db_connect.php';
 
-function findAllUsers()
+function findAllPatients()
 {
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `user`';
+    $selectQuery = 'SELECT * FROM `patient`';
 
     try {
         $result = $conn->query($selectQuery);
@@ -24,12 +24,12 @@ function findAllUsers()
 
         // Check for an empty result set
         if (empty($rows)) {
-            throw new Exception("No rows found in the 'user' table.");
+            throw new Exception("No rows found in the 'patient' table.");
         }
 
         return $rows;
     } catch (Exception $e) {
-        echo "userRepo Error = " . $e->getMessage();
+        echo "patientRepo Error = " . $e->getMessage();
         return null;
     } finally {
         // Close the database connection
@@ -38,56 +38,10 @@ function findAllUsers()
 }
 
 
-function findUserByEmailAndPassword($email, $password) {
-
-    $conn = db_conn();
-
-    // Use prepared statement to prevent SQL injection
-    $selectQuery = 'SELECT * FROM `user` WHERE `email` = ?';
-
-    try {
-        $stmt = $conn->prepare($selectQuery);
-
-        // Bind parameters
-        $stmt->bind_param("s", $email);
-
-        // Execute the statement
-        $stmt->execute();
-
-        // Get the result
-        $result = $stmt->get_result();
-
-        // Fetch the user as an associative array
-        $user = $result->fetch_assoc();
-
-        // Close the result set
-        $result->close();
-
-        // Close the statement
-        $stmt->close();
-
-        // Check if the user exists and if the password matches
-        if ($user && password_verify($password, $user['password'])) {
-            // Password is correct
-            return $user;
-        } else {
-            // Password is incorrect or user doesn't exist
-            return null;
-        }
-    } catch (Exception $e) {
-        echo 'UserRepo Error = ' . $e->getMessage();
-        return null;
-    } finally {
-        // Close the database connection
-        $conn->close();
-    }
-}
-
-
-function findUserByUserID($id)
+function findPatientByID($id)
 {
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `user` WHERE `id` = ?';
+    $selectQuery = 'SELECT * FROM `patient` WHERE `id` = ?';
 
     try {
         $stmt = $conn->prepare($selectQuery);
@@ -111,7 +65,7 @@ function findUserByUserID($id)
 
         // Check for an empty result set
         if (!$user) {
-            throw new Exception("No user found with ID: " . $id);
+            throw new Exception("No patient found with ID: " . $id);
         }
 
         // Close the statement
@@ -119,7 +73,7 @@ function findUserByUserID($id)
 
         return $user;
     } catch (Exception $e) {
-        echo "userRepo Error = " . $e->getMessage();
+        echo 'patientRepo Error = ' . $e->getMessage();
         return null;
     } finally {
         // Close the database connection
@@ -128,14 +82,51 @@ function findUserByUserID($id)
 }
 
 
-function updateUser($email, $password, $id)
+function findAllPatientsByCareGiverID($id)
+{
+    $conn = db_conn();
+    $selectQuery = 'SELECT * FROM `patient` WHERE `care_giver_id` = '.$id;
+
+    try {
+        $result = $conn->query($selectQuery);
+
+        // Check if the query was successful
+        if (!$result) {
+            throw new Exception("Query failed: " . $conn->error);
+        }
+
+        $rows = array();
+
+        // Fetch rows one by one
+        while ($row = $result->fetch_assoc()) {
+            $rows[] = $row;
+        }
+
+        // Check for an empty result set
+        if (empty($rows)) {
+            throw new Exception("No rows found in the 'patient' table. Created By Current Care Giver");
+        }
+
+        return $rows;
+    } catch (Exception $e) {
+        echo "patientRepo Error: " . $e->getMessage();
+        return null;
+    } finally {
+        // Close the database connection
+        $conn->close();
+    }
+}
+
+
+function updatePatient($name, $age, $phone, $id)
 {
     $conn = db_conn();
 
     // Construct the SQL query
     $updateQuery = "UPDATE `user` SET 
-                    email = ?,
-                    password = ?
+                    name = ?,
+                    age = ?,
+                    phone = ?
                     WHERE id = ?";
 
     try {
@@ -148,7 +139,7 @@ function updateUser($email, $password, $id)
         }
 
         // Bind parameters
-        $stmt->bind_param('ssi', $email, $password, $id);
+        $stmt->bind_param('sssi', $name, $age, $phone, $id);
 
         // Execute the query
         $stmt->execute();
@@ -157,7 +148,7 @@ function updateUser($email, $password, $id)
         return true;
     } catch (Exception $e) {
         // Handle the exception, you might want to log it or return false
-        echo "userRepo Error = " . $e->getMessage();
+        echo "patientRepo Error = " . $e->getMessage();
         return false;
     } finally {
         // Close the statement
@@ -169,11 +160,11 @@ function updateUser($email, $password, $id)
 }
 
 
-function deleteUser($id) {
+function deletePatient($id) {
     $conn = db_conn();
 
     // Construct the SQL query
-    $updateQuery = "DELETE FROM `user` WHERE id = ?";
+    $updateQuery = "DELETE FROM `patient` WHERE id = ?";
 
     try {
         // Prepare the statement
@@ -194,7 +185,7 @@ function deleteUser($id) {
         return true;
     } catch (Exception $e) {
         // Handle the exception, you might want to log it or return false
-        echo "userRepo Error = " . $e->getMessage();
+        echo "patientRepo Error = " . $e->getMessage();
         return false;
     } finally {
         // Close the statement
@@ -206,21 +197,19 @@ function deleteUser($id) {
 }
 
 
-function createUser($email, $password, $role) {
+function createPatient($name, $age, $phone, $care_giver_id) {
     $conn = db_conn();
 
-    // Hash the password using a secure hashing algorithm (e.g., password_hash)
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Construct the SQL query
-    $insertQuery = "INSERT INTO `user` (email, password, role) VALUES (?, ?, ?)";
+    $insertQuery = "INSERT INTO `pateint` (name, age, phone, care_giver_id) VALUES (?, ?, ?, ?)";
 
     try {
         // Prepare the statement
         $stmt = $conn->prepare($insertQuery);
 
         // Bind parameters
-        $stmt->bind_param('sss', $email, $hashedPassword, $role);
+        $stmt->bind_param('sssi', $name, $age, $phone, $care_giver_id );
 
         // Execute the query
         $stmt->execute();
@@ -234,7 +223,7 @@ function createUser($email, $password, $role) {
         return $newUserId;
     } catch (Exception $e) {
         // Handle the exception, you might want to log it or return false
-        echo "userRepo Error = " . $e->getMessage();
+        echo "patientRepo Error = " . $e->getMessage();
         return -1;
     } finally {
         // Close the database connection
