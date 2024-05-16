@@ -20,8 +20,20 @@ $routes = [
 
 $backend_routes = [
     'login_controller' => '/Mental_Health_Management_System/controller/loginController.php',
-    'care_giver_signup_controller' => '/Mental_Health_Management_System/controller/care_giver/signupController.php',
     'logout_controller' => '/Mental_Health_Management_System/controller/logoutController.php',
+    'care_giver_signup_controller' => '/Mental_Health_Management_System/controller/care_giver/signupController.php',
+
+
+    'care_giver_add_a_patient_controller' => '/Mental_Health_Management_System/controller/care_giver/patients/add_a_patientController.php',
+    'care_giver_delete_patient_controller' => '/Mental_Health_Management_System/controller/care_giver/patients/delete_patientsController.php',
+    'care_giver_edit_patient_controller' => '/Mental_Health_Management_System/controller/care_giver/patients/edit_patientController.php',
+
+    'care_giver_add_a_schedule_controller' => '/Mental_Health_Management_System/controller/care_giver/patients/edit_patientController.php',
+    'care_giver_delete_a_schedule_controller' => '/Mental_Health_Management_System/controller/care_giver/schedule/delete_scheduleController.php',
+
+    'care_giver_add_progress_controller' => '/Mental_Health_Management_System/controller/care_giver/add_progressController.php',
+    'care_giver_add_symptoms_tracking_controller' => '/Mental_Health_Management_System/controller/care_giver/add_symptoms_trackingController.php',
+
 ];
 
 
