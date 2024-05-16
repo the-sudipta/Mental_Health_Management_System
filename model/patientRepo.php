@@ -118,15 +118,16 @@ function findAllPatientsByCareGiverID($id)
 }
 
 
-function updatePatient($name, $age, $phone, $id)
+function updatePatient($name, $age, $phone, $gender, $id)
 {
     $conn = db_conn();
 
     // Construct the SQL query
-    $updateQuery = "UPDATE `user` SET 
+    $updateQuery = "UPDATE `patient` SET 
                     name = ?,
                     age = ?,
-                    phone = ?
+                    phone = ?,
+                    gender = ?
                     WHERE id = ?";
 
     try {
@@ -139,7 +140,7 @@ function updatePatient($name, $age, $phone, $id)
         }
 
         // Bind parameters
-        $stmt->bind_param('sssi', $name, $age, $phone, $id);
+        $stmt->bind_param('ssssi', $name, $age, $phone, $gender, $id);
 
         // Execute the query
         $stmt->execute();
@@ -197,19 +198,19 @@ function deletePatient($id) {
 }
 
 
-function createPatient($name, $age, $phone, $care_giver_id) {
+function createPatient($name, $age, $phone, $gender, $care_giver_id) {
     $conn = db_conn();
 
 
     // Construct the SQL query
-    $insertQuery = "INSERT INTO `pateint` (name, age, phone, care_giver_id) VALUES (?, ?, ?, ?)";
+    $insertQuery = "INSERT INTO `pateint` (name, age, phone, gender, care_giver_id) VALUES (?, ?, ?, ?, ?)";
 
     try {
         // Prepare the statement
         $stmt = $conn->prepare($insertQuery);
 
         // Bind parameters
-        $stmt->bind_param('sssi', $name, $age, $phone, $care_giver_id );
+        $stmt->bind_param('ssssi', $name, $age, $phone, $gender, $care_giver_id );
 
         // Execute the query
         $stmt->execute();

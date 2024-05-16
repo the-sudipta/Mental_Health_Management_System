@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2024 at 08:44 PM
+-- Generation Time: May 16, 2024 at 10:32 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -110,24 +110,25 @@ CREATE TABLE `patient` (
   `name` varchar(50) NOT NULL,
   `age` varchar(50) NOT NULL,
   `phone` varchar(50) NOT NULL,
-  `care_giver_id` int(50) NOT NULL
+  `care_giver_id` int(50) NOT NULL,
+  `gender` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `patient`
 --
 
-INSERT INTO `patient` (`id`, `name`, `age`, `phone`, `care_giver_id`) VALUES
-(1, 'John Doe', '35', '+1234567890', 1),
-(2, 'Jane Smith', '28', '+1987654321', 1),
-(3, 'Alice Johnson', '45', '+1122334455', 1),
-(4, 'Bob Williams', '40', '+1555666777', 1),
-(5, 'Emma Brown', '30', '+1444333222', 1),
-(6, 'Michael Davis', '50', '+1777888999', 2),
-(7, 'Olivia Wilson', '32', '+1666777888', 1),
-(8, 'William Taylor', '38', '+1999888777', 3),
-(9, 'Sophia Martinez', '42', '+1223344556', 5),
-(10, 'James Anderson', '48', '+1444555666', 1);
+INSERT INTO `patient` (`id`, `name`, `age`, `phone`, `care_giver_id`, `gender`) VALUES
+(1, 'John Doe', '35', '+1234567890', 1, 'MALE'),
+(2, 'Jane Smith', '28', '+1987654321', 1, 'FEMALE'),
+(3, 'Alice Johnson', '45', '+1122334455', 1, 'FEMALE'),
+(4, 'Bob Williams', '40', '+1555666777', 1, 'MALE'),
+(5, 'Emma Brown', '30', '+1444333222', 1, 'FEMALE'),
+(6, 'Michael Davis', '50', '+1777888999', 2, 'MALE'),
+(7, 'Olivia Wilson', '32', '+1666777888', 1, 'FEMALE'),
+(8, 'William Taylor', '38', '+1999888777', 3, 'MALE'),
+(9, 'Sophia Martinez', '42', '+1223344556', 5, 'FEMALE'),
+(10, 'James Anderson', '48', '+1444555666', 1, 'MALE');
 
 -- --------------------------------------------------------
 
@@ -171,24 +172,25 @@ CREATE TABLE `schedule` (
   `date` varchar(50) NOT NULL,
   `time` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'Pending',
-  `patient_id` int(11) NOT NULL
+  `patient_id` int(11) NOT NULL,
+  `TYPE` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `schedule`
 --
 
-INSERT INTO `schedule` (`id`, `date`, `time`, `status`, `patient_id`) VALUES
-(1, '2024-05-17', '09:00 AM', 'Confirmed', 1),
-(2, '2024-05-18', '10:30 AM', 'Confirmed', 2),
-(3, '2024-05-19', '11:00 AM', 'Pending', 3),
-(4, '2024-05-20', '02:00 PM', 'Pending', 4),
-(5, '2024-05-21', '03:30 PM', 'Confirmed', 5),
-(6, '2024-05-22', '04:00 PM', 'Confirmed', 6),
-(7, '2024-05-23', '10:00 AM', 'Pending', 7),
-(8, '2024-05-24', '01:30 PM', 'Confirmed', 8),
-(9, '2024-05-25', '11:30 AM', 'Pending', 9),
-(10, '2024-05-26', '12:00 PM', 'Confirmed', 10);
+INSERT INTO `schedule` (`id`, `date`, `time`, `status`, `patient_id`, `TYPE`) VALUES
+(1, '2024-05-17', '09:00 AM', 'Confirmed', 1, 'Online'),
+(2, '2024-05-18', '10:30 AM', 'Confirmed', 2, 'Offline'),
+(3, '2024-05-19', '11:00 AM', 'Pending', 3, 'Offline'),
+(4, '2024-05-20', '02:00 PM', 'Cancelled', 4, 'Offline'),
+(5, '2024-05-21', '03:30 PM', 'Completed', 5, 'Online'),
+(6, '2024-05-22', '04:00 PM', 'Completed', 6, 'Offline'),
+(7, '2024-05-23', '10:00 AM', 'Completed', 7, 'Online'),
+(8, '2024-05-24', '01:30 PM', 'Confirmed', 8, 'Online'),
+(9, '2024-05-25', '11:30 AM', 'Pending', 9, 'Offline'),
+(10, '2024-05-26', '12:00 PM', 'Cancelled', 10, 'Online');
 
 -- --------------------------------------------------------
 

@@ -1,3 +1,46 @@
+<?php
+
+
+session_start();
+global $routes, $backend_routes, $image_routes;
+//include_once '../Navigation_Links.php';
+require '../../routes.php';
+require '../../utils/system_functions.php';
+require '../../utils/calculationProvider.php';
+
+
+$Login_page = $routes['login'];
+if($_SESSION["user_id"] <= 0 && $_SESSION["role"] !== "caregiver"){
+    echo '<h1>'.$_SESSION["user_id"] .'</h1>';
+    navigate($Login_page);
+}
+
+// Frontend Redirections
+$Dashboard_Page = $routes['care_giver_dashboard'];
+$Patients_Page = $routes['care_givers_patients'];
+$Schedule_Page = $routes['care_giver_schedule_page'];
+$Progress_Tracking_Page = $routes['care_giver_progress_tracking'];
+$Education_And_Resources_Page = $routes['care_giver_education_and_resource'];
+$Symptoms_Tracking_Page = $routes['care_giver_symptoms_tracking_behaviour'];
+$Emergency_Support = $routes['care_giver_emergency_support'];
+
+
+// Backend Redirections
+
+$Logout_Controller = $backend_routes['logout_controller'];
+
+
+
+?>
+
+
+
+
+
+
+
+
+
 <!doctype html>
 <html lang="en">
 
@@ -33,15 +76,15 @@
                         <label class="px-2 p-3 text-secondary">Menu</label>
                         <ul class="nav navbar-nav text-secondary">
 
-                            <li class="nav-item"><a href="index.php" class="nav-link "><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
-                            <li class="nav-item"><a href="patients.php" class="nav-link"><i class="fa-solid fa-user-group"></i> Patients</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-calendar"></i> Schedule</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Tasks</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-envelope"></i> Chats</a></li>
-                            <li class="nav-item"><a href="progress_tracking.php" class=" nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
-                            <li class="nav-item"><a href="#" data-bs-target="#symptomstrackingModal" data-bs-toggle="modal" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
-                            <li class="nav-item"><a href="evergency_support.php" class="active-sidebar-button  nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
+                            <li class="nav-item"><a href="<?php echo $Dashboard_Page; ?>" class=" nav-link "><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                            <li class="nav-item"><a href="<?php echo $Patients_Page; ?>" class="nav-link"><i class="fa-solid fa-user-group"></i> Patients</a></li>
+                            <li class="nav-item"><a href="<?php echo $Schedule_Page; ?>" class="nav-link"><i class="fa-solid fa-calendar"></i> Schedule</a></li>
+                            <!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Tasks</a></li>-->
+                            <!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-envelope"></i> Chats</a></li>-->
+                            <li class="nav-item"><a href="<?php echo $Progress_Tracking_Page; ?>" class=" nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
+                            <li class="nav-item"><a href="<?php echo $Education_And_Resources_Page; ?>" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
+                            <li class="nav-item"><a href="<?php echo $Symptoms_Tracking_Page; ?>" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
+                            <li class="nav-item"><a href="<?php echo $Emergency_Support; ?>" class="active-sidebar-button nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
                         </ul>
 
                     </div>
@@ -97,7 +140,7 @@
                                         <div class="icon-group">
                                             <a href="#" class="text-secondary "> <i class="fa-regular fa-envelope"></i> <i class="fa-solid fa-circle  notification-active"></i></a>
                                             <a href="#" class="text-secondary"> <i class="fa-regular fa-bell"></i> <i class="fa-solid fa-circle  notification-active"></i></a>
-                                            <a href="#" class="text-secondary"> <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                                            <a href="<?php echo $Logout_Controller;?>" class="text-secondary"> <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
                                             <button id="sidebarToggler" class="border-0 bg-white d-lg-none"><i class="fa-solid fa-bars-staggered"></i></button>
 
                                         </div>

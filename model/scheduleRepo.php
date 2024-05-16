@@ -117,14 +117,15 @@ function findAllSchedulesByPatientID($id)
     }
 }
 
-function updateSchedule($date, $time, $id)
+function updateSchedule($date, $time, $type, $id)
 {
     $conn = db_conn();
 
     // Construct the SQL query
     $updateQuery = "UPDATE `schedule` SET 
                     date = ?,
-                    time = ?
+                    time = ?,
+                    type = ?
                     WHERE id = ?";
 
     try {
@@ -137,7 +138,7 @@ function updateSchedule($date, $time, $id)
         }
 
         // Bind parameters
-        $stmt->bind_param('ssi', $date, $time, $id);
+        $stmt->bind_param('sssi', $date, $time, $type, $id);
 
         // Execute the query
         $stmt->execute();
@@ -196,7 +197,6 @@ function updateScheduleStatus($status, $id)
     }
 }
 
-
 function deleteSchedule($id) {
 
     $conn = db_conn();
@@ -235,13 +235,13 @@ function deleteSchedule($id) {
     }
 }
 
-function createSchedule($date, $time, $status) {
+function createSchedule($date, $time, $type, $status) {
 
     $conn = db_conn();
 
 
     // Construct the SQL query
-    $insertQuery = "INSERT INTO `schedule` (date, time, status) VALUES (?, ?, ?)";
+    $insertQuery = "INSERT INTO `schedule` (date, time, type, status) VALUES (?, ?, ?, ?)";
 
     try {
         // Prepare the statement
@@ -254,7 +254,7 @@ function createSchedule($date, $time, $status) {
 
 
         // Bind parameters
-        $stmt->bind_param('sss', $date, $time, $status);
+        $stmt->bind_param('ssss', $date, $time, $type, $status);
 
         // Execute the query
         $stmt->execute();

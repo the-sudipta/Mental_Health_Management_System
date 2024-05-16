@@ -1,10 +1,52 @@
+<?php
+
+
+session_start();
+global $routes, $backend_routes, $image_routes;
+//include_once '../Navigation_Links.php';
+require '../../routes.php';
+require '../../utils/system_functions.php';
+require '../../utils/calculationProvider.php';
+
+
+$Login_page = $routes['login'];
+if($_SESSION["user_id"] <= 0 && $_SESSION["role"] !== "caregiver"){
+    echo '<h1>'.$_SESSION["user_id"] .'</h1>';
+    navigate($Login_page);
+}
+
+// Frontend Redirections
+$Dashboard_Page = $routes['care_giver_dashboard'];
+$Patients_Page = $routes['care_givers_patients'];
+$Schedule_Page = $routes['care_giver_schedule_page'];
+$Progress_Tracking_Page = $routes['care_giver_progress_tracking'];
+$Education_And_Resources_Page = $routes['care_giver_education_and_resource'];
+$Symptoms_Tracking_Page = $routes['care_giver_symptoms_tracking_behaviour'];
+$Emergency_Support = $routes['care_giver_emergency_support'];
+
+
+// Backend Redirections
+
+$Logout_Controller = $backend_routes['logout_controller'];
+
+
+
+?>
+
+
+
+
+
+
+
+
 <!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboarad</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -33,15 +75,15 @@
                         <label class="px-2 p-3 text-secondary">Menu</label>
                         <ul class="nav navbar-nav text-secondary">
 
-                            <li class="nav-item"><a href="index.php" class="active-sidebar-button nav-link "><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
-                            <li class="nav-item"><a href="patients.php" class="nav-link"><i class="fa-solid fa-user-group"></i> Patients</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-calendar"></i> Schedule</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Tasks</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-envelope"></i> Chats</a></li>
-                            <li class="nav-item"><a href="progress_tracking.php" class=" nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
-                            <li class="nav-item"><a href="evergency_support.php" class="nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
+                            <li class="nav-item"><a href="<?php echo $Dashboard_Page; ?>" class="active-sidebar-button nav-link "><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                            <li class="nav-item"><a href="<?php echo $Patients_Page; ?>" class="nav-link"><i class="fa-solid fa-user-group"></i> Patients</a></li>
+                            <li class="nav-item"><a href="<?php echo $Schedule_Page; ?>" class="nav-link"><i class="fa-solid fa-calendar"></i> Schedule</a></li>
+<!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Tasks</a></li>-->
+<!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-envelope"></i> Chats</a></li>-->
+                            <li class="nav-item"><a href="<?php echo $Progress_Tracking_Page; ?>" class=" nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
+                            <li class="nav-item"><a href="<?php echo $Education_And_Resources_Page; ?>" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
+                            <li class="nav-item"><a href="<?php echo $Symptoms_Tracking_Page; ?>" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
+                            <li class="nav-item"><a href="<?php echo $Emergency_Support; ?>" class="nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
                         </ul>
 
                     </div>
@@ -82,7 +124,7 @@
                                     <div class="mx-2 d-flex justify-content-center ">
                                         <div class="user-title-box text-center d-lg-block d-none">
                                             <label class="cust-color1">Tofayal Ahmed</label><br>
-                                            <h6><b>Care GIvers</b></h6>
+                                            <h6><b>Care Giver</b></h6>
 
                                         </div>
 
@@ -97,7 +139,7 @@
                                         <div class="icon-group">
                                             <a href="#" class="text-secondary "> <i class="fa-regular fa-envelope"></i> <i class="fa-solid fa-circle  notification-active"></i></a>
                                             <a href="#" class="text-secondary"> <i class="fa-regular fa-bell"></i> <i class="fa-solid fa-circle  notification-active"></i></a>
-                                            <a href="#" class="text-secondary"> <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                                            <a href="<?php echo $Logout_Controller;?>" class="text-secondary"> <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
                                             <button id="sidebarToggler" class="border-0 bg-white d-lg-none"><i class="fa-solid fa-bars-staggered"></i></button>
 
                                         </div>
