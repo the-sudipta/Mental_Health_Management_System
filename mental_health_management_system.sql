@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2024 at 09:35 AM
+-- Generation Time: May 16, 2024 at 11:55 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -214,7 +214,7 @@ INSERT INTO `symptom_track` (`id`, `mood_swings`, `changes_in_appetite`, `sleep_
 CREATE TABLE `user` (
   `id` int(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(200) NOT NULL,
   `role` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -232,7 +232,9 @@ INSERT INTO `user` (`id`, `email`, `password`, `role`) VALUES
 (7, 'patient2@example.com', 'patient123', 'patient'),
 (8, 'patient3@example.com', 'patient123', 'patient'),
 (9, 'patient4@example.com', 'patient123', 'patient'),
-(10, 'patient5@example.com', 'patient123', 'patient');
+(10, 'patient5@example.com', 'patient123', 'patient'),
+(11, 'test1@gmail.com', '$2y$10$MCIHGG4IV3HFTwG/UNQ3VORzSgwICBNb9PcPqOq/IyX', 'caregiver'),
+(12, 'test1@gmail.com', '$2y$10$MCIHGG4IV3HFTwG/UNQ3VORzSgwICBNb9PcPqOq/IyX/zyD3QqA5u', 'caregiver');
 
 --
 -- Indexes for dumped tables
@@ -324,7 +326,7 @@ ALTER TABLE `symptom_track`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,17 +1,12 @@
 <?php
 
 require_once __DIR__ . '/../model/db_connect.php';
-require '../routes.php';
-require '../utils/system_functions.php';
 
 
-
-function findAllDiagnosis()
+function findAllUsers()
 {
-    global $system_routes;
-    $error_page = $system_routes['error_500'];
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `diagnosis`';
+    $selectQuery = 'SELECT * FROM `user`';
 
     try {
         $result = $conn->query($selectQuery);
@@ -30,14 +25,12 @@ function findAllDiagnosis()
 
         // Check for an empty result set
         if (empty($rows)) {
-            throw new Exception("No rows found in the 'Diagnosis' table.");
+            throw new Exception("No rows found in the 'user' table.");
         }
 
         return $rows;
     } catch (Exception $e) {
-        $error_message = $e->getMessage();
-        http_response_code(500);
-        navigate($error_page . "?error_message=" . urlencode($error_message));
+        echo "Error: " . $e->getMessage();
         return null;
     } finally {
         // Close the database connection
@@ -45,12 +38,56 @@ function findAllDiagnosis()
     }
 }
 
-function findDiagnosisByID($id)
-{
-    global $system_routes;
-    $error_page = $system_routes['error_500'];
+
+function findUserByEmailAndPassword($email, $password) {
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `diagnosis` WHERE `id` = ?';
+
+    // Use prepared statement to prevent SQL injection
+    $selectQuery = 'SELECT * FROM `user` WHERE `email` = ?';
+
+    try {
+        $stmt = $conn->prepare($selectQuery);
+
+        // Bind parameters
+        $stmt->bind_param("s", $email);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the result
+        $result = $stmt->get_result();
+
+        // Fetch the user as an associative array
+        $user = $result->fetch_assoc();
+
+        // Close the result set
+        $result->close();
+
+        // Close the statement
+        $stmt->close();
+
+        // Check if the user exists and if the password matches
+        if ($user && password_verify($password, $user['password'])) {
+            // Password is correct
+            return $user;
+        } else {
+            // Password is incorrect or user doesn't exist
+            return null;
+        }
+    } catch (Exception $e) {
+        echo $e->getMessage();
+        return null;
+    } finally {
+        // Close the database connection
+        $conn->close();
+    }
+}
+
+
+function findUserByUserID($id)
+{
+    $conn = db_conn();
+    $selectQuery = 'SELECT * FROM `user` WHERE `id` = ?';
 
     try {
         $stmt = $conn->prepare($selectQuery);
@@ -82,9 +119,7 @@ function findDiagnosisByID($id)
 
         return $user;
     } catch (Exception $e) {
-        $error_message = $e->getMessage();
-        http_response_code(500);
-        navigate($error_page . "?error_message=" . urlencode($error_message));
+        echo "Error: " . $e->getMessage();
         return null;
     } finally {
         // Close the database connection
@@ -92,54 +127,15 @@ function findDiagnosisByID($id)
     }
 }
 
-function findAllDiagnosisByPatientID($id)
+
+function updateUser($email, $password, $id)
 {
-    global $system_routes;
-    $error_page = $system_routes['error_500'];
-    $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `diagnosis` WHERE `patient_id` = '.$id;
-
-    try {
-        $result = $conn->query($selectQuery);
-
-        // Check if the query was successful
-        if (!$result) {
-            throw new Exception("Query failed: " . $conn->error);
-        }
-
-        $rows = array();
-
-        // Fetch rows one by one
-        while ($row = $result->fetch_assoc()) {
-            $rows[] = $row;
-        }
-
-        // Check for an empty result set
-        if (empty($rows)) {
-            throw new Exception("No rows found in the 'user' table.");
-        }
-
-        return $rows;
-    } catch (Exception $e) {
-        $error_message = $e->getMessage();
-        http_response_code(500);
-        navigate($error_page . "?error_message=" . urlencode($error_message));
-        return null;
-    } finally {
-        // Close the database connection
-        $conn->close();
-    }
-}
-
-function updateDiagnosis($diagnosis_name, $id)
-{
-    global $system_routes;
-    $error_page = $system_routes['error_500'];
     $conn = db_conn();
 
     // Construct the SQL query
-    $updateQuery = "UPDATE `diagnosis` SET 
-                    diagnosis_name = ?
+    $updateQuery = "UPDATE `user` SET 
+                    email = ?,
+                    password = ?
                     WHERE id = ?";
 
     try {
@@ -152,7 +148,7 @@ function updateDiagnosis($diagnosis_name, $id)
         }
 
         // Bind parameters
-        $stmt->bind_param('si', $diagnosis_name, $id);
+        $stmt->bind_param('ssi', $email, $password, $id);
 
         // Execute the query
         $stmt->execute();
@@ -161,9 +157,7 @@ function updateDiagnosis($diagnosis_name, $id)
         return true;
     } catch (Exception $e) {
         // Handle the exception, you might want to log it or return false
-        $error_message = $e->getMessage();
-        http_response_code(500);
-        navigate($error_page . "?error_message=" . urlencode($error_message));
+        echo "Error: " . $e->getMessage();
         return false;
     } finally {
         // Close the statement
@@ -175,16 +169,11 @@ function updateDiagnosis($diagnosis_name, $id)
 }
 
 
-
-
-function deleteDiagnosis($id) {
-
-    global $system_routes;
-    $error_page = $system_routes['error_500'];
+function deleteUser($id) {
     $conn = db_conn();
 
     // Construct the SQL query
-    $updateQuery = "DELETE FROM `diagnosis` WHERE id = ?";
+    $updateQuery = "DELETE FROM `user` WHERE id = ?";
 
     try {
         // Prepare the statement
@@ -205,9 +194,7 @@ function deleteDiagnosis($id) {
         return true;
     } catch (Exception $e) {
         // Handle the exception, you might want to log it or return false
-        $error_message = $e->getMessage();
-        http_response_code(500);
-        navigate($error_page . "?error_message=" . urlencode($error_message));
+        echo "Error: " . $e->getMessage();
         return false;
     } finally {
         // Close the statement
@@ -215,37 +202,32 @@ function deleteDiagnosis($id) {
 
         // Close the database connection
         $conn->close();
+        $data['status'] = "De-Activated";
     }
 }
 
 
-function createDiagnosis($diagnosis_name, $patient_id) {
-
-    global $system_routes;
-    $error_page = $system_routes['error_500'];
+function createUser($email, $password, $role) {
     $conn = db_conn();
 
+    // Hash the password using a secure hashing algorithm (e.g., password_hash)
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
     // Construct the SQL query
-    $insertQuery = "INSERT INTO `diagnosis` (diagnosis_name, patient_id) VALUES (?, ?)";
+    $insertQuery = "INSERT INTO `user` (email, password, role) VALUES (?, ?, ?)";
 
     try {
         // Prepare the statement
         $stmt = $conn->prepare($insertQuery);
 
-        // Check if the prepare statement was successful
-        if (!$stmt) {
-            throw new Exception("Prepare statement for CreateMedicalHistory failed: " . $conn->error);
-        }
-
-
         // Bind parameters
-        $stmt->bind_param('si', $diagnosis_name, $patient_id);
+        $stmt->bind_param('sss', $email, $hashedPassword, $role);
 
         // Execute the query
         $stmt->execute();
 
         // Return the ID of the newly inserted user
-        $newUserId = $conn->insert_id;
+        $newUserId = $stmt->insert_id;
 
         // Close the statement
         $stmt->close();
@@ -253,9 +235,7 @@ function createDiagnosis($diagnosis_name, $patient_id) {
         return $newUserId;
     } catch (Exception $e) {
         // Handle the exception, you might want to log it or return false
-        $error_message = $e->getMessage();
-        http_response_code(500);
-        navigate($error_page . "?error_message=" . urlencode($error_message));
+        echo "Error: " . $e->getMessage();
         return -1;
     } finally {
         // Close the database connection

@@ -1,13 +1,14 @@
 <?php
 // Check if the requested file does not exist
+
 session_start();
-global $system_routes;
+global $system_routes, $routes;
 require './routes.php';
 require './utils/system_functions.php';
 
 $error_404 = $system_routes['error_404'];
 $error_500 = $system_routes['error_500'];
-$login_page = $system_routes['login'];
+$login_page = $routes['login'];
 
 if (!file_exists($_SERVER['DOCUMENT_ROOT'] . $_SERVER['REQUEST_URI'])) {
     // Redirect to the custom 404 page
