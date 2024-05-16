@@ -9,14 +9,14 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-    <link href="../css/main.css" rel="stylesheet">
+    <link href="../../css/main.css" rel="stylesheet">
 </head>
 
 <body>
 
 
     <section class="dashboard-part ">
-        <div id="modalContainer"></div>
+        <div id="symptomsmodalContainer"></div>
 
 
 
@@ -40,8 +40,8 @@
                             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-envelope"></i> Chats</a></li>
                             <li class="nav-item"><a href="progress_tracking.php" class=" nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
                             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
-                            <li class="nav-item"><a href="emergency_support.php" class="active-sidebar-button  nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
+                            <li class="nav-item"><a href="#" data-bs-target="#symptomstrackingModal" data-bs-toggle="modal" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
+                            <li class="nav-item"><a href="evergency_support.php" class="active-sidebar-button  nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
                         </ul>
 
                     </div>
@@ -228,12 +228,36 @@
 
 
 
-    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="../../js/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
-    <script src="../js/main.js"></script>
+    <script src="../../js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fetch modal content from progresstrackingmodal.html
+            fetch('symptoms_tracking_behaviour.php')
+                .then(response => response.text())
+                .then(data => {
+                    // Inject modal content into the modalContainer div
+                    document.getElementById('symptomsmodalContainer').innerHTML = data;
+                })
+                .catch(error => console.error(error));
+        });
+        // JavaScript to toggle visibility of details
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleLinks = document.querySelectorAll('.toggle-details');
 
+            toggleLinks.forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent default link behavior
+                    const details = this.nextElementSibling; // Get the next sibling div
+                    details.style.display = (details.style.display === 'none' || details.style.display === '') ? 'block' : 'none'; // Toggle display
+                });
+            });
+        });
+
+    </script>
 
 </body>
 
