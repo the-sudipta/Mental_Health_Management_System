@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2024 at 03:58 PM
+-- Generation Time: May 16, 2024 at 08:44 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `mental_health_management_system`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `care_giver`
+--
+
+CREATE TABLE `care_giver` (
+  `id` int(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `gender` varchar(50) NOT NULL,
+  `phone` varchar(50) NOT NULL,
+  `user_id` int(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `care_giver`
+--
+
+INSERT INTO `care_giver` (`id`, `name`, `gender`, `phone`, `user_id`) VALUES
+(2, 'Test Name', 'Male', '01931117419', 14);
 
 -- --------------------------------------------------------
 
@@ -98,15 +119,15 @@ CREATE TABLE `patient` (
 
 INSERT INTO `patient` (`id`, `name`, `age`, `phone`, `care_giver_id`) VALUES
 (1, 'John Doe', '35', '+1234567890', 1),
-(2, 'Jane Smith', '28', '+1987654321', 2),
-(3, 'Alice Johnson', '45', '+1122334455', 3),
-(4, 'Bob Williams', '40', '+1555666777', 4),
-(5, 'Emma Brown', '30', '+1444333222', 5),
-(6, 'Michael Davis', '50', '+1777888999', 6),
-(7, 'Olivia Wilson', '32', '+1666777888', 7),
-(8, 'William Taylor', '38', '+1999888777', 8),
-(9, 'Sophia Martinez', '42', '+1223344556', 9),
-(10, 'James Anderson', '48', '+1444555666', 10);
+(2, 'Jane Smith', '28', '+1987654321', 1),
+(3, 'Alice Johnson', '45', '+1122334455', 1),
+(4, 'Bob Williams', '40', '+1555666777', 1),
+(5, 'Emma Brown', '30', '+1444333222', 1),
+(6, 'Michael Davis', '50', '+1777888999', 2),
+(7, 'Olivia Wilson', '32', '+1666777888', 1),
+(8, 'William Taylor', '38', '+1999888777', 3),
+(9, 'Sophia Martinez', '42', '+1223344556', 5),
+(10, 'James Anderson', '48', '+1444555666', 1);
 
 -- --------------------------------------------------------
 
@@ -225,22 +246,17 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `password`, `role`) VALUES
-(1, 'admin@example.com', 'admin123', 'admin'),
-(2, 'doctor1@example.com', 'doctor123', 'doctor'),
-(3, 'doctor2@example.com', 'doctor123', 'doctor'),
-(4, 'caregiver1@example.com', 'caregiver123', 'caregiver'),
-(5, 'caregiver2@example.com', 'caregiver123', 'caregiver'),
-(6, 'patient1@example.com', 'patient123', 'patient'),
-(7, 'patient2@example.com', 'patient123', 'patient'),
-(8, 'patient3@example.com', 'patient123', 'patient'),
-(9, 'patient4@example.com', 'patient123', 'patient'),
-(10, 'patient5@example.com', 'patient123', 'patient'),
-(11, 'test1@gmail.com', '$2y$10$MCIHGG4IV3HFTwG/UNQ3VORzSgwICBNb9PcPqOq/IyX', 'caregiver'),
-(12, 'test1@gmail.com', '$2y$10$MCIHGG4IV3HFTwG/UNQ3VORzSgwICBNb9PcPqOq/IyX/zyD3QqA5u', 'caregiver');
+(1, 'test1@gmail.com', '$2y$10$uN83Bkias/1SXpcD2EO0cug/9loaTAYnONIP3OHQpAro3Nz8vh1he', 'caregiver');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `care_giver`
+--
+ALTER TABLE `care_giver`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `diagnosis`
@@ -289,6 +305,12 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `care_giver`
+--
+ALTER TABLE `care_giver`
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `diagnosis`
 --
 ALTER TABLE `diagnosis`
@@ -328,7 +350,7 @@ ALTER TABLE `symptom_track`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
