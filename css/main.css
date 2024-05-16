@@ -1,0 +1,581 @@
+@importurl('https://fonts.googleapis.com/css2family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Poppins:wght@200;300;400;500;600;700&family=Varela+Round&display=swap') * {
+    margin: 0;
+    padding: 0
+}
+
+*,
+:after,
+:before {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+a,
+a:hover {
+    transition: .3s;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button,
+input,
+input:hover {
+    outline: 0
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+address {
+    margin: 0;
+    padding: 0
+}
+
+p {
+    margin: 0;
+    padding: 0
+}
+
+p,
+lable,
+a {
+    font-size: 13px;
+}
+
+img {
+    vertical-align: middle;
+    border: none
+}
+
+ol,
+ul {
+    list-style: none
+}
+
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ol,
+p,
+ul {
+    margin: 0;
+    padding: 0
+}
+
+:root {
+    --web-color1: #2323B7;
+    --web-color2: dodgerblue;
+    --web-font-style1: Arial;
+    --web-font-style2: 'Poppins', sans-serif;
+    --web-font-style3: 'Varela Round', sans-serif;
+    --web-font-style4: 'EB Garamond', serif;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+
+body {
+    font-family: var(--web-font-style2);
+    background: #F4F4F7;
+
+}
+
+
+.row {
+    margin: 0 !Important;
+}
+
+.comm_padd {
+    padding: 50px 0;
+}
+
+.cust-w-35 {
+    width: 500px;
+}
+
+
+
+
+.cust-color1 {
+    color: var(--web-color1);
+}
+
+.cust-color2 {
+    color: var(--web-color2);
+}
+
+.cust-bg-color1 {
+    background: var(--web-color1);
+    color: white
+}
+
+.dashboard-part {
+        height: 100%;
+
+}
+
+.dashboard-part .sidebar-part {
+    background: #FFFFFF;
+        height: 100% ;
+
+}
+
+.dashboard-part .sidebar-part .nav-box .nav {}
+
+.dashboard-part .sidebar-part .nav-box .nav .nav-item {}
+
+
+.dashboard-part .sidebar-part .nav-box .nav .nav-item .nav-link {
+    padding: 10px;
+    transition: .3s;
+    border-left-color: var(--web-color1);
+    font-size: 13px;
+    font-weight: bold;
+    border-left: 3px solid transparent;
+
+
+}
+
+.dashboard-part .sidebar-part .nav-box .nav .nav-item .nav-link i {
+    margin-right: 5px;
+}
+
+.active-sidebar-button,
+.dashboard-part .sidebar-part .nav-box .nav .nav-item .nav-link:hover {
+    color: var(--web-color1);
+    border-left: 3px solid var(--web-color1) !important;
+
+}
+
+
+.dashboard-part .dash-header {
+    font-size: 13px;
+    background: #f9f9f9;
+    padding: 10px;
+
+}
+
+.dashboard-part .dash-header .right-box {}
+
+.dashboard-part .dash-header .right-box .icon-group a {
+    position: relative;
+    margin: 5px;
+}
+
+.dashboard-part .dash-header .right-box .icon-group .notification-active {
+    color: #dc3545;
+    font-size: 7px;
+    position: absolute;
+    top: 0;
+    right: 4px;
+}
+
+.dashboard-part .dash-header .right-box .icon-group a {
+    font-size: 18px;
+}
+
+.dashboard-part .dash-content {
+    height: 100%;
+}
+
+.dashboard-part .dash-content .overall-summary-ratio .box3 .graph {
+    position: relative;
+}
+
+.dashboard-part .dash-content .overall-summary-ratio .box3 .ratio {
+    --ratio: 0.3;
+    /* Adjust this value to change the proportion of the red color */
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    position: relative;
+    clip-path: circle(50%);
+}
+
+.dashboard-part .dash-content .overall-summary-ratio .box3 .ratio::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: conic-gradient(dodgerblue 0 60%, #dc3545 60% 100%);
+    z-index: -2;
+}
+
+.dashboard-part .dash-content .overall-summary-ratio .box3 .ratio::after {
+    content: '';
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 10%;
+    background-color: white;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+.dashboard-part .dash-content .overall-summary-ratio .box3 .label-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: black;
+}
+
+.dashboard-part .dash-content .overall-summary-ratio .box3 .label-container label {
+    display: block;
+}
+
+.dashboard-part .dash-content .overall-summary-ratio .box3 .label-container label:first-child {
+    margin-bottom: 5px;
+}
+
+.dashboard-part .dash-content .dash-summery {
+    flex: 1;
+}
+
+.dashboard-part .dash-content .dash-summery .task-table .box {
+    background: #FBFBFB;
+    padding: 20px;
+}
+
+.dashboard-part .dash-content .dash-summery .task-table .box .left-box i {
+    font-size: 20px;
+}
+
+.dashboard-part .dash-content .dash-summery .appointment-list {}
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-list .time-parent-hour {
+    font-size: 13px;
+    display: flex;
+    justify-content: flex-start;
+    width: 100px;
+
+}
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-list .time-parent-hour i {
+    font-size: 12px;
+
+
+}
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-list .time-parent-hour span:last-child {
+    margin-left: auto;
+    /* Push the last span to the right */
+}
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-list .appointments {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 67px;
+    height: auto;
+    position: relative;
+
+}
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-list .appointments .long-span {
+    background: lightgray;
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    left: 26px;
+    top: 0;
+}
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-list .appointments .appointment {}
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-list .appointments .appointment-short-details {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 50px;
+}
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-list .appointments .appointment-short-details .fa-circle {
+    font-size: 8px;
+    color: lightgray;
+    margin-right: 8px;
+
+}
+
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-short-details {
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    font-size: 12px;
+
+}
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-short-details-active {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+
+}
+
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-short-details .fa-angle-down {
+    transition: transform 0.3s ease;
+}
+
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-short-details .fa-angle-down.rotate {
+    transform: rotate(180deg);
+}
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-details {
+    display: none;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    z-index: 1;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 13px;
+    width: auto;
+    margin-left: 50px;
+
+}
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-details b {
+    display: inline-block;
+    width: 30%;
+}
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-details ul {
+    list-style-type: none;
+    padding: 10px 20px;
+
+}
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-details ul li {
+    margin-bottom: 10px;
+}
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-details.active {
+    display: block;
+}
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-details .edit-function a {
+    font-size: 11px;
+}
+
+.dashboard-part .dash-content .dash-summery .right-box .appointment-details .edit-function a {
+    margin-left: 100px;
+}
+
+
+.dashboard-part .dash-content .dash-summery .overall-patient-ratio .circle {
+    width: 200px;
+    margin: 6px 6px 20px;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.dashboard-part .dash-content .dash-summery .overall-patient-ratio .circle canvas {
+    vertical-align: top;
+    width: 200px !important;
+}
+
+.dashboard-part .dash-content .dash-summery .overall-patient-ratio .circle strong {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 30px;
+    color: black;
+}
+
+.dashboard-part .dash-content .dash-summery .overall-patient-ratio .circle strong i {
+    font-style: normal;
+    font-size: 0.6em;
+    font-weight: normal;
+}
+
+.dashboard-part .dash-content .dash-summery .overall-patient-ratio .circle span {
+    display: block;
+    color: #aaa;
+    margin-top: 12px;
+}
+
+.dashboard-part .dash-content .support-summery {}
+
+.dashboard-part .dash-content .support-summery .header-box {
+    padding: 50px;
+
+}
+
+.dashboard-part .dash-content .support-summery .header-box h2 {
+    font-weight: bolder;
+    font-size: 50px;
+
+}
+
+.dashboard-part .dash-content .support-summery .header-box .bg-overlay {
+    opacity: .7;
+
+}
+
+.dashboard-part .dash-content .support-summery .header-box img {}
+
+.dashboard-part .dash-content .support-summery .info-box {}
+
+.dashboard-part .dash-content .support-summery .info-box .emergency-info {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+}
+
+.dashboard-part .dash-content .support-summery .info-box .emergency-info h3 i {
+    display: block;
+    color: var(--web-color1);
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.dashboard-part .dash-content .support-summery .info-box .emergency-info h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.dashboard-part .dash-content .support-summery .info-box .emergency-info a {}
+
+.dashboard-part .dash-content .support-summery .info-box .emergency-info {}
+
+
+.dashboard-part .dash-content .support-summery .emergency-info div {
+    color: grey;
+    text-align: left;
+}
+
+.dashboard-part .dash-content .support-summery .emergency-info div p {
+    font-size: 16px;
+
+}
+
+.dashboard-part .dash-content .support-summery .emergency-info div ul {
+    margin-top: 10px;
+    margin-left: 20px;
+    list-style: disc;
+    font-size: 14px;
+}
+
+.dashboard-part .dash-content .support-summery .emergency-info div ul li {
+    margin-bottom: 10px;
+}
+
+.dashboard-part .dash-content .support-summery .emergency-info > div {
+    display: none;
+}
+
+@media (max-width: 1200px) {
+    .s-title h4 {
+        font-size: 18px;
+    }
+
+}
+
+@media (max-width: 991.98px) {
+
+    .dashboard-part .dash-header {
+        padding: 0;
+
+    }
+
+    .s-title h4 {
+        font-size: 18px;
+    }
+
+
+    .sidebar-part {
+        position: fixed;
+        top: 0;
+        left: -250px;
+        height: 100%;
+        width: 250px;
+        transition: left 0.3s ease;
+    }
+
+    .show-sidebar {
+        left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .dashboard-part .dash-content .dash-summery .task-table .box {
+        font-size: 13px;
+    }
+
+    .dashboard-part .dash-content .dash-summery .task-table .box {}
+}
+
+@media (max-width: 545px) {
+
+
+
+    .s-title h4 {
+        font-size: 16px;
+    }
+
+
+    .dashboard-part .dash-content .dash-summery .right-box .appointment-list .time-parent-hour {
+        font-size: 12px;
+        width: 75px;
+
+    }
+
+    .dashboard-part .dash-content .dash-summery .right-box .appointment-list .time-parent-hour i {
+        font-size: 11px;
+
+
+    }
+
+    .dashboard-part .dash-content .dash-summery .right-box .appointment-list .appointments .long-span {
+        left: 2px;
+    }
+
+    .dashboard-part .dash-content .dash-summery .right-box .appointment-list .appointments {}
+
+    .dashboard-part .dash-content .dash-summery .right-box .appointment-list .appointments .appointment-short-details {
+        font-size: 11px;
+
+        margin-left: 10px;
+        width: 100%;
+    }
+
+
+
+    .dashboard-part .dash-content .dash-summery .right-box .appointment-details {
+        font-size: 11px;
+
+        margin-left: 10px;
+
+    }
+
+    .dashboard-part .dash-content .dash-summery .right-box .appointment-list .appointments .edit-function a {
+        font-size: 11px;
+    }
+}
