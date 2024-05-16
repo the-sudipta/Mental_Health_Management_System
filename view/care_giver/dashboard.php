@@ -9,7 +9,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-    <link href="css/main.css" rel="stylesheet">
+    <link href="../../css/main.css" rel="stylesheet">
 </head>
 
 <body>
@@ -33,15 +33,15 @@
                         <label class="px-2 p-3 text-secondary">Menu</label>
                         <ul class="nav navbar-nav text-secondary">
 
-                            <li class="nav-item"><a href="index.html" class="active-sidebar-button nav-link "><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
-                            <li class="nav-item"><a href="patients.html" class="nav-link"><i class="fa-solid fa-user-group"></i> Patients</a></li>
+                            <li class="nav-item"><a href="index.php" class="active-sidebar-button nav-link "><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                            <li class="nav-item"><a href="patients.php" class="nav-link"><i class="fa-solid fa-user-group"></i> Patients</a></li>
                             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-calendar"></i> Schedule</a></li>
                             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Tasks</a></li>
                             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-envelope"></i> Chats</a></li>
-                            <li class="nav-item"><a href="progress_tracking.html" class=" nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
+                            <li class="nav-item"><a href="progress_tracking.php" class=" nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
                             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
                             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
-                            <li class="nav-item"><a href="evergency_support.html" class="nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
+                            <li class="nav-item"><a href="evergency_support.php" class="nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
                         </ul>
 
                     </div>
@@ -787,7 +787,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
     <script src="js/jquery-3.7.1.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="../js/main.js"></script>
 
 
 

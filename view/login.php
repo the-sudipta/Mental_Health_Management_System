@@ -26,10 +26,9 @@ $signup_decider = '';
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-    <link href="css/main.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
 
     <script>
-
         // Function to validate email format
         function validateEmail(email) {
             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -69,7 +68,7 @@ $signup_decider = '';
         }
 
         // Attach the validation function to the form's onsubmit event
-        document.getElementById("form").onsubmit = function () {
+        document.getElementById("form").onsubmit = function() {
             return validateForm();
         };
 
@@ -88,7 +87,7 @@ $signup_decider = '';
                     <div class="col-lg-8 col-md-12 offset-lg-2 offset-md-0">
                         <div class="signup-content box bg-white d-lg-flex justify-content-between p-5 border shadow-sm p-3 mb-5 bg-body rounded cust-box-shadow">
                             <div class="signin-image text-center w-100">
-                                <figure><img src="img/signin-image.jpg" class="img-fluid" alt="sing up image"></figure>
+                                <figure><img src="../img/signin-image.jpg" class="img-fluid" alt="sign in image"></figure>
                             </div>
 
                             <div class="signin-form w-100">

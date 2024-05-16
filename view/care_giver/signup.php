@@ -9,7 +9,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-    <link href="css/main.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
 
 </head>
 
@@ -35,25 +35,34 @@
                                         <input type="email" name="email" class="form-control" id="email" />
                                     </div>
                                     <div class="form-group mb-3">
+                                        <label for="number" class="form-label">Number</label>
+                                        <input type="number" name="number" class="form-control" id="email" />
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="gender" class="form-label">Gender</label>
+                                        <select class="form-select" name="gender" aria-label="Default select example">
+                                            <option selected>Select</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+
+                              
+                                    <div class="form-group mb-3">
                                         <label for="pass" class="form-label">Password</label>
                                         <input type="password" name="pass" class="form-control" id="pass" />
                                     </div>
 
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected>Select Your Role</option>
-                                        <option value="1">Doctor</option>
-                                        <option value="2">Caregivers</option>
-                                        <option value="3">Employers</option>
-                                    </select>
+
                                     <div class="form-group form-button">
                                         <input type="submit" name="signup" id="signup" class="form-submit btn-primary btn mt-3 w-100" value="Register" />
-                                        <a href="login.html" class="mt-3 d-block">Already a member? Sign in</a>
+                                        <a href="../login.php" class="mt-3 d-block">Already a member? Sign in</a>
 
                                     </div>
                                 </form>
                             </div>
                             <div class="signup-image text-center w-100">
-                                <figure><img src="img/signup.png" class="img-fluid" alt="sing up image"></figure>
+                                <figure><img src="../../img/signup.png" class="img-fluid" alt="sing up image"></figure>
                             </div>
                         </div>
                     </div>
@@ -61,7 +70,7 @@
             </div>
         </section>
 
-      
+
     </div>
 
 </body>
