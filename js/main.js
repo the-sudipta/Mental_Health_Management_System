@@ -48,11 +48,11 @@
 
  document.addEventListener("DOMContentLoaded", function () {
      // Fetch modal content from progresstrackingmodal.html
-     fetch('progresstrackingmodal.php')
+     fetch('/view/care_giver/symptoms_tracking_behaviour.php')
          .then(response => response.text())
          .then(data => {
              // Inject modal content into the modalContainer div
-             document.getElementById('modalContainer').innerHTML = data;
+             document.getElementById('symptomsmodalContainer').innerHTML = data;
          })
          .catch(error => console.error(error));
  });

@@ -9,7 +9,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-    <link href="css/main.css" rel="stylesheet">
+    <link href="../../css/main.css" rel="stylesheet">
 
 
 
@@ -19,7 +19,7 @@
 
 
     <section class="dashboard-part ">
-        <div id="modalContainer"></div>
+        <div id="symptomsmodalContainer"></div>
 
 
 
@@ -36,19 +36,15 @@
                         <label class="px-2 p-3 text-secondary">Menu</label>
                         <ul class="nav navbar-nav text-secondary">
 
-                            <li class="nav-item"><a href="index.html" class="nav-link "><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
-                            <li class="nav-item"><a href="patients.html" class=" nav-link"><i class="fa-solid fa-user-group"></i> Patients</a></li>
+                            <li class="nav-item"><a href="index.php" class="nav-link "><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                            <li class="nav-item"><a href="patients.php" class=" nav-link"><i class="fa-solid fa-user-group"></i> Patients</a></li>
                             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-calendar"></i> Schedule</a></li>
                             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Tasks</a></li>
                             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-envelope"></i> Chats</a></li>
-                            <li class="nav-item"><a href="progress_tracking.html" class="active-sidebar-button nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
+                            <li class="nav-item"><a href="progress_tracking.php" class="active-sidebar-button nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
                             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
-<<<<<<< HEAD
+                            <li class="nav-item"><a href="#" data-bs-target="#symptomstrackingModal" data-bs-toggle="modal" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
                             <li class="nav-item"><a href="emergency_support.php" class="nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
-=======
-                            <li class="nav-item"><a href="evergency_support.html" class="nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
->>>>>>> 444b92afe9fbe0e219f65594fef8f5c52464941c
                         </ul>
 
                     </div>
@@ -290,7 +286,7 @@
 
                             <div class="col-md-6">
                                 <label for="patient_name" class="form-label">Select Patient</label>
-                                <select class="form-select" aria-label="Default select example" name="patient_name">
+                                <select class="form-select" aria-label="Default select example" name="patient_name" required>
                                     <option selected>Select Your Role</option>
                                     <option value="1">John Doe</option>
                                     <option value="2">Jane Smith</option>
@@ -300,7 +296,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="medication_adherence" class="form-label">Medication Adherence</label>
-                                <select class="form-select" aria-label="Default select example" name="medication_adherence">
+                                <select class="form-select" aria-label="Default select example" name="medication_adherence" required>
                                     <option selected>Select Your Role</option>
                                     <option value="1">Irregular</option>
                                     <option value="2">Poor</option>
@@ -311,7 +307,7 @@
                             </div>
                             <div class="col-md-12">
                                 <label for="patient_mood" class="form-label">Patients Mood</label>
-                                <select class="form-select" aria-label="Default select example" name="patient_mood">
+                                <select class="form-select" aria-label="Default select example" name="patient_mood" required>
                                     <option selected>Select Your Role</option>
                                     <option value="1">😁 (Very Happy)</option>
                                     <option value="3">😃 (Happy)</option>
@@ -355,18 +351,42 @@
 
 
 
-    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="../../js/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
-    <script src="js/main.js"></script>
+    <script src="../../js/main.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
 
 
 
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fetch modal content from progresstrackingmodal.html
+            fetch('symptoms_tracking_behaviour.php')
+                .then(response => response.text())
+                .then(data => {
+                    // Inject modal content into the modalContainer div
+                    document.getElementById('symptomsmodalContainer').innerHTML = data;
+                })
+                .catch(error => console.error(error));
+        });
+        // JavaScript to toggle visibility of details
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleLinks = document.querySelectorAll('.toggle-details');
 
+            toggleLinks.forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent default link behavior
+                    const details = this.nextElementSibling; // Get the next sibling div
+                    details.style.display = (details.style.display === 'none' || details.style.display === '') ? 'block' : 'none'; // Toggle display
+                });
+            });
+        });
+
+    </script>
 
     <script>
         $(document).ready(function() {

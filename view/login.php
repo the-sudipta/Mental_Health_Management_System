@@ -100,17 +100,23 @@ $sign_in_icon = $image_routes['sign_in_icon'];
                                     <div class="form-group mb-3">
                                         <label for="email" class="form-label">Email</label>
                                         <input type="email" name="email" class="form-control" id="email" />
+                                        <span class="invalid-feedback email-error"></span>
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="password" class="form-label">Password</label>
-                                        <input type="password" name="password" class="form-control" id="password" />
+                                        <input type="password" name="password" class="form-control" id="password" onkeyup="checkPasswordStrength(this.value)" />
+                                        <span class="invalid-feedback password-error"></span>
+                                        <div id="password-strength"></div>
                                     </div>
                                     <div class="form-group form-button">
                                         <input type="submit" name="signin" id="signin" class="form-submit btn-primary btn mt-3 w-100" value="Sign In" />
                                         <a href="<?php echo $signup_decider; ?>" class="mt-3 d-block">Create an account</a>
-
                                     </div>
                                 </form>
+
+
+
+
 
                             </div>
                         </div>
@@ -120,6 +126,81 @@ $sign_in_icon = $image_routes['sign_in_icon'];
         </section>
 
     </div>
+    <script src="../js/jquery-3.7.1.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("#form").submit(function(event) {
+                var email = $("#email").val().trim();
+                var password = $("#password").val().trim();
+                var isValid = true;
+
+                // Check for empty email
+                if (email === "") {
+                    $(".email-error").text("Please enter your email address").show();
+                    isValid = false;
+                } else {
+                    // Check for valid email format
+                    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(email)) {
+                        $(".email-error").text("Please enter a valid email address").show();
+                        isValid = false;
+                    } else {
+                        $(".email-error").hide();
+                    }
+                }
+
+                // Check for empty password
+                if (password === "") {
+                    $(".password-error").text("Please enter your password").show();
+                    isValid = false;
+                } else {
+                    // Check password strength using checkPasswordStrength function
+                    var strength = checkPasswordStrength(password);
+                    if (strength !== "Strong") {
+                        $(".password-error").text("Password is not strong enough. Please consider using a combination of uppercase, lowercase, numbers, and symbols.").show();
+                        isValid = false;
+                    } else {
+                        $(".password-error").hide();
+                    }
+                }
+
+                if (!isValid) {
+                    event.preventDefault(); // Prevent form submission if validation fails
+                }
+            });
+        });
+
+        // Function to check password strength (informational only)
+        function checkPasswordStrength(password) {
+            var score = 0;
+            var hasUpper = /[A-Z]/.test(password);
+            var hasLower = /[a-z]/.test(password);
+            var hasNumber = /[0-9]/.test(password);
+            var hasSymbol = /[^\w\s]/.test(password);
+            var lengthBonus = Math.min(password.length, 10);
+
+            if (hasUpper) score++;
+            if (hasLower) score++;
+            if (hasNumber) score++;
+            if (hasSymbol) score++;
+
+            score += lengthBonus;
+
+            var strength = "";
+            if (score < 3) {
+                strength = "Weak";
+            } else if (score < 6) {
+                strength = "Medium";
+            } else {
+                strength = "Strong";
+            }
+
+            document.getElementById("password-strength").innerText = strength;
+            return strength;
+        }
+
+    </script>
 
 </body>
 
