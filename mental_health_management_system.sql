@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2024 at 10:29 PM
+-- Generation Time: May 16, 2024 at 09:35 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `diagnosis` (
   `id` int(50) NOT NULL,
-  `diagnosis` varchar(50) NOT NULL,
+  `diagnosis_name` varchar(50) NOT NULL,
   `patient_id` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -37,7 +37,7 @@ CREATE TABLE `diagnosis` (
 -- Dumping data for table `diagnosis`
 --
 
-INSERT INTO `diagnosis` (`id`, `diagnosis`, `patient_id`) VALUES
+INSERT INTO `diagnosis` (`id`, `diagnosis_name`, `patient_id`) VALUES
 (1, 'Depression', 1),
 (2, 'Anxiety', 2),
 (3, 'Bipolar Disorder', 3),
