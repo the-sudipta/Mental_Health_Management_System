@@ -185,15 +185,20 @@
                             <input type="checkbox" id="suicidal_thoughts" class="form-check-input">
                             <label class="form-check-label" for="suicidal_thoughts"><span>Suicidal thoughts or self-harming behaviors</span></label>
                         </div>
+                        <div class="col-md-12">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" required>
+
+                        </div>
                     </div>
 
                     <div class="col-12">
-                        <a class="btn btn-primary w-100" data-bs-target="#symptomstrackingModal" data-bs-toggle="modal" >Submit</a>
+                        <a class="btn btn-primary w-100" data-bs-target="#symptomstrackingModal" data-bs-toggle="modal">Submit</a>
                     </div>
                 </form>
 
             </div>
-            
+
         </div>
     </div>
 </div>
