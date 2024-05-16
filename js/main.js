@@ -48,7 +48,7 @@
 
  document.addEventListener("DOMContentLoaded", function () {
      // Fetch modal content from progresstrackingmodal.html
-     fetch('progresstrackingmodal.html')
+     fetch('progresstrackingmodal.php')
          .then(response => response.text())
          .then(data => {
              // Inject modal content into the modalContainer div

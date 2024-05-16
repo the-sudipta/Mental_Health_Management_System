@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboarad</title>
+    <title>Patient Progress Track</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-    <link href="../css/main.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
 
 
 
@@ -36,15 +36,19 @@
                         <label class="px-2 p-3 text-secondary">Menu</label>
                         <ul class="nav navbar-nav text-secondary">
 
-                            <li class="nav-item"><a href="index.php" class="nav-link "><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
-                            <li class="nav-item"><a href="patients.php" class=" nav-link"><i class="fa-solid fa-user-group"></i> Patients</a></li>
+                            <li class="nav-item"><a href="index.html" class="nav-link "><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                            <li class="nav-item"><a href="patients.html" class=" nav-link"><i class="fa-solid fa-user-group"></i> Patients</a></li>
                             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-calendar"></i> Schedule</a></li>
                             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Tasks</a></li>
                             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-envelope"></i> Chats</a></li>
-                            <li class="nav-item"><a href="progress_tracking.php" class="active-sidebar-button nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
+                            <li class="nav-item"><a href="progress_tracking.html" class="active-sidebar-button nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
                             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
                             <li class="nav-item"><a href="#" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
+<<<<<<< HEAD
                             <li class="nav-item"><a href="emergency_support.php" class="nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
+=======
+                            <li class="nav-item"><a href="evergency_support.html" class="nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
+>>>>>>> 444b92afe9fbe0e219f65594fef8f5c52464941c
                         </ul>
 
                     </div>
@@ -273,7 +277,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Patient Info</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Patient Progress</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -281,12 +285,6 @@
 
 
                         <form class="row g-3">
-
-
-
-
-
-
 
 
 
@@ -352,63 +350,6 @@
 
 
 
-        <!-- Task Update -->
-        <div class="modal fade" id="updatepatientsModal" tabindex="-1" aria-labelledby="updatepatientsModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Patient Info</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-
-
-                        <form class="row g-3">
-
-
-
-
-                            <div class="col-md-6">
-                                <label for="patient_name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="patient_name" required>
-
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="patient_age" class="form-label">Age</label>
-                                <input type="number" class="form-control" id="patient_age" required>
-
-                            </div>
-                            <div class="col-md-6">
-                                <label for="patient_diagnosis" class="form-label">Diagnosis</label>
-                                <input type="text" class="form-control" id="patient_diagnosis" required>
-
-                            </div>
-
-
-                            <div class="col-md-6">
-                                <label for="patient_medication" class="form-label">Medication</label>
-                                <input type="text" class="form-control" id="patient_medication" required>
-
-                            </div>
-                            <div class="col-md-12">
-                                <label for="contact_number" class="form-label">Number</label>
-                                <input type="number" class="form-control" id="contact_number" required>
-
-                            </div>
-                            <div class="col-12">
-                                <button class="btn cust-bg-color1 w-100" type="submit">Update</button>
-                            </div>
-                        </form>
-
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
 
     </section>
 
@@ -418,7 +359,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
-    <script src="../js/main.js"></script>
+    <script src="js/main.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
 
