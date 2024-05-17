@@ -8,6 +8,7 @@ require '../../routes.php';
 require '../../utils/system_functions.php';
 require '../../utils/calculationProvider.php';
 require '../../model/symptom_trackRepo.php';
+require '../../model/patientRepo.php';
 
 
 $Login_page = $routes['login'];
@@ -28,9 +29,12 @@ $Emergency_Support = $routes['care_giver_emergency_support'];
 
 // Backend Redirections
 
+
+$add_symptoms_tracking_controller = $backend_routes['care_giver_add_symptoms_tracking_controller'];
 $Logout_Controller = $backend_routes['logout_controller'];
 $care_giver_id = $_SESSION['user_id'];
 
+$patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
 
 ?>
 
@@ -64,6 +68,7 @@ $care_giver_id = $_SESSION['user_id'];
 
     <section class="dashboard-part ">
 
+        <div id="education_resources"></div>
 
 
         <div class="row">
@@ -80,15 +85,16 @@ $care_giver_id = $_SESSION['user_id'];
                         <ul class="nav navbar-nav text-secondary">
 
                             <li class="nav-item"><a href="<?php echo $Dashboard_Page; ?>" class=" nav-link "><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
-                            <li class="nav-item"><a href="<?php echo $Patients_Page; ?>" class="active-sidebar-button nav-link"><i class="fa-solid fa-user-group"></i> Patients</a></li>
+                            <li class="nav-item"><a href="<?php echo $Patients_Page; ?>" class=" nav-link"><i class="fa-solid fa-user-group"></i> Patients</a></li>
                             <li class="nav-item"><a href="<?php echo $Schedule_Page; ?>" class="nav-link"><i class="fa-solid fa-calendar"></i> Schedule</a></li>
                             <!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Tasks</a></li>-->
                             <!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-envelope"></i> Chats</a></li>-->
                             <li class="nav-item"><a href="<?php echo $Progress_Tracking_Page; ?>" class=" nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
-                            <li class="nav-item"><a href="<?php echo $Education_And_Resources_Page; ?>" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
-
                             <!-- This is a popup link -->
-                            <li class="nav-item"><a href="<?php echo $Symptoms_Tracking_Page; ?>" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
+                            <li class="nav-item"><a href="#" data-bs-toggle="modal" data-bs-target="#education_resourcesModal" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
+                            <!-- This is a popup link -->
+
+                            <li class="nav-item"><a href="<?php echo $Symptoms_Tracking_Page; ?>" class="active-sidebar-button nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
                             <li class="nav-item"><a href="<?php echo $Emergency_Support; ?>" class="nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
                         </ul>
 
@@ -194,34 +200,34 @@ $care_giver_id = $_SESSION['user_id'];
                                                             </thead>
                                                             <tbody id="symptoms-table-body">
                                                                 <?php
-                    // Call the PHP function to fetch data
-                    $symptoms = findAllSymptomsTrackForAllPatients();
-                    // Check if data is fetched successfully
-                    if ($symptoms) {
-                        // Loop through each symptom
-                        foreach ($symptoms as $index => $symptom) {
-                            if($symptom['care_giver_id']== $care_giver_id){
-                                
-                                // Output table row with symptom details
-                                echo "<tr>";
-                                echo "<td>" . ($index + 1) . "</td>"; // Increment index to start from 1
-                                echo "<td>" . $symptom['name'] . "</td>"; // Assuming 'name' is the column name for patient's name
-                                echo "<td>" . $symptom['symptoms'] . "</td>"; // Assuming 'behaviour' is the column name for symptom behavior
-                                echo "<td>" . $symptom['date'] . "</td>"; // Assuming 'date' is the column name for symptom date
-                                echo "</tr>";
-                                
-                            }
-                        }
-                    } else {
-                        // If no data is fetched, display a message in a single row
-                        echo "<tr><td colspan='4'>No symptoms found.</td></tr>";
-                    }
-                    ?>
+                                                                // Call the PHP function to fetch data
+                                                                $symptoms = findAllSymptomsTrackForAllPatients();
+                                                                // Check if data is fetched successfully
+                                                                if ($symptoms) {
+                                                                    // Loop through each symptom
+                                                                    foreach ($symptoms as $index => $symptom) {
+                                                                        if($symptom['care_giver_id']== $care_giver_id){
+
+                                                                            $patient_data = findPatientByID($symptom['patient_id']);
+                                                                            // Output table row with symptom details
+                                                                            echo "<tr>";
+                                                                            echo "<td>" . ($index + 1) . "</td>"; // Increment index to start from 1
+                                                                            echo "<td>" . $patient_data['name'] . "</td>"; // Assuming 'name' is the column name for patient's name
+                                                                            echo "<td>" . $symptom['symptoms'] . "</td>"; // Assuming 'behaviour' is the column name for symptom behavior
+                                                                            echo "<td>" . $symptom['date'] . "</td>"; // Assuming 'date' is the column name for symptom date
+                                                                            echo "</tr>";
+                                                                            
+                                                                        }
+                                                                    }
+                                                                } else {
+                                                                    // If no data is fetched, display a message in a single row
+                                                                    echo "<tr><td colspan='4'>No symptoms found.</td></tr>";
+                                                                }
+                                                                ?>
                                                             </tbody>
 
                                                         </table>
                                                     </div>
-
 
                                                 </div>
                                             </div>
@@ -258,92 +264,91 @@ $care_giver_id = $_SESSION['user_id'];
 
 
 
-                        <form class="row g-3" action="#" method="post" id="symptomsaddform">
+                        <form class="row g-3" action="<?php echo $add_symptoms_tracking_controller; ?>" method="post" id="symptomsaddform">
 
 
 
 
-                            <div class="col-12">
-                                <label for="patient_name" class="form-label" class="form-label">Patient Name</label>
-
-                                <select id="patient_name" required class="form-control" name="patient_name">
-                                    <option value="">Select</option> <!-- Default option -->
+                            <div id="patient_name_id" class="col-12">
+                                <label for="patient_name" class="form-label">Patient Name</label>
+                                <input type="hidden" id="selected_symptoms" name="symptoms_data">
+                                <select id="patient_name" required class="form-control" name="selected_patient_id">
+                                    <option value="null">Select</option> <!-- Default option -->
                                     <?php
+                                    if (!empty($patients_of_care_giver)) {
+                                        // Iterate through each patient
+                                        foreach ($patients_of_care_giver as $patient) {
+                                            if ($patient['care_giver_id'] == $care_giver_id) {
+                                                // Output the option for each patient
+                                                echo '<option value="'.$patient['id'].'" >' . $patient['name'] . '</option>';
+//                                                echo '<input hidden name="selected_patient_id" type="number" value="'.$patient['id'].'"/>';
 
-                                if (!empty($patients)) {
-                                    // Iterate through each patient
-                                    foreach ($patients as $patient) {
-
-                                        if($patient['care_giver_id']== $care_giver_id){
-
-                                            echo '<input type="hidden" name="selected_patient_id" value="'.$patient['id'].'"/>';
-
-                                            echo '<option value="' . $patient['name'] .'">' . $patient['name'] . '</option>';
+                                            }
                                         }
                                     }
-                                }
-                            ?>
+                                    ?>
                                 </select>
-
-
-
                             </div>
 
-                            <div class="col-12">
+
+
+
+
+                            <div id="symptoms_checkboxes" class="col-12">
                                 <label for="Behaviour" class="form-label" class="form-label">Behaviour</label>
 
 
                                 <div class="symptom form-check">
-                                    <input type="checkbox" id="mood_swings" class="form-check-input">
+                                    <input type="checkbox" value="Mood Swings" id="mood_swings" class="form-check-input">
                                     <label class="form-check-label" for="mood_swings"><span>Mood swings</span></label>
                                 </div>
 
                                 <div class="symptom form-check">
-                                    <input type="checkbox" id="changes_in_appetite" class="form-check-input">
+                                    <input type="checkbox" value="Changes In Appetite" id="changes_in_appetite" class="form-check-input">
                                     <label class="form-check-label" for="changes_in_appetite"><span>Changes in appetite</span></label>
                                 </div>
 
                                 <div class="symptom form-check">
-                                    <input type="checkbox" id="sleep_disturbances" class="form-check-input">
+                                    <input type="checkbox" value="Sleep Disturbance" id="sleep_disturbances" class="form-check-input">
                                     <label class="form-check-label" for="sleep_disturbances"><span>Sleep disturbances</span></label>
                                 </div>
 
                                 <div class="symptom form-check">
-                                    <input type="checkbox" id="difficulty_concentrating" class="form-check-input">
+                                    <input type="checkbox" value="Difficulty Concentrating" id="difficulty_concentrating" class="form-check-input">
                                     <label class="form-check-label" for="difficulty_concentrating"><span>Difficulty concentrating</span></label>
                                 </div>
 
                                 <div class="symptom form-check">
-                                    <input type="checkbox" id="loss_of_interest" class="form-check-input">
+                                    <input type="checkbox" value="Loss of Interest" id="loss_of_interest" class="form-check-input">
                                     <label class="form-check-label" for="loss_of_interest"><span>Loss of interest in activities</span></label>
                                 </div>
 
                                 <div class="symptom form-check">
-                                    <input type="checkbox" id="feelings_of_hopelessness" class="form-check-input">
+                                    <input type="checkbox" value="Feelings of Hopelessness" id="feelings_of_hopelessness" class="form-check-input">
                                     <label class="form-check-label" for="feelings_of_hopelessness"><span>Feelings of hopelessness or worthlessness</span></label>
                                 </div>
 
                                 <div class="symptom form-check">
-                                    <input type="checkbox" id="increased_irritability" class="form-check-input">
+                                    <input type="checkbox" value="Increased Irritability" id="increased_irritability" class="form-check-input">
                                     <label class="form-check-label" for="increased_irritability"><span>Increased irritability</span></label>
                                 </div>
 
                                 <div class="symptom form-check">
-                                    <input type="checkbox" id="social_withdrawal" class="form-check-input">
+                                    <input type="checkbox" value="Social Withdrawal" id="social_withdrawal" class="form-check-input">
                                     <label class="form-check-label" for="social_withdrawal"><span>Social withdrawal</span></label>
                                 </div>
                                 <div class="symptom form-check">
-                                    <input type="checkbox" id="fatigue_or_lack_of_energy" class="form-check-input">
+                                    <input type="checkbox" value="Fatigue or Lack of Energy" id="fatigue_or_lack_of_energy" class="form-check-input">
                                     <label class="form-check-label" for="fatigue_or_lack_of_energy"><span>Fatigue or lack of energy</span></label>
                                 </div>
 
                                 <div class="symptom form-check">
-                                    <input type="checkbox" id="physical_symptoms" class="form-check-input">
+                                    <input value="Physical Symptoms" type="checkbox" id="physical_symptoms" class="form-check-input">
                                     <label class="form-check-label" for="physical_symptoms"><span>Physical symptoms without medical cause (headaches, stomachaches, etc.)</span></label>
                                 </div>
 
                                 <div class="symptom form-check">
-                                    <input type="checkbox" id="suicidal_thoughts" class="form-check-input">
+                                    <input type="checkbox" value="Suicidal Thoughts" id="suicidal_thoughts" class="form-check-input">
                                     <label class="form-check-label" for="suicidal_thoughts"><span>Suicidal thoughts or self-harming behaviors</span></label>
                                 </div>
                                 <div class="col-md-12">
@@ -364,103 +369,6 @@ $care_giver_id = $_SESSION['user_id'];
                 </div>
             </div>
 
-            <div class="modal-body">
-
-
-                <form class="row g-3">
-
-
-
-
-                    <div class="col-12">
-                        <label for="patient_name" class="form-label" class="form-label">Patient Name</label>
-                        <select id="patient_name" required class="form-control">
-                            <option value="John Doe">Select</option>
-                            <option value="John Doe">John Doe</option>
-                            <option value="Alice Smith">Alice Smith</option>
-                            <option value="Michael Johnson">Michael Johnson</option>
-                            <option value="Emily Brown">Emily Brown</option>
-                            <option value="David Wilson">David Wilson</option>
-                            <option value="Sarah Anderson">Sarah Anderson</option>
-                            <option value="Matthew Martinez">Matthew Martinez</option>
-                            <option value="Emma Taylor">Emma Taylor</option>
-                            <option value="James Brown">James Brown</option>
-                            <option value="Olivia Jones">Olivia Jones</option>
-                        </select>
-                    </div>
-
-                    <div class="col-12">
-                        <label for="Behaviour" class="form-label">Behaviour</label>
-
-
-                        <div class="symptom form-check">
-                            <input type="checkbox" id="mood_swings" class="form-check-input">
-                            <label class="form-check-label" for="mood_swings"><span>Mood swings</span></label>
-                        </div>
-
-                        <div class="symptom form-check">
-                            <input type="checkbox" id="changes_in_appetite" class="form-check-input">
-                            <label class="form-check-label" for="changes_in_appetite"><span>Changes in appetite</span></label>
-                        </div>
-
-                        <div class="symptom form-check">
-                            <input type="checkbox" id="sleep_disturbances" class="form-check-input">
-                            <label class="form-check-label" for="sleep_disturbances"><span>Sleep disturbances</span></label>
-                        </div>
-
-                        <div class="symptom form-check">
-                            <input type="checkbox" id="difficulty_concentrating" class="form-check-input">
-                            <label class="form-check-label" for="difficulty_concentrating"><span>Difficulty concentrating</span></label>
-                        </div>
-
-                        <div class="symptom form-check">
-                            <input type="checkbox" id="loss_of_interest" class="form-check-input">
-                            <label class="form-check-label" for="loss_of_interest"><span>Loss of interest in activities</span></label>
-                        </div>
-
-                        <div class="symptom form-check">
-                            <input type="checkbox" id="feelings_of_hopelessness" class="form-check-input">
-                            <label class="form-check-label" for="feelings_of_hopelessness"><span>Feelings of hopelessness or worthlessness</span></label>
-                        </div>
-
-                        <div class="symptom form-check">
-                            <input type="checkbox" id="increased_irritability" class="form-check-input">
-                            <label class="form-check-label" for="increased_irritability"><span>Increased irritability</span></label>
-                        </div>
-
-                        <div class="symptom form-check">
-                            <input type="checkbox" id="social_withdrawal" class="form-check-input">
-                            <label class="form-check-label" for="social_withdrawal"><span>Social withdrawal</span></label>
-                        </div>
-                        <div class="symptom form-check">
-                            <input type="checkbox" id="fatigue_or_lack_of_energy" class="form-check-input">
-                            <label class="form-check-label" for="fatigue_or_lack_of_energy"><span>Fatigue or lack of energy</span></label>
-                        </div>
-
-                        <div class="symptom form-check">
-                            <input type="checkbox" id="physical_symptoms" class="form-check-input">
-                            <label class="form-check-label" for="physical_symptoms"><span>Physical symptoms without medical cause (headaches, stomachaches, etc.)</span></label>
-                        </div>
-
-                        <div class="symptom form-check">
-                            <input type="checkbox" id="suicidal_thoughts" class="form-check-input">
-                            <label class="form-check-label" for="suicidal_thoughts"><span>Suicidal thoughts or self-harming behaviors</span></label>
-                        </div>
-                        <div class="col-md-12">
-                            <label for="date" class="form-label">Date</label>
-                            <input type="date" class="form-control" id="date" required>
-
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <a class="btn btn-primary w-100" data-bs-target="#symptomstrackingModal" data-bs-toggle="modal">Submit</a>
-                    </div>
-                </form>
-
-            </div>
-
-
         </div>
 
 
@@ -479,13 +387,34 @@ $care_giver_id = $_SESSION['user_id'];
 
 
 
-
-
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fetch modal content from progresstrackingmodal.html
+            fetch('education_resources.php')
+                .then(response => response.text())
+                .then(data => {
+                    // Inject modal content into the modalContainer div
+                    document.getElementById('education_resources').innerHTML = data;
+                })
+                .catch(error => console.error(error));
+
+        });
+
         $(document).ready(function() {
             new DataTable('#patientlist');
 
         });
+
+        document.getElementById('submitSymptoms').addEventListener('click', function() {
+            var checkboxes = document.querySelectorAll('.symptom input[type="checkbox"]:checked');
+            var selectedSymptoms = Array.from(checkboxes).map(function(checkbox) {
+                return checkbox.value; // Get the value attribute instead of id
+            }).join(', ');
+            console.log(selectedSymptoms); // Add this line for debugging
+            document.getElementById('selected_symptoms').value = selectedSymptoms;
+        });
+
+
 
     </script>
 

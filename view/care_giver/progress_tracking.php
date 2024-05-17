@@ -28,7 +28,7 @@ $Emergency_Support = $routes['care_giver_emergency_support'];
 // Backend Redirections
 
 $Logout_Controller = $backend_routes['logout_controller'];
-$progress_add_trackingController = $backend_routes['care_giver_add_progress_controller'];
+$add_progressController = $backend_routes['care_giver_add_progress_controller'];
 
 
 
@@ -62,6 +62,7 @@ $progress_add_trackingController = $backend_routes['care_giver_add_progress_cont
 
 
     <section class="dashboard-part ">
+        <div id="education_resources"></div>
 
 
 
@@ -84,7 +85,11 @@ $progress_add_trackingController = $backend_routes['care_giver_add_progress_cont
                             <!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Tasks</a></li>-->
                             <!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-envelope"></i> Chats</a></li>-->
                             <li class="nav-item"><a href="<?php echo $Progress_Tracking_Page; ?>" class="active-sidebar-button nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
-                            <li class="nav-item"><a href="<?php echo $Education_And_Resources_Page; ?>" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
+                            <!-- This is a popup link -->
+                            <li class="nav-item"><a href="#" data-bs-toggle="modal" data-bs-target="#education_resourcesModal" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
+                            <!-- This is a popup link -->
+
+                           
                             <li class="nav-item"><a href="<?php echo $Symptoms_Tracking_Page; ?>" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
                             <li class="nav-item"><a href="<?php echo $Emergency_Support; ?>" class="nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
                         </ul>
@@ -322,14 +327,14 @@ $progress_add_trackingController = $backend_routes['care_giver_add_progress_cont
 
 
 
-                        <form action="<?php echo $progress_add_trackingController; ?>" method="post" class="row g-3">
+                        <form class="row g-3" action="<?php echo $add_progressController; ?>" method="post">
 
 
 
                             <div class="col-md-6">
                                 <label for="patient_name" class="form-label">Select Patient</label>
                                 <select class="form-select" aria-label="Default select example" name="patient_id" required>
-                                    <option selected>Select Your Role</option>
+                                    <option selected>Select Your Patient</option>
                                     <option value="1">John Doe</option>
                                     <option value="2">Jane Smith</option>
                                     <option value="3">Michael Johnson</option>
@@ -339,7 +344,7 @@ $progress_add_trackingController = $backend_routes['care_giver_add_progress_cont
                             <div class="col-md-6">
                                 <label for="medication_adherence" class="form-label">Medication Adherence</label>
                                 <select class="form-select" aria-label="Default select example" name="medication_adherence" required>
-                                    <option selected value="null">Select Your Role</option>
+                                    <option selected>Select Adherence</option>
                                     <option value="Irregular">Irregular</option>
                                     <option value="Poor">Poor</option>
                                     <option value="Regular">Regular</option>
@@ -350,25 +355,26 @@ $progress_add_trackingController = $backend_routes['care_giver_add_progress_cont
                             <div class="col-md-12">
                                 <label for="patient_mood" class="form-label">Patients Mood</label>
                                 <select class="form-select" aria-label="Default select example" name="patient_mood" required>
-                                    <option value="null" selected>Select Your Role</option>
-                                    <option value="Very Happy">😁 (Very Happy)</option>
-                                    <option value="Happy">😃 (Happy)</option>
-                                    <option value="Sad">😐 (Sad) </option>
-                                    <option value="Not Good">😔 (Not Good) </option>
+                                    <option selected>Select Patient Current Mood</option>
+                                    <option value="Very Happy 😁">😁 (Very Happy)</option>
+                                    <option value="Happy 😃">😃 (Happy)</option>
+                                    <option value="Sad 😐">😐 (Sad) </option>
+                                    <option value="Not Good 😔">😔 (Not Good) </option>
                                 </select>
+
                             </div>
 
 
                             <div class="col-md-12">
                                 <label for="therapy" class="form-label">Therapy Sessions Attended</label>
-                                <input type="number" name="therapy" class="form-control" id="therapy" required>
+                                <input placeholder="0" type="number" class="form-control" name="therapy" id="therapy" required>
 
                             </div>
 
 
                             <div class="col-md-12">
                                 <label for="date" class="form-label">Date</label>
-                                <input type="date" name="date" class="form-control" id="date" required>
+                                <input type="date" class="form-control" id="date" name="date" required>
 
                             </div>
 
@@ -403,22 +409,6 @@ $progress_add_trackingController = $backend_routes['care_giver_add_progress_cont
 
 
 
-    <script>
-
-        // JavaScript to toggle visibility of details
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggleLinks = document.querySelectorAll('.toggle-details');
-
-            toggleLinks.forEach(function(link) {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault(); // Prevent default link behavior
-                    const details = this.nextElementSibling; // Get the next sibling div
-                    details.style.display = (details.style.display === 'none' || details.style.display === '') ? 'block' : 'none'; // Toggle display
-                });
-            });
-        });
-
-    </script>
 
     <script>
         $(document).ready(function() {
@@ -426,8 +416,19 @@ $progress_add_trackingController = $backend_routes['care_giver_add_progress_cont
 
         });
 
-    </script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fetch modal content from progresstrackingmodal.html
+            fetch('education_resources.php')
+                .then(response => response.text())
+                .then(data => {
+                    // Inject modal content into the modalContainer div
+                    document.getElementById('education_resources').innerHTML = data;
+                })
+                .catch(error => console.error(error));
 
+        });
+
+    </script>
 </body>
 
 </html>

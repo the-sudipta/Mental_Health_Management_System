@@ -7,6 +7,7 @@ global $routes, $backend_routes, $image_routes;
 require '../../routes.php';
 require '../../utils/system_functions.php';
 require '../../utils/calculationProvider.php';
+require '../../model/patientRepo.php';
 
 
 $Login_page = $routes['login'];
@@ -28,8 +29,10 @@ $Emergency_Support = $routes['care_giver_emergency_support'];
 // Backend Redirections
 
 $add_patient_controller = $backend_routes['care_giver_add_a_patient_controller'];
+$delete_patient_controller = $backend_routes['care_giver_delete_patient_controller'];
 $Logout_Controller = $backend_routes['logout_controller'];
 
+$care_giver_id = $_SESSION['user_id'];
 
 
 ?>
@@ -49,7 +52,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboarad</title>
+    <title>Patients</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -65,6 +68,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
     <section class="dashboard-part ">
 
+        <div id="education_resources"></div>
 
 
         <div class="row">
@@ -86,7 +90,11 @@ $Logout_Controller = $backend_routes['logout_controller'];
                             <!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Tasks</a></li>-->
                             <!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-envelope"></i> Chats</a></li>-->
                             <li class="nav-item"><a href="<?php echo $Progress_Tracking_Page; ?>" class=" nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
-                            <li class="nav-item"><a href="<?php echo $Education_And_Resources_Page; ?>" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
+                            <!-- This is a popup link -->
+                            <li class="nav-item"><a href="#" data-bs-toggle="modal" data-bs-target="#education_resourcesModal" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
+                            <!-- This is a popup link -->
+
+
                             <li class="nav-item"><a href="<?php echo $Symptoms_Tracking_Page; ?>" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
                             <li class="nav-item"><a href="<?php echo $Emergency_Support; ?>" class="nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
                         </ul>
@@ -190,130 +198,50 @@ $Logout_Controller = $backend_routes['logout_controller'];
                                                                     <th>Age</th>
                                                                     <th>Diagnosis</th>
                                                                     <th>Medication</th>
+                                                                    <th>Gender</th>
                                                                     <th>Number</th>
+                                                                    <th>Date</th>
                                                                     <th>Action</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr>
-                                                                    <td>1</td>
-                                                                    <td>John Doe</td>
-                                                                    <td>45</td>
-                                                                    <td>Hypertension</td>
-                                                                    <td>Lisinopril</td>
-                                                                    <td>123-456-7890</td>
-                                                                    <td>
-                                                                        <button class="border text-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updatepatientsModal"><i class="fa-regular fa-pen-to-square"></i></button>
-                                                                        <button class="border text-danger btn-sm"><i class="fa-regular fa-trash-can"></i></button>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>2</td>
-                                                                    <td>Jane Smith</td>
-                                                                    <td>32</td>
-                                                                    <td>Diabetes Type 2</td>
-                                                                    <td>Metformin</td>
-                                                                    <td>234-567-8901</td>
-                                                                    <td>
-                                                                        <button class="border text-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updatepatientsModal"><i class="fa-regular fa-pen-to-square"></i></button>
-                                                                        <button class="border text-danger btn-sm"><i class="fa-regular fa-trash-can"></i></button>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>3</td>
-                                                                    <td>Michael Johnson</td>
-                                                                    <td>55</td>
-                                                                    <td>Osteoarthritis</td>
-                                                                    <td>Ibuprofen</td>
-                                                                    <td>345-678-9012</td>
-                                                                    <td>
-                                                                        <button class="border text-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updatepatientsModal"><i class="fa-regular fa-pen-to-square"></i></button>
-                                                                        <button class="border text-danger btn-sm"><i class="fa-regular fa-trash-can"></i></button>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>4</td>
-                                                                    <td>Emily Brown</td>
-                                                                    <td>28</td>
-                                                                    <td>Asthma</td>
-                                                                    <td>Albuterol</td>
-                                                                    <td>456-789-0123</td>
-                                                                    <td>
-                                                                        <button class="border text-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updatepatientsModal"><i class="fa-regular fa-pen-to-square"></i></button>
-                                                                        <button class="border text-danger btn-sm"><i class="fa-regular fa-trash-can"></i></button>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>5</td>
-                                                                    <td>David Wilson</td>
-                                                                    <td>60</td>
-                                                                    <td>Coronary Artery Disease</td>
-                                                                    <td>Aspirin</td>
-                                                                    <td>567-890-1234</td>
-                                                                    <td>
-                                                                        <button class="border text-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updatepatientsModal"><i class="fa-regular fa-pen-to-square"></i></button>
-                                                                        <button class="border text-danger btn-sm"><i class="fa-regular fa-trash-can"></i></button>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>6</td>
-                                                                    <td>Sarah Taylor</td>
-                                                                    <td>42</td>
-                                                                    <td>Depression</td>
-                                                                    <td>Sertraline</td>
-                                                                    <td>678-901-2345</td>
-                                                                    <td>
-                                                                        <button class="border text-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updatepatientsModal"><i class="fa-regular fa-pen-to-square"></i></button>
-                                                                        <button class="border text-danger btn-sm"><i class="fa-regular fa-trash-can"></i></button>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>7</td>
-                                                                    <td>Robert Martinez</td>
-                                                                    <td>50</td>
-                                                                    <td>Hypothyroidism</td>
-                                                                    <td>Levothyroxine</td>
-                                                                    <td>789-012-3456</td>
-                                                                    <td>
-                                                                        <button class="border text-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updatepatientsModal"><i class="fa-regular fa-pen-to-square"></i></button>
-                                                                        <button class="border text-danger btn-sm"><i class="fa-regular fa-trash-can"></i></button>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>8</td>
-                                                                    <td>Jennifer Lee</td>
-                                                                    <td>38</td>
-                                                                    <td>Migraine</td>
-                                                                    <td>Sumatriptan</td>
-                                                                    <td>890-123-4567</td>
-                                                                    <td>
-                                                                        <button class="border text-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updatepatientsModal"><i class="fa-regular fa-pen-to-square"></i></button>
-                                                                        <button class="border text-danger btn-sm"><i class="fa-regular fa-trash-can"></i></button>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>9</td>
-                                                                    <td>William Anderson</td>
-                                                                    <td>47</td>
-                                                                    <td>Gastroesophageal Reflux Disease</td>
-                                                                    <td>Omeprazole</td>
-                                                                    <td>901-234-5678</td>
-                                                                    <td>
-                                                                        <button class="border text-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updatepatientsModal"><i class="fa-regular fa-pen-to-square"></i></button>
-                                                                        <button class="border text-danger btn-sm"><i class="fa-regular fa-trash-can"></i></button>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>10</td>
-                                                                    <td>Olivia Garcia</td>
-                                                                    <td>35</td>
-                                                                    <td>Anxiety</td>
-                                                                    <td>Lorazepam</td>
-                                                                    <td>012-345-6789</td>
-                                                                    <td>
-                                                                        <button class="border text-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updatepatientsModal"><i class="fa-regular fa-pen-to-square"></i></button>
-                                                                        <button class="border text-danger btn-sm"><i class="fa-regular fa-trash-can"></i></button>
-                                                                    </td>
+                                                                    <?php
+                                                                // Call the PHP function to fetch data
+                                                                $patients = findAllPatientsByCareGiverID($care_giver_id);
+                                                                // Check if data is fetched successfully
+                                                                if ($patients) {
+                                                                    // Loop through each symptom
+                                                                    foreach ($patients as $index => $patient) {
+//                                                                        if($patient['care_giver_id']== $care_giver_id){
+                                                                            
+                                                                            // Output table row with symptom details
+                                                                            echo "<tr>";
+                                                                            echo "<td>" . ($index + 1) . "</td>"; // Increment index to start from 1
+                                                                            echo "<td>" . $patient['name'] . "</td>"; // Assuming 'name' is the column name for patient's name
+                                                                            echo "<td>" . $patient['age'] . "</td>"; // Assuming 'behaviour' is the column name for symptom behavior
+                                                                            echo "<td>" . $patient['diagnosis'] . "</td>"; // Assuming 'date' is the column name for symptom date
+                                                                            echo "<td>" . $patient['medication'] . "</td>"; // Assuming 'date' is the column name for symptom date
+                                                                            echo "<td>" . $patient['gender'] . "</td>"; // Assuming 'date' is the column name for symptom date
+                                                                            echo "<td>" . $patient['phone'] . "</td>"; // Assuming 'date' is the column name for symptom date
+                                                                            echo "<td>" . $patient['date'] . "</td>"; // Assuming 'date' is the column name for symptom date
+                                                                            echo "<td>
+                                                                            
+                                                                                    <a href='?patient_id=".$patient['id']."' class='border text-primary btn-sm edit-button' data-bs-toggle='modal' data-bs-target='#updatepatientsModal'><i class='fa-regular fa-pen-to-square'></i></a>
+                                                                                    <a href='{$delete_patient_controller}?delete_patient=".$patient['id']."'  class='border text-danger btn-sm'><i class='fa-regular fa-trash-can'></i></a>
+                                                                                    
+                                                                                </td>";
+                                                                            echo "</tr>";
+                                                                            
+//                                                                        }
+                                                                    }
+                                                                } else {
+                                                                    // If no data is fetched, display a message in a single row
+                                                                    echo "<tr><td colspan='4'>No symptoms found.</td></tr>";
+                                                                }
+                                                                ?>
+
+
                                                                 </tr>
 
 
@@ -413,7 +341,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
 
 
-        <!-- Task Update -->
+        <!-- Edit Patient Update -->
         <div class="modal fade" id="updatepatientsModal" tabindex="-1" aria-labelledby="updatepatientsModalLabel" aria-hidden="true">
             <div class="modal-dialog">
 
@@ -426,7 +354,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
 
 
-                        <form action="" class="row g-3">
+                        <form class="row g-3">
 
 
 
@@ -497,25 +425,54 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
 
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggleLinks = document.querySelectorAll('.toggle-details');
-
-            toggleLinks.forEach(function(link) {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault(); // Prevent default link behavior
-                    const details = this.nextElementSibling; // Get the next sibling div
-                    details.style.display = (details.style.display === 'none' || details.style.display === '') ? 'block' : 'none'; // Toggle display
-                });
-            });
-        });
-
-    </script>
-
 
     <script>
         $(document).ready(function() {
             new DataTable('#patientlist');
+
+        });
+
+        $(document).ready(function() {
+            $('.edit-button').on('click', function(event) {
+                const patientId = $(this).data('patientId');
+
+                $.ajax({
+                    url: '../../model/symptom_trackRepo.php?id=' + patientId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.error) {
+                            console.error(data.error);
+                            // Handle error message (optional)
+                            return;
+                        }
+
+                        $('#patient_name').val(data.name);
+                        $('#patient_age').val(data.age);
+                        // ... and so on for other fields
+                        $('#patient_diagnosis').val(data.diagnosis);
+                        $('#patient_medication').val(data.medication);
+                        $('#patient_gender').val(data.gender);
+                        $('#contact_number').val(data.phone); // Assuming 'phone' column for contact number
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        alert('panna');
+
+                        console.error('Error fetching patient data:', textStatus, errorThrown);
+                        // Handle error message (optional)
+                    }
+                });
+            });
+        });
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fetch modal content from progresstrackingmodal.html
+            fetch('education_resources.php')
+                .then(response => response.text())
+                .then(data => {
+                    // Inject modal content into the modalContainer div
+                    document.getElementById('education_resources').innerHTML = data;
+                })
+                .catch(error => console.error(error));
 
         });
 

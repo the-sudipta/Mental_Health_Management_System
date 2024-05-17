@@ -117,23 +117,13 @@ function findAllSymptomsTrackByPatientID($id)
     }
 }
 
-function updateSymptomsTrack($mood_swings, $changes_in_appetite, $sleep_disturbances, $difficulty_concentrating, $loss_of_interest_in_activities, $feelings_of_hopelessness,
-                        $increased_irritability, $social_withdrawal, $lack_of_energy, $suicidal_thoughts, $date, $id)
+function updateSymptomsTrack($symptoms, $date, $id)
 {
     $conn = db_conn();
 
     // Construct the SQL query
     $updateQuery = "UPDATE `symptom_track` SET 
-                    mood_swings = ?,
-                    changes_in_appetite = ?,
-                    sleep_disturbances = ?,
-                    difficulty_concentrating = ?,
-                    loss_of_interest_in_activities = ?,
-                    feelings_of_hopelessness = ?,
-                    increased_irritability = ?,
-                    social_withdrawal = ?,
-                    lack_of_energy = ?,
-                    suicidal_thoughts = ?,
+                    symptoms = ?,
                     date = ?
                     WHERE id = ?";
 
@@ -148,8 +138,7 @@ function updateSymptomsTrack($mood_swings, $changes_in_appetite, $sleep_disturba
         }
 
         // Bind parameters
-        $stmt->bind_param('sssssssssssi', $mood_swings, $changes_in_appetite, $sleep_disturbances, $difficulty_concentrating, $loss_of_interest_in_activities,
-            $feelings_of_hopelessness, $increased_irritability, $social_withdrawal, $lack_of_energy, $suicidal_thoughts, $date, $id);
+        $stmt->bind_param('ssi', $symptoms, $date, $id);
 
         // Execute the query
         $stmt->execute();
@@ -207,15 +196,13 @@ function deleteSymptom_track($id) {
     }
 }
 
-function createSymptom_track($mood_swings, $changes_in_appetite, $sleep_disturbances, $difficulty_concentrating, $loss_of_interest_in_activities, $feelings_of_hopelessness,
-                        $increased_irritability, $social_withdrawal, $lack_of_energy, $suicidal_thoughts, $date, $patient_id) {
+function createSymptom_track($symptoms, $date, $patient_id, $care_giver_id) {
 
     $conn = db_conn();
 
 
     // Construct the SQL query
-    $insertQuery = "INSERT INTO `symptom_track` (mood_swings, changes_in_appetite, sleep_disturbances, difficulty_concentrating, loss_of_interest_in_activities, feelings_of_hopelessness,
-                        increased_irritability, social_withdrawal, lack_of_energy, suicidal_thoughts, date, patient_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $insertQuery = "INSERT INTO `symptom_track` (symptoms, date, patient_id, care_giver_id) VALUES (?, ?, ?, ?)";
 
     try {
         // Prepare the statement
@@ -228,8 +215,7 @@ function createSymptom_track($mood_swings, $changes_in_appetite, $sleep_disturba
 
 
         // Bind parameters
-        $stmt->bind_param('sssssssssssi', $mood_swings, $changes_in_appetite, $sleep_disturbances, $difficulty_concentrating, $loss_of_interest_in_activities, $feelings_of_hopelessness,
-            $increased_irritability, $social_withdrawal, $lack_of_energy, $suicidal_thoughts, $date, $patient_id);
+        $stmt->bind_param('ssii', $symptoms, $date, $patient_id, $care_giver_id);
 
         // Execute the query
         $stmt->execute();
@@ -242,7 +228,8 @@ function createSymptom_track($mood_swings, $changes_in_appetite, $sleep_disturba
 
         return $newUserId;
     } catch (Exception $e) {
-        echo 'symptom_trackRepo Error = '.$e->getMessage();
+        echo 'progressRepo Error = '.$e->getMessage();
+        header("Location: /Mental_Health_Management_System/error/database_error.php?error_message=".$e->getMessage());
         return -1;
     } finally {
         // Close the database connection

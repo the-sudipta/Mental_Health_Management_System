@@ -155,6 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }else{
     http_response_code(405);
+    navigate($patient_page);
 
     echo '<h1 style="color: #ff8839">SORRY! GOT GET REQUEST</h1>';
     navigate($error_405);

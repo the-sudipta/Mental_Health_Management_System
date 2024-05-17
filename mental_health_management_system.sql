@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2024 at 06:19 PM
+-- Generation Time: May 17, 2024 at 11:54 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -71,12 +71,9 @@ INSERT INTO `patient` (`id`, `name`, `age`, `phone`, `care_giver_id`, `gender`, 
 (4, 'Bob Williams', '40', '+1555666777', 1, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
 (5, 'Emma Brown', '30', '+1444333222', 1, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
 (6, 'Michael Davis', '50', '+1777888999', 2, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
-(7, 'Olivia Wilson', '32', '+1666777888', 1, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
 (8, 'William Taylor', '38', '+1999888777', 3, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
 (9, 'Sophia Martinez', '42', '+1223344556', 5, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
-(10, 'James Anderson', '48', '+1444555666', 1, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
-(14, 'Ada Loveless', '22', '12312313422', 1, 'Female', 'Gastrid', 'Blood Test', '2024-05-17'),
-(15, 'Test Name', '30', '34352353', 1, 'Male', '12431sfda', 'Blood XXY', '2024-05-17');
+(17, 'Test Patient', '40', '111111222334', 1, 'Male', '12431sfda', 'Test Problem', '2024-05-17');
 
 -- --------------------------------------------------------
 
@@ -110,7 +107,11 @@ INSERT INTO `progress` (`id`, `mood`, `medication_adherence`, `therapy_attended`
 (10, 'Happy', 'Buprenorphine', '10', 10, '2024-04-11'),
 (11, 'Happy', 'Excellent', '11', 3, '2023-05-17'),
 (12, 'Sad', 'Irregular', '3', 1, '2022-09-28'),
-(13, 'Happy', 'Regular', '15', 2, '2024-05-18');
+(13, 'Happy', 'Regular', '15', 2, '2024-05-18'),
+(14, 'Very Happy', 'Excellent', '33', 3, '2024-05-25'),
+(15, 'Sad', 'Poor', '12', 2, '2024-05-29'),
+(16, 'Very Happy', 'Excellent', '1111', 2, '2026-06-25'),
+(18, 'Not Good 😔', 'Irregular', '3', 2, '2023-12-28');
 
 -- --------------------------------------------------------
 
@@ -151,7 +152,6 @@ INSERT INTO `schedule` (`id`, `date`, `time`, `status`, `patient_id`, `type`) VA
 
 CREATE TABLE `symptom_track` (
   `id` int(50) NOT NULL,
-  `name` varchar(255) NOT NULL,
   `symptoms` varchar(255) NOT NULL,
   `date` varchar(50) NOT NULL,
   `patient_id` int(50) NOT NULL,
@@ -162,9 +162,9 @@ CREATE TABLE `symptom_track` (
 -- Dumping data for table `symptom_track`
 --
 
-INSERT INTO `symptom_track` (`id`, `name`, `symptoms`, `date`, `patient_id`, `care_giver_id`) VALUES
-(11, 'John Doe', 'Mood swings,\nChanges in appetite', '2024-05-17', 1, 1),
-(12, 'Sophia Martinez', 'Fatigue or lack of energy,\nPhysical symptoms without medical cause ,(headaches, stomachaches, etc.),\nSuicidal thoughts or self-harming behaviors,', '2024-05-17', 9, 15);
+INSERT INTO `symptom_track` (`id`, `symptoms`, `date`, `patient_id`, `care_giver_id`) VALUES
+(11, 'Mood swings,\nChanges in appetite', '2024-05-17', 1, 1),
+(12, 'Fatigue or lack of energy,\nPhysical symptoms without medical cause ,(headaches, stomachaches, etc.),\nSuicidal thoughts or self-harming behaviors,', '2024-05-17', 9, 15);
 
 -- --------------------------------------------------------
 
@@ -240,13 +240,13 @@ ALTER TABLE `care_giver`
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `progress`
 --
 ALTER TABLE `progress`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `schedule`

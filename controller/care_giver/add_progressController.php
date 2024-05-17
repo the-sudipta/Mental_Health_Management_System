@@ -94,6 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $progress_id = createProgress($mood, $medicine, $therapy, $patient_id, $date);
 
+            echo "<br>Progress ID".$progress_id."<br>";
             if($progress_id > 0){
                 echo '<br><p style="color: darkgreen">Redirecting to Patient Page</p><br>';
                 navigate($patient_progress_page);

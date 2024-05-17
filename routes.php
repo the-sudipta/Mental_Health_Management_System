@@ -14,7 +14,7 @@ $routes = [
     'care_giver_progress_tracking' => '/Mental_Health_Management_System/view/care_giver/progress_tracking.php',
     'care_giver_symptoms_tracking_behaviour' => '/Mental_Health_Management_System/view/care_giver/symptoms_tracking_behaviour.php',
     'care_giver_schedule_page' => '/Mental_Health_Management_System/YOUR_PAGE_HERE',
-    'care_giver_education_and_resource' => '/Mental_Health_Management_System/YOUR_PAGE_HERE',
+    'care_giver_education_and_resource' => '/Mental_Health_Management_System/view/care_giver/education_resources.php',
 
 ];
 
@@ -47,9 +47,11 @@ $image_routes = [
 
 
 $system_routes = [
+    'bootstrap' => '/Mental_Health_Management_System/bootstrap.php',
     'error_404' => '/Mental_Health_Management_System/error/404.php',
     'error_405' => '/Mental_Health_Management_System/error/405.php',
     'error_500' => '/Mental_Health_Management_System/error/500.php',
+    'error_database' => '/Mental_Health_Management_System/error/database_error.php',
 ];
 
 ?>

@@ -8,20 +8,19 @@ require '../../routes.php';
 require '../../utils/system_functions.php';
 
 
-require_once __DIR__ . '/../../model/progressRepo.php';
+require_once __DIR__ . '/../../model/symptom_trackRepo.php';
 
 /**
  * Needed Parameters
- * 1. mood
- * 2. medicine
- * 3. therapy_name
+ * 1. symptoms
+ * 2. date
+ * 3. care_giver_id
  * 4. patient_id
- * 5. date
  */
 
 
 $Login_page =  $routes['login'];
-$patient_progress_page =$routes['care_giver_progress_tracking'];
+$patient_symptoms_page =$routes['care_giver_symptoms_tracking_behaviour'];
 $INDEX_page = $routes['INDEX'];
 $error_405 = $system_routes['error_405'];
 
@@ -32,52 +31,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "<br>Got Req<br>";
 
 
-    $patient_id = $_POST['patient_id'];
 
-//    Medicine Validations
-    $medicine = $_POST['medication_adherence'];
-    if (empty($medicine) || $medicine === null || $medicine === 'null') {
+//    Patient ID Validations
+    $patient_id = $_POST['selected_patient_id'];
+
+    if ($patient_id < 0 && $patient_id === null) {
 
         $everythingOK = FALSE;
         $everythingOKCounter += 1;
-        echo "<br><p style='color: #dc3545'>Medication Adherence must be selected</p><br>";
+        echo "<br><p style='color: #dc3545'>A Patient must be selected</p><br>";
     } else {
-        echo "<br>Name = ".$medicine."<br>";
+        echo "<br>Patient ID = ".$patient_id."<br>";
         $everythingOK = TRUE;
     }
 
 
-//* Mood Validation
-    $mood = $_POST['patient_mood'];
-    if (empty($mood) || $mood === null || $mood === 'null') {
-        $everythingOK = FALSE;
-        $everythingOKCounter += 1;
-        echo "<br><p style='color: #dc3545'>Mood Must be Selected</p><br>";
-    } else {
-        echo "<br>Age = ".$mood."<br>";
-        $everythingOK = TRUE;
-    }
-
-//* Therapy Validation
-    $therapy = $_POST['therapy'];
-    if (empty($therapy)) {
-        $everythingOK = FALSE;
-        $everythingOKCounter += 1;
-        echo "<br><p style='color: #dc3545'>Therapy Session Attended cannot be empty</p><br>";
-    }  elseif (!filter_var($therapy, FILTER_VALIDATE_INT)) {
-        $everythingOK = FALSE;
-        $everythingOKCounter += 1;
-        echo "<br><p style='color: #dc3545'>Number of Therapy attended must be in integer only</p><br>";
-    }else {
-        echo "<br>Phone = ".$therapy."<br>";
-        $everythingOK = TRUE;
-    }
-
-//    Date Validation
     $date =  $_POST['date'];
+    echo "<br> Date = ".$date."<br>";
 
 
-
+//    Get Symptoms
+    $selected_symptoms = $_POST['symptoms_data'];
+    echo "<br> Selected Symptoms = ".$selected_symptoms."<br>";
 
 
 
@@ -92,15 +67,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if($care_giver_id > 0){
 
-            $progress_id = createProgress($mood, $medicine, $therapy, $patient_id, $date);
+            $inserted_id = 0;
+            $inserted_id = createSymptom_track($selected_symptoms, $date, $patient_id, $care_giver_id);
 
-            if($progress_id > 0){
-                echo '<br><p style="color: darkgreen">Redirecting to Patient Page</p><br>';
-                navigate($patient_progress_page);
+            if($inserted_id > 0){
+                echo '<br><p style="color: darkgreen">Redirecting to Symptoms Tracking Page</p><br>';
+                navigate($patient_symptoms_page);
                 exit;
             }else{
-                echo '<br> <p style="color: #dc3545">Redirecting to Progress tracking page BUT Patient Profile could not be created</p><br>';
-                navigate($patient_progress_page);
+                echo '<br> <p style="color: #dc3545">Redirecting to Symptoms tracking page BUT Symptoms Could not be added</p><br>';
+                navigate($patient_symptoms_page);
                 exit;
             }
         }else{
@@ -110,8 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } else {
 
-        echo '<br><p style="color: #dc3545">Redirecting to Progress tracking Page BUT there is data validation issue</p><br>';
-        navigate($patient_progress_page);
+        echo '<br><p style="color: #dc3545">Redirecting to Symptoms tracking Page BUT there is data validation issue</p><br>';
+        navigate($patient_symptoms_page);
         exit;
     }
 }else{

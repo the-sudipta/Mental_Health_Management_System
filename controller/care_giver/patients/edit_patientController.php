@@ -130,7 +130,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<br>Creating Patient Profile<br>";
 
         if($selected_patient_id > 0){
-            $date = date('Y-m-d');
             $patient_id = updatePatient($name, $age, $phone, $gender, $medication, $diagnosis, $selected_patient_id);
 
             if($patient_id > 0){

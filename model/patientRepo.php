@@ -162,7 +162,6 @@ function updatePatient($name, $age, $phone, $gender, $medication, $diagnosis, $i
     }
 }
 
-
 function deletePatient($id) {
     $conn = db_conn();
 
