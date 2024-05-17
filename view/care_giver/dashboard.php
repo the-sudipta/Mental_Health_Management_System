@@ -744,6 +744,27 @@ $Logout_Controller = $backend_routes['logout_controller'];
                                     <input type="time" class="form-control" id="totime" required>
 
                                 </div>
+
+                                <div class="col-12">
+                                    <label for="fromtime" class="form-label">Type</label>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="type" id="Online">
+                                        <label class="form-check-label" for="Online">
+                                            Online
+                                        </label>
+                                        </div>
+                                        <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="type" id="Offline" checked>
+                                        <label class="form-check-label" for="Offline">
+                                            Offline
+                                        </label>
+                                    </div>
+
+                                </div>
+
+
+
                                 <div class="col-12">
                                     <button class="btn cust-bg-color1" type="submit">Submit</button>
                                 </div>
