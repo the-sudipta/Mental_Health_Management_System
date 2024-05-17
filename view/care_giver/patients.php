@@ -78,6 +78,7 @@ if (isset($_GET['delete_patient'])) {
 
     <section class="dashboard-part ">
 
+        <div id="education_resources"></div>
 
 
         <div class="row">
@@ -99,7 +100,11 @@ if (isset($_GET['delete_patient'])) {
                             <!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Tasks</a></li>-->
                             <!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-envelope"></i> Chats</a></li>-->
                             <li class="nav-item"><a href="<?php echo $Progress_Tracking_Page; ?>" class=" nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
-                            <li class="nav-item"><a href="<?php echo $Education_And_Resources_Page; ?>" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
+                            <!-- This is a popup link -->
+                            <li class="nav-item"><a href="#" data-bs-toggle="modal" data-bs-target="#education_resourcesModal" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
+                            <!-- This is a popup link -->
+
+
                             <li class="nav-item"><a href="<?php echo $Symptoms_Tracking_Page; ?>" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
                             <li class="nav-item"><a href="<?php echo $Emergency_Support; ?>" class="nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
                         </ul>
@@ -210,7 +215,8 @@ if (isset($_GET['delete_patient'])) {
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                            <?php
+                                                                <tr>
+                                                                    <?php
                                                                 // Call the PHP function to fetch data
                                                                 $patients = findAllPatients();
                                                                 // Check if data is fetched successfully
@@ -244,8 +250,8 @@ if (isset($_GET['delete_patient'])) {
                                                                     echo "<tr><td colspan='4'>No symptoms found.</td></tr>";
                                                                 }
                                                                 ?>
-                                                                
-                                                                    
+
+
                                                                 </tr>
 
 
@@ -358,7 +364,7 @@ if (isset($_GET['delete_patient'])) {
 
 
 
-                        <form action="" class="row g-3">
+                        <form class="row g-3">
 
 
 
@@ -437,37 +443,48 @@ if (isset($_GET['delete_patient'])) {
         });
 
         $(document).ready(function() {
-  $('.edit-button').on('click', function(event) {
-    const patientId = $(this).data('patientId');
+            $('.edit-button').on('click', function(event) {
+                const patientId = $(this).data('patientId');
 
-    $.ajax({
-      url: 'model/symptom_trackRepo.php?id=' + patientId,
-      type: 'GET',
-      dataType: 'json',
-      success: function(data) {
-        if (data.error) {
-          console.error(data.error);
-          // Handle error message (optional)
-          return;
-        }
+                $.ajax({
+                    url: '../../model/symptom_trackRepo.php?id=' + patientId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.error) {
+                            console.error(data.error);
+                            // Handle error message (optional)
+                            return;
+                        }
 
-        $('#patient_name').val(data.name);
-        $('#patient_age').val(data.age);
-        // ... and so on for other fields
-        $('#patient_diagnosis').val(data.diagnosis);
-        $('#patient_medication').val(data.medication);
-        $('#patient_gender').val(data.gender);
-        $('#contact_number').val(data.phone); // Assuming 'phone' column for contact number
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        alert('panna');
+                        $('#patient_name').val(data.name);
+                        $('#patient_age').val(data.age);
+                        // ... and so on for other fields
+                        $('#patient_diagnosis').val(data.diagnosis);
+                        $('#patient_medication').val(data.medication);
+                        $('#patient_gender').val(data.gender);
+                        $('#contact_number').val(data.phone); // Assuming 'phone' column for contact number
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        alert('panna');
 
-        console.error('Error fetching patient data:', textStatus, errorThrown);
-        // Handle error message (optional)
-      }
-    });
-  });
-});
+                        console.error('Error fetching patient data:', textStatus, errorThrown);
+                        // Handle error message (optional)
+                    }
+                });
+            });
+        });
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fetch modal content from progresstrackingmodal.html
+            fetch('education_resources.php')
+                .then(response => response.text())
+                .then(data => {
+                    // Inject modal content into the modalContainer div
+                    document.getElementById('education_resources').innerHTML = data;
+                })
+                .catch(error => console.error(error));
+
+        });
 
     </script>
 

@@ -64,6 +64,7 @@ $care_giver_id = $_SESSION['user_id'];
 
     <section class="dashboard-part ">
 
+        <div id="education_resources"></div>
 
 
         <div class="row">
@@ -85,9 +86,10 @@ $care_giver_id = $_SESSION['user_id'];
                             <!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Tasks</a></li>-->
                             <!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-envelope"></i> Chats</a></li>-->
                             <li class="nav-item"><a href="<?php echo $Progress_Tracking_Page; ?>" class=" nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
-                            <li class="nav-item"><a href="<?php echo $Education_And_Resources_Page; ?>" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
-
                             <!-- This is a popup link -->
+                            <li class="nav-item"><a href="#" data-bs-toggle="modal" data-bs-target="#education_resourcesModal" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
+                            <!-- This is a popup link -->
+
                             <li class="nav-item"><a href="<?php echo $Symptoms_Tracking_Page; ?>" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
                             <li class="nav-item"><a href="<?php echo $Emergency_Support; ?>" class="nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
                         </ul>
@@ -477,9 +479,19 @@ $care_giver_id = $_SESSION['user_id'];
 
 
 
-
-
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fetch modal content from progresstrackingmodal.html
+            fetch('education_resources.php')
+                .then(response => response.text())
+                .then(data => {
+                    // Inject modal content into the modalContainer div
+                    document.getElementById('education_resources').innerHTML = data;
+                })
+                .catch(error => console.error(error));
+
+        });
+
         $(document).ready(function() {
             new DataTable('#patientlist');
 
