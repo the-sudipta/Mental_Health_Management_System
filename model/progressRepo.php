@@ -117,7 +117,7 @@ function findAllProgressesByPatientID($id)
     }
 }
 
-function updateProgress($mood, $medicine, $therapy_name, $date, $id)
+function updateProgress($mood, $medicine, $therapy_attended, $date, $id)
 {
     $conn = db_conn();
 
@@ -125,7 +125,7 @@ function updateProgress($mood, $medicine, $therapy_name, $date, $id)
     $updateQuery = "UPDATE `progress` SET 
                     mood = ?,
                     medicine = ?,
-                    therapy_name = ?,
+                    therapy_attended = ?,
                     date = ?
                     WHERE id = ?";
 
@@ -139,7 +139,7 @@ function updateProgress($mood, $medicine, $therapy_name, $date, $id)
         }
 
         // Bind parameters
-        $stmt->bind_param('ssssi', $mood, $medicine, $therapy_name, $date, $id);
+        $stmt->bind_param('ssssi', $mood, $medicine, $therapy_attended, $date, $id);
 
         // Execute the query
         $stmt->execute();
@@ -197,13 +197,13 @@ function deleteProgress($id) {
     }
 }
 
-function createProgress($mood, $medicine, $therapy_name, $patient_id, $date) {
+function createProgress($mood, $medicine, $therapy_attended, $patient_id, $date) {
 
     $conn = db_conn();
 
 
     // Construct the SQL query
-    $insertQuery = "INSERT INTO `progress` (mood, medicine, therapy_name, patient_id, date) VALUES (?, ?, ?, ?, ?)";
+    $insertQuery = "INSERT INTO `progress` (mood, medicine, therapy_attended, patient_id, date) VALUES (?, ?, ?, ?, ?)";
 
     try {
         // Prepare the statement
@@ -216,7 +216,7 @@ function createProgress($mood, $medicine, $therapy_name, $patient_id, $date) {
 
 
         // Bind parameters
-        $stmt->bind_param('sssis', $mood, $medicine, $therapy_name, $patient_id, $date);
+        $stmt->bind_param('sssis', $mood, $medicine, $therapy_attended, $patient_id, $date);
 
         // Execute the query
         $stmt->execute();

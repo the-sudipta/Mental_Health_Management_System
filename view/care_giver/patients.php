@@ -358,7 +358,7 @@ if (isset($_GET['delete_patient'])) {
 
 
 
-                        <form class="row g-3">
+                        <form action="" class="row g-3">
 
 
 
