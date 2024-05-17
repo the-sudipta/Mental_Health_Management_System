@@ -59,7 +59,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
     <section class="dashboard-part ">
 
-        <div id="modalContainer"></div>
+    <div id="symptomsmodalContainer"></div>
 
 
         <div class="row">
@@ -82,7 +82,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
 <!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-envelope"></i> Chats</a></li>-->
                             <li class="nav-item"><a href="<?php echo $Progress_Tracking_Page; ?>" class=" nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
                             <li class="nav-item"><a href="<?php echo $Education_And_Resources_Page; ?>" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
-                            <li class="nav-item"><a href="<?php echo $Symptoms_Tracking_Page; ?>" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
+                            <li class="nav-item"><a href="#" data-bs-toggle="modal" data-bs-target="#symptomstrackingModal" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
                             <li class="nav-item"><a href="<?php echo $Emergency_Support; ?>" class="nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
                         </ul>
 
@@ -744,6 +744,27 @@ $Logout_Controller = $backend_routes['logout_controller'];
                                     <input type="time" class="form-control" id="totime" required>
 
                                 </div>
+
+                                <div class="col-12">
+                                    <label for="fromtime" class="form-label">Type</label>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="type" id="Online">
+                                        <label class="form-check-label" for="Online">
+                                            Online
+                                        </label>
+                                        </div>
+                                        <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="type" id="Offline" checked>
+                                        <label class="form-check-label" for="Offline">
+                                            Offline
+                                        </label>
+                                    </div>
+
+                                </div>
+
+
+
                                 <div class="col-12">
                                     <button class="btn cust-bg-color1" type="submit">Submit</button>
                                 </div>
