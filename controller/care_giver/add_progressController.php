@@ -95,24 +95,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $progress_id = createProgress($mood, $medicine, $therapy, $patient_id, $date);
 
             if($progress_id > 0){
-                echo '<br><p style="color: chartreuse">Redirecting to Patient Page</p><br>';
-//                navigate($patient_progress_page);
-//                exit;
+                echo '<br><p style="color: darkgreen">Redirecting to Patient Page</p><br>';
+                navigate($patient_progress_page);
+                exit;
             }else{
-                echo '<br> <p style="color: #dc3545">Redirecting to Patient page BUT Patient Profile could not be created</p><br>';
-//                navigate($patient_progress_page);
-//                exit;
+                echo '<br> <p style="color: #dc3545">Redirecting to Progress tracking page BUT Patient Profile could not be created</p><br>';
+                navigate($patient_progress_page);
+                exit;
             }
         }else{
             echo '<br><p style="color: #dc3545">Redirecting to Login Page Because Care Giver ID not Found</p><br>';
-//            navigate($Login_page);
-//            exit;
+            navigate($Login_page);
+            exit;
         }
     } else {
 
-        echo '<br><p style="color: #dc3545">Redirecting to Patient Page BUT there is data validation issue</p><br>';
-//        navigate($patient_progress_page);
-//        exit;
+        echo '<br><p style="color: #dc3545">Redirecting to Progress tracking Page BUT there is data validation issue</p><br>';
+        navigate($patient_progress_page);
+        exit;
     }
 }else{
     http_response_code(405);

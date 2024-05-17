@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2024 at 04:13 PM
+-- Generation Time: May 17, 2024 at 06:19 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -87,8 +87,8 @@ INSERT INTO `patient` (`id`, `name`, `age`, `phone`, `care_giver_id`, `gender`, 
 CREATE TABLE `progress` (
   `id` int(50) NOT NULL,
   `mood` varchar(50) NOT NULL,
-  `medicine` varchar(50) NOT NULL,
-  `therapy_name` varchar(50) NOT NULL,
+  `medication_adherence` varchar(50) NOT NULL,
+  `therapy_attended` varchar(50) NOT NULL,
   `patient_id` int(50) NOT NULL,
   `date` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -97,17 +97,20 @@ CREATE TABLE `progress` (
 -- Dumping data for table `progress`
 --
 
-INSERT INTO `progress` (`id`, `mood`, `medicine`, `therapy_name`, `patient_id`, `date`) VALUES
-(1, 'Stable', 'Sertraline', 'Cognitive Behavioral Therapy', 1, '2024-01-12'),
-(2, 'Improved', 'Lorazepam', 'Exposure Therapy', 2, '2024-01-12'),
-(3, 'Worsened', 'Lithium', 'Dialectical Behavior Therapy', 3, '2024-01-18'),
-(4, 'Stable', 'Olanzapine', 'Interpersonal Therapy', 4, '2024-01-12'),
-(5, 'Improved', 'Fluoxetine', 'Mindfulness-Based Therapy', 5, '2024-02-12'),
-(6, 'Worsened', 'Paroxetine', 'Psychodynamic Therapy', 6, '2024-04-22'),
-(7, 'Stable', 'Quetiapine', 'Group Therapy', 7, '2024-01-12'),
-(8, 'Improved', 'Venlafaxine', 'Family Therapy', 8, '2024-02-12'),
-(9, 'Worsened', 'Methylphenidate', 'Art Therapy', 9, '2024-03-17'),
-(10, 'Stable', 'Buprenorphine', 'Music Therapy', 10, '2024-04-11');
+INSERT INTO `progress` (`id`, `mood`, `medication_adherence`, `therapy_attended`, `patient_id`, `date`) VALUES
+(1, 'Sad', 'Sertraline', '0', 1, '2024-01-12'),
+(2, 'Sad', 'Lorazepam', '6', 2, '2024-01-12'),
+(3, 'Not Good', 'Lithium', '2', 3, '2024-01-18'),
+(4, 'Very Happy', 'Olanzapine', '1', 4, '2024-01-12'),
+(5, 'Very Happy', 'Fluoxetine', '4', 5, '2024-02-12'),
+(6, 'Happy', 'Paroxetine', '12', 6, '2024-04-22'),
+(7, 'Not Good', 'Quetiapine', '23', 7, '2024-01-12'),
+(8, 'Very Happy', 'Venlafaxine', '12', 8, '2024-02-12'),
+(9, 'Sad', 'Methylphenidate', '43', 9, '2024-03-17'),
+(10, 'Happy', 'Buprenorphine', '10', 10, '2024-04-11'),
+(11, 'Happy', 'Excellent', '11', 3, '2023-05-17'),
+(12, 'Sad', 'Irregular', '3', 1, '2022-09-28'),
+(13, 'Happy', 'Regular', '15', 2, '2024-05-18');
 
 -- --------------------------------------------------------
 
@@ -243,7 +246,7 @@ ALTER TABLE `patient`
 -- AUTO_INCREMENT for table `progress`
 --
 ALTER TABLE `progress`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `schedule`
