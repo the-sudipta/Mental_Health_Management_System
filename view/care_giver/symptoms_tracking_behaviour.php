@@ -363,7 +363,7 @@ $care_giver_id = $_SESSION['user_id'];
 
                 </div>
             </div>
-<<<<<<< HEAD
+
             <div class="modal-body">
 
 
@@ -460,8 +460,7 @@ $care_giver_id = $_SESSION['user_id'];
 
             </div>
 
-=======
->>>>>>> 24a48a544ad458bedd76e7222a2787165fff9ed4
+
         </div>
 
 
