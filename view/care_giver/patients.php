@@ -359,10 +359,6 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
 
                         <form class="row g-3">
-
-
-
-
                             <div class="col-md-6">
                                 <label for="patient_name" class="form-label">Name</label>
                                 <input type="text" class="form-control" id="patient_name" required>
@@ -386,6 +382,27 @@ $Logout_Controller = $backend_routes['logout_controller'];
                                 <input type="text" class="form-control" id="patient_medication" required>
 
                             </div>
+                            <div class="col-md-12">
+                                <label for="patient_gender" class="form-label">Gender</label>
+                                <select class="form-select" name="patient_gender" id="patient_gender" aria-label="Default select example" required>
+                                    <option selected value="null">Select</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="type" class="form-label">Type</label>
+                                <select class="form-select" name="type" id="type" aria-label="Default select example" required>
+                                    <option selected value="null">Select</option>
+                                    <option value="Offline">Offline</option>
+                                    <option value="Online">Online</option>
+                                </select>
+                            </div>
+
+
+
+
                             <div class="col-md-12">
                                 <label for="contact_number" class="form-label">Contact Number</label>
                                 <input type="number" class="form-control" id="contact_number" required>
@@ -424,7 +441,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
 
 
-                            <div class="col-md-6">
+                        <div class="col-md-6">
                                 <label for="patient_name" class="form-label">Name</label>
                                 <input type="text" class="form-control" id="patient_name" required>
 
@@ -448,10 +465,29 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
                             </div>
                             <div class="col-md-12">
-                                <label for="contact_number" class="form-label">Number</label>
+                                <label for="patient_gender" class="form-label">Gender</label>
+                                <select class="form-select" name="patient_gender" id="patient_gender" aria-label="Default select example" required>
+                                    <option selected value="null">Select</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="type" class="form-label">Type</label>
+                                <select class="form-select" name="type" id="type" aria-label="Default select example" required>
+                                    <option selected value="null">Select</option>
+                                    <option value="Offline">Offline</option>
+                                    <option value="Online">Online</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="contact_number" class="form-label">Contact Number</label>
                                 <input type="number" class="form-control" id="contact_number" required>
 
                             </div>
+
                             <div class="col-12">
                                 <button class="btn cust-bg-color1 w-100" type="submit">Update</button>
                             </div>

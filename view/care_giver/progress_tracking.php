@@ -173,7 +173,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
                                                     <div class="d-flex justify-content-between pb-2">
                                                         <h4><b>Patients Progress Report</b></h4>
 
-                                                        <a href="#" class="cust-color1" data-bs-toggle="modal" data-bs-target="#addpatientsModal">Add Progress Report <span class="border p-1"><i class="fa-solid fa-plus"></i></span></a>
+                                                        <a href="#" class="cust-color1" data-bs-toggle="modal" data-bs-target="#addpatientsprogressModal">Add Progress Report <span class="border p-1"><i class="fa-solid fa-plus"></i></span></a>
                                                     </div>
 
                                                 </div>
@@ -310,8 +310,8 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
 
 
-        <!-- Task Add -->
-        <div class="modal fade" id="addpatientsModal" tabindex="-1" aria-labelledby="addpatientsModalLabel" aria-hidden="true">
+        <!-- Patient Progress Add -->
+        <div class="modal fade" id="addpatientsprogressModal" tabindex="-1" aria-labelledby="addpatientsprogressModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
