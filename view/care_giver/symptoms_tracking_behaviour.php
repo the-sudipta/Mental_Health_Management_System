@@ -331,6 +331,105 @@
 
                 </div>
             </div>
+<<<<<<< HEAD
+            <div class="modal-body">
+
+
+                <form class="row g-3">
+
+
+
+
+                    <div class="col-12">
+                        <label for="patient_name" class="form-label" class="form-label">Patient Name</label>
+                        <select id="patient_name" required class="form-control">
+                            <option value="John Doe">Select</option>
+                            <option value="John Doe">John Doe</option>
+                            <option value="Alice Smith">Alice Smith</option>
+                            <option value="Michael Johnson">Michael Johnson</option>
+                            <option value="Emily Brown">Emily Brown</option>
+                            <option value="David Wilson">David Wilson</option>
+                            <option value="Sarah Anderson">Sarah Anderson</option>
+                            <option value="Matthew Martinez">Matthew Martinez</option>
+                            <option value="Emma Taylor">Emma Taylor</option>
+                            <option value="James Brown">James Brown</option>
+                            <option value="Olivia Jones">Olivia Jones</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="Behaviour" class="form-label">Behaviour</label>
+
+
+                        <div class="symptom form-check">
+                            <input type="checkbox" id="mood_swings" class="form-check-input">
+                            <label class="form-check-label" for="mood_swings"><span>Mood swings</span></label>
+                        </div>
+
+                        <div class="symptom form-check">
+                            <input type="checkbox" id="changes_in_appetite" class="form-check-input">
+                            <label class="form-check-label" for="changes_in_appetite"><span>Changes in appetite</span></label>
+                        </div>
+
+                        <div class="symptom form-check">
+                            <input type="checkbox" id="sleep_disturbances" class="form-check-input">
+                            <label class="form-check-label" for="sleep_disturbances"><span>Sleep disturbances</span></label>
+                        </div>
+
+                        <div class="symptom form-check">
+                            <input type="checkbox" id="difficulty_concentrating" class="form-check-input">
+                            <label class="form-check-label" for="difficulty_concentrating"><span>Difficulty concentrating</span></label>
+                        </div>
+
+                        <div class="symptom form-check">
+                            <input type="checkbox" id="loss_of_interest" class="form-check-input">
+                            <label class="form-check-label" for="loss_of_interest"><span>Loss of interest in activities</span></label>
+                        </div>
+
+                        <div class="symptom form-check">
+                            <input type="checkbox" id="feelings_of_hopelessness" class="form-check-input">
+                            <label class="form-check-label" for="feelings_of_hopelessness"><span>Feelings of hopelessness or worthlessness</span></label>
+                        </div>
+
+                        <div class="symptom form-check">
+                            <input type="checkbox" id="increased_irritability" class="form-check-input">
+                            <label class="form-check-label" for="increased_irritability"><span>Increased irritability</span></label>
+                        </div>
+
+                        <div class="symptom form-check">
+                            <input type="checkbox" id="social_withdrawal" class="form-check-input">
+                            <label class="form-check-label" for="social_withdrawal"><span>Social withdrawal</span></label>
+                        </div>
+                        <div class="symptom form-check">
+                            <input type="checkbox" id="fatigue_or_lack_of_energy" class="form-check-input">
+                            <label class="form-check-label" for="fatigue_or_lack_of_energy"><span>Fatigue or lack of energy</span></label>
+                        </div>
+
+                        <div class="symptom form-check">
+                            <input type="checkbox" id="physical_symptoms" class="form-check-input">
+                            <label class="form-check-label" for="physical_symptoms"><span>Physical symptoms without medical cause (headaches, stomachaches, etc.)</span></label>
+                        </div>
+
+                        <div class="symptom form-check">
+                            <input type="checkbox" id="suicidal_thoughts" class="form-check-input">
+                            <label class="form-check-label" for="suicidal_thoughts"><span>Suicidal thoughts or self-harming behaviors</span></label>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" required>
+
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <a class="btn btn-primary w-100" data-bs-target="#symptomstrackingModal" data-bs-toggle="modal">Submit</a>
+                    </div>
+                </form>
+
+            </div>
+
+=======
+>>>>>>> 24a48a544ad458bedd76e7222a2787165fff9ed4
         </div>
 
 

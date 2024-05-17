@@ -126,7 +126,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
                                     <div class="mx-2 d-flex justify-content-center ">
                                         <div class="user-title-box text-center d-lg-block d-none">
                                             <label class="cust-color1">Tofayal Ahmed</label><br>
-                                            <h6><b>Care GIvers</b></h6>
+                                            <h6><b>Care Givers</b></h6>
 
                                         </div>
 
@@ -339,8 +339,8 @@ $Logout_Controller = $backend_routes['logout_controller'];
                                 <label for="medication_adherence" class="form-label">Medication Adherence</label>
                                 <select class="form-select" aria-label="Default select example" name="medication_adherence" required>
                                     <option selected>Select Your Role</option>
-                                    <option value="1">Irregular</option>
-                                    <option value="2">Poor</option>
+                                    <option value="Irregular">Irregular</option>
+                                    <option value="Poor">Poor</option>
                                     <option value="3">Regular</option>
                                     <option value="3">Excellent</option>
                                 </select>
@@ -351,7 +351,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
                                 <select class="form-select" aria-label="Default select example" name="patient_mood" required>
                                     <option selected>Select Your Role</option>
                                     <option value="1">😁 (Very Happy)</option>
-                                    <option value="3">😃 (Happy)</option>
+                                    <option value="Happy">😃 (Happy)</option>
                                     <option value="2">😐 (Sad) </option>
                                     <option value="2">😔 (Not Good) </option>
                                 </select>
