@@ -391,16 +391,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
                                 </select>
                             </div>
 
-                            <div class="col-md-12">
-                                <label for="type" class="form-label">Type</label>
-                                <select class="form-select" name="type" id="type" aria-label="Default select example" required>
-                                    <option selected value="null">Select</option>
-                                    <option value="Offline">Offline</option>
-                                    <option value="Online">Online</option>
-                                </select>
-                            </div>
-
-
+                            
 
 
                             <div class="col-md-12">
@@ -408,7 +399,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
                                 <input type="number" class="form-control" id="contact_number" required>
 
                             </div>
-
+                            
                             <div class="col-12">
                                 <button class="btn cust-bg-color1 w-100" type="submit">Register</button>
                             </div>
@@ -473,21 +464,14 @@ $Logout_Controller = $backend_routes['logout_controller'];
                                 </select>
                             </div>
 
-                            <div class="col-md-12">
-                                <label for="type" class="form-label">Type</label>
-                                <select class="form-select" name="type" id="type" aria-label="Default select example" required>
-                                    <option selected value="null">Select</option>
-                                    <option value="Offline">Offline</option>
-                                    <option value="Online">Online</option>
-                                </select>
-                            </div>
+                            
 
                             <div class="col-md-12">
                                 <label for="contact_number" class="form-label">Contact Number</label>
                                 <input type="number" class="form-control" id="contact_number" required>
 
                             </div>
-
+                            
                             <div class="col-12">
                                 <button class="btn cust-bg-color1 w-100" type="submit">Update</button>
                             </div>
