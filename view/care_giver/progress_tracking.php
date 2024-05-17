@@ -403,22 +403,6 @@ $progress_add_trackingController = $backend_routes['care_giver_add_progress_cont
 
 
 
-    <script>
-
-        // JavaScript to toggle visibility of details
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggleLinks = document.querySelectorAll('.toggle-details');
-
-            toggleLinks.forEach(function(link) {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault(); // Prevent default link behavior
-                    const details = this.nextElementSibling; // Get the next sibling div
-                    details.style.display = (details.style.display === 'none' || details.style.display === '') ? 'block' : 'none'; // Toggle display
-                });
-            });
-        });
-
-    </script>
 
     <script>
         $(document).ready(function() {
