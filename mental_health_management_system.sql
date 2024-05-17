@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2024 at 11:54 PM
+-- Generation Time: May 18, 2024 at 01:57 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -164,7 +164,8 @@ CREATE TABLE `symptom_track` (
 
 INSERT INTO `symptom_track` (`id`, `symptoms`, `date`, `patient_id`, `care_giver_id`) VALUES
 (11, 'Mood swings,\nChanges in appetite', '2024-05-17', 1, 1),
-(12, 'Fatigue or lack of energy,\nPhysical symptoms without medical cause ,(headaches, stomachaches, etc.),\nSuicidal thoughts or self-harming behaviors,', '2024-05-17', 9, 15);
+(12, 'Fatigue or lack of energy,\nPhysical symptoms without medical cause ,(headaches, stomachaches, etc.),\nSuicidal thoughts or self-harming behaviors,', '2024-05-17', 9, 15),
+(13, 'Mood Swings, Sleep Disturbance, Difficulty Concentrating, Social Withdrawal, Suicidal Thoughts', '2024-05-16', 17, 1);
 
 -- --------------------------------------------------------
 
@@ -258,7 +259,7 @@ ALTER TABLE `schedule`
 -- AUTO_INCREMENT for table `symptom_track`
 --
 ALTER TABLE `symptom_track`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `user`
