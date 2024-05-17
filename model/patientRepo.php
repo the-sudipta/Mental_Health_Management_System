@@ -198,22 +198,31 @@ function deletePatient($id) {
 }
 
 
-function createPatient($name, $age, $phone, $gender, $care_giver_id) {
+function createPatient($name, $age, $phone, $gender, $care_giver_id, $medication, $diagnosis, $date) {
     $conn = db_conn();
 
-
     // Construct the SQL query
-    $insertQuery = "INSERT INTO `pateint` (name, age, phone, gender, care_giver_id) VALUES (?, ?, ?, ?, ?)";
+    $insertQuery = "INSERT INTO `patient` (name, age, phone, gender, care_giver_id, medication, diagnosis, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     try {
         // Prepare the statement
         $stmt = $conn->prepare($insertQuery);
 
+        if (!$stmt) {
+            // Handle prepare error
+            echo "Failed to prepare the statement: " . $conn->error;
+            return -1;
+        }
+
         // Bind parameters
-        $stmt->bind_param('ssssi', $name, $age, $phone, $gender, $care_giver_id );
+        $stmt->bind_param('ssssisss', $name, $age, $phone, $gender, $care_giver_id, $medication, $diagnosis, $date);
 
         // Execute the query
-        $stmt->execute();
+        if (!$stmt->execute()) {
+            // Handle execute error
+            echo "Execute failed: " . $stmt->error;
+            return -1;
+        }
 
         // Return the ID of the newly inserted user
         $newUserId = $stmt->insert_id;
@@ -224,7 +233,7 @@ function createPatient($name, $age, $phone, $gender, $care_giver_id) {
         return $newUserId;
     } catch (Exception $e) {
         // Handle the exception, you might want to log it or return false
-        echo "patientRepo Error = " . $e->getMessage();
+        echo "patientRepo Error: " . $e->getMessage();
         return -1;
     } finally {
         // Close the database connection

@@ -1,15 +1,14 @@
 <?php
 
 //include_once '../../Navigation_Links.php';
+global $routes, $system_routes;
 session_start();
 
-global $routes;
 require '../../../routes.php';
 require '../../../utils/system_functions.php';
 
-require_once __DIR__ . '/../../../model/userRepo.php';
-require_once __DIR__ . '/../../../model/care_giverRepo.php';
 
+require_once __DIR__ . '/../../../model/patientRepo.php';
 
 /**
  * Needed Parameters
@@ -25,6 +24,7 @@ require_once __DIR__ . '/../../../model/care_giverRepo.php';
 $Login_page =  $routes['login'];
 $patient_page =$routes['care_givers_patients'];
 $INDEX_page = $routes['INDEX'];
+$error_405 = $system_routes['error_405'];
 
 $everythingOKCounter = 0;
 
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $everythingOK = FALSE;
         $everythingOKCounter += 1;
-        echo "<br style='color: #dc3545'>Name Can not be Empty<br>";
+        echo "<br><p style='color: #dc3545'>Name Can not be Empty</p><br>";
     } else {
         echo "<br>Name = ".$name."<br>";
         $everythingOK = TRUE;
@@ -50,11 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($age)) {
         $everythingOK = FALSE;
         $everythingOKCounter += 1;
-        echo "<br style='color: #dc3545'>Age cannot be empty<br>";
+        echo "<br><p style='color: #dc3545'>Age cannot be empty</p><br>";
     } elseif (!filter_var($age, FILTER_VALIDATE_INT)) {
         $everythingOK = FALSE;
         $everythingOKCounter += 1;
-        echo "<br style='color: #dc3545'>Age must be an integer only<br>";
+        echo "<br><p style='color: #dc3545'>Age must be an integer only</p><br>";
     } else {
         echo "<br>Age = ".$age."<br>";
         $everythingOK = TRUE;
@@ -65,11 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($phone)) {
         $everythingOK = FALSE;
         $everythingOKCounter += 1;
-        echo "<br style='color: #dc3545'>Phone cannot be empty<br>";
+        echo "<br><p style='color: #dc3545'>Phone cannot be empty</p><br>";
     } elseif (!ctype_digit($phone)) {
         $everythingOK = FALSE;
         $everythingOKCounter += 1;
-        echo "<br style='color: #dc3545'>Phone must be digits only<br>";
+        echo "<br><p style='color: #dc3545'>Phone must be digits only</p><br>";
     } else {
         echo "<br>Phone = ".$phone."<br>";
         $everythingOK = TRUE;
@@ -82,11 +82,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($gender)) {
         $everythingOK = FALSE;
         $everythingOKCounter += 1;
-        echo "<br style='color: #dc3545'>Gender Can not be Empty<br>";
+        echo "<br><p style='color: #dc3545'>Gender Can not be Empty</p><br>";
     }elseif ($gender === 'null'){
         $everythingOK = FALSE;
         $everythingOKCounter += 1;
-        echo "<br style='color: #dc3545'>Gender Can not be null. Select Gender<br>";
+        echo "<br><p style='color: #dc3545'>Gender Can not be null. Select Gender</p><br>";
     } else {
         echo "<br>Gender = ".$gender."<br>";
         $everythingOK = TRUE;
@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $everythingOK = FALSE;
         $everythingOKCounter += 1;
-        echo "<br style='color: #dc3545'>Diagnosis Can not be Empty<br>";
+        echo "<br><p style='color: #dc3545'>Diagnosis Can not be Empty</p><br>";
     } else {
         echo "<br>Diagnosis = ".$diagnosis."<br>";
         $everythingOK = TRUE;
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $everythingOK = FALSE;
         $everythingOKCounter += 1;
-        echo "<br style='color: #dc3545'>Medication Can not be Empty<br>";
+        echo "<br><p style='color: #dc3545'>Medication Can not be Empty</p><br>";
     } else {
         echo "<br>Medication = ".$medication."<br>";
         $everythingOK = TRUE;
@@ -123,46 +123,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($everythingOK && $everythingOKCounter === 0) {
 
         echo "<br>all ok<br>";
-        $user_id = 0;
+        $care_giver_id = $_SESSION['user_id'];
 //        $user_id = createUser($email, $password, "caregiver");
-        echo '<br>Data id = '.$user_id.'<br>';
-        $_SESSION["data"] = $user_id;
-        $_SESSION["user_id"] = $user_id;
+        echo '<br>Care giver ID = '.$care_giver_id.'<br>';
 
-        echo "<br>Creating Care Giver Profile<br>";
+        echo "<br>Creating Patient Profile<br>";
 
-        if($user_id > 0){
-            $care_giver_id = createCare_giver($name, $gender, $phone, $user_id);
+        if($care_giver_id > 0){
+            $date = date('Y-m-d');
+            $patient_id = createPatient($name, $age, $phone, $gender, $care_giver_id, $medication, $diagnosis, $date);
 
-            if($care_giver_id > 0){
-                echo '<br style="color: chartreuse">Redirecting to Patient Page<br>';
-//                navigate($patient_page);
-//                exit;
-
+            if($patient_id > 0){
+                echo '<br><p style="color: chartreuse">Redirecting to Patient Page</p><br>';
+                navigate($patient_page);
+                exit;
             }else{
-                echo '<br style="color: #dc3545">Redirecting to Patient page BUT Patient Profile could not be created<br>';
-//                navigate($patient_page);
-//                exit;
+                echo '<br> <p style="color: #dc3545">Redirecting to Patient page BUT Patient Profile could not be created</p><br>';
+                navigate($patient_page);
+                exit;
             }
-
         }else{
-            echo '<br style="color: #dc3545">Redirecting to Signup file because user Account not created<br>';
-//            navigate($patient_page);
-//            exit;
+            echo '<br><p style="color: #dc3545">Redirecting to Login Page Because Care Giver ID not Found</p><br>';
+            navigate($Login_page);
+            exit;
         }
-
-
-
-
     } else {
 
-        echo 'Redirecting to Signup file because of data validation issue';
-//        navigate($patient_page);
-//        exit;
+        echo '<br><p style="color: #dc3545">Redirecting to Patient Page BUT there is data validation issue</p><br>';
+        navigate($patient_page);
+        exit;
     }
-
 }else{
-    echo '<h1>SORRY! GOT GET REQUEST</h1>';
-//    navigate($INDEX_page);
-//    exit;
+    http_response_code(405);
+    navigate($patient_page);
+
+    echo '<h1 style="color: #ff8839">SORRY! GOT GET REQUEST</h1>';
+    navigate($error_405);
+    exit;
 }
