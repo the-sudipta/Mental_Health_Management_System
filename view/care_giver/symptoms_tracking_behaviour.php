@@ -129,7 +129,7 @@
                     </div>
 
                     <div class="col-12">
-                        <label for="Behaviour" class="form-label" class="form-label">Behaviour</label>
+                        <label for="Behaviour" class="form-label">Behaviour</label>
 
 
                         <div class="symptom form-check">
