@@ -1,7 +1,38 @@
 <?php
 
-?>
 
+session_start();
+global $routes, $backend_routes, $image_routes;
+//include_once '../Navigation_Links.php';
+require '../../routes.php';
+require '../../utils/system_functions.php';
+require '../../utils/calculationProvider.php';
+require '../../model/symptom_trackRepo.php';
+
+
+$Login_page = $routes['login'];
+if($_SESSION["user_id"] <= 0 && $_SESSION["role"] !== "caregiver"){
+    echo '<h1>'.$_SESSION["user_id"] .'</h1>';
+    navigate($Login_page);
+}
+
+// Frontend Redirections
+$Dashboard_Page = $routes['care_giver_dashboard'];
+$Patients_Page = $routes['care_givers_patients'];
+$Schedule_Page = $routes['care_giver_schedule_page'];
+$Progress_Tracking_Page = $routes['care_giver_progress_tracking'];
+$Education_And_Resources_Page = $routes['care_giver_education_and_resource'];
+$Symptoms_Tracking_Page = $routes['care_giver_symptoms_tracking_behaviour'];
+$Emergency_Support = $routes['care_giver_emergency_support'];
+
+
+// Backend Redirections
+
+$Logout_Controller = $backend_routes['logout_controller'];
+$care_giver_id = $_SESSION['user_id'];
+
+
+?>
 
 
 
@@ -164,13 +195,12 @@
                                                             <tbody id="symptoms-table-body">
                                                                 <?php
                     // Call the PHP function to fetch data
-                    
-
+                    $symptoms = findAllSymptomsTrackForAllPatients();
                     // Check if data is fetched successfully
                     if ($symptoms) {
                         // Loop through each symptom
                         foreach ($symptoms as $index => $symptom) {
-                            if($symptom['care_giver_id']=='1'){
+                            if($symptom['care_giver_id']== $care_giver_id){
                                 
                                 // Output table row with symptom details
                                 echo "<tr>";
@@ -228,7 +258,7 @@
 
 
 
-                        <form class="row g-3" action="" method="post" id="symptomsaddform">
+                        <form class="row g-3" action="#" method="post" id="symptomsaddform">
 
 
 
@@ -244,9 +274,11 @@
                                     // Iterate through each patient
                                     foreach ($patients as $patient) {
 
-                                        if($patient['care_giver_id']=='1'){
+                                        if($patient['care_giver_id']== $care_giver_id){
 
-                                            echo '<option value="' . $patient['name'] . '" data-patient-id="'.$patient['id'] .'" data-care-giver-id="'.$patient['care_giver_id'] .'">' . $patient['name'] . '</option>';
+                                            echo '<input type="hidden" name="selected_patient_id" value="'.$patient['id'].'"/>';
+
+                                            echo '<option value="' . $patient['name'] .'">' . $patient['name'] . '</option>';
                                         }
                                     }
                                 }
