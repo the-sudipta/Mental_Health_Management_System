@@ -28,6 +28,7 @@ $Emergency_Support = $routes['care_giver_emergency_support'];
 // Backend Redirections
 
 $Logout_Controller = $backend_routes['logout_controller'];
+$progress_add_trackingController = $backend_routes['care_giver_add_progress_controller'];
 
 
 
@@ -321,13 +322,13 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
 
 
-                        <form class="row g-3">
+                        <form action="<?php echo $progress_add_trackingController; ?>" method="post" class="row g-3">
 
 
 
                             <div class="col-md-6">
                                 <label for="patient_name" class="form-label">Select Patient</label>
-                                <select class="form-select" aria-label="Default select example" name="patient_name" required>
+                                <select class="form-select" aria-label="Default select example" name="patient_id" required>
                                     <option selected>Select Your Role</option>
                                     <option value="1">John Doe</option>
                                     <option value="2">Jane Smith</option>
@@ -338,37 +339,36 @@ $Logout_Controller = $backend_routes['logout_controller'];
                             <div class="col-md-6">
                                 <label for="medication_adherence" class="form-label">Medication Adherence</label>
                                 <select class="form-select" aria-label="Default select example" name="medication_adherence" required>
-                                    <option selected>Select Your Role</option>
-                                    <option value="1">Irregular</option>
-                                    <option value="2">Poor</option>
-                                    <option value="3">Regular</option>
-                                    <option value="3">Excellent</option>
+                                    <option selected value="null">Select Your Role</option>
+                                    <option value="Irregular">Irregular</option>
+                                    <option value="Poor">Poor</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="Excellent">Excellent</option>
                                 </select>
 
                             </div>
                             <div class="col-md-12">
                                 <label for="patient_mood" class="form-label">Patients Mood</label>
                                 <select class="form-select" aria-label="Default select example" name="patient_mood" required>
-                                    <option selected>Select Your Role</option>
-                                    <option value="1">😁 (Very Happy)</option>
-                                    <option value="3">😃 (Happy)</option>
-                                    <option value="2">😐 (Sad) </option>
-                                    <option value="2">😔 (Not Good) </option>
+                                    <option value="null" selected>Select Your Role</option>
+                                    <option value="Very Happy">😁 (Very Happy)</option>
+                                    <option value="Happy">😃 (Happy)</option>
+                                    <option value="Sad">😐 (Sad) </option>
+                                    <option value="Not Good">😔 (Not Good) </option>
                                 </select>
-
                             </div>
 
 
                             <div class="col-md-12">
-                                <label for="patient_medication" class="form-label">Therapy Sessions Attended</label>
-                                <input type="number" class="form-control" id="patient_medication" required>
+                                <label for="therapy" class="form-label">Therapy Sessions Attended</label>
+                                <input type="number" name="therapy" class="form-control" id="therapy" required>
 
                             </div>
 
 
                             <div class="col-md-12">
                                 <label for="date" class="form-label">Date</label>
-                                <input type="date" class="form-control" id="date" required>
+                                <input type="date" name="date" class="form-control" id="date" required>
 
                             </div>
 

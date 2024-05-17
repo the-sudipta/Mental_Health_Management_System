@@ -426,7 +426,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
 
 
-                        <form class="row g-3">
+                        <form action="" class="row g-3">
 
 
 
