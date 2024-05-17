@@ -59,7 +59,6 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
 
     <section class="dashboard-part ">
-    <div id="symptomsmodalContainer"></div>
 
 
 
@@ -83,7 +82,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
                             <!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-envelope"></i> Chats</a></li>-->
                             <li class="nav-item"><a href="<?php echo $Progress_Tracking_Page; ?>" class=" nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
                             <li class="nav-item"><a href="<?php echo $Education_And_Resources_Page; ?>" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
-                            <li class="nav-item"><a href="#" data-bs-toggle="modal" data-bs-target="#symptomstrackingModal" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
+                            <li class="nav-item"><a href="<?php echo $Symptoms_Tracking_Page; ?>" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
                             <li class="nav-item"><a href="<?php echo $Emergency_Support; ?>" class="active-sidebar-button nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
                         </ul>
 
@@ -277,17 +276,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
     <script src="../../js/main.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Fetch modal content from progresstrackingmodal.html
-            fetch('symptoms_tracking_behaviour.php')
-                .then(response => response.text())
-                .then(data => {
-                    // Inject modal content into the modalContainer div
-                    document.getElementById('symptomsmodalContainer').innerHTML = data;
-                })
-                .catch(error => console.error(error));
-        });
-        // JavaScript to toggle visibility of details
+       
         document.addEventListener('DOMContentLoaded', function() {
             const toggleLinks = document.querySelectorAll('.toggle-details');
 

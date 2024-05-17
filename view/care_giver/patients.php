@@ -43,7 +43,6 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
 
 
-
 <!doctype html>
 <html lang="en">
 
@@ -65,7 +64,6 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
 
     <section class="dashboard-part ">
-    <div id="symptomsmodalContainer"></div>
 
 
 
@@ -89,7 +87,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
                             <!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-envelope"></i> Chats</a></li>-->
                             <li class="nav-item"><a href="<?php echo $Progress_Tracking_Page; ?>" class=" nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
                             <li class="nav-item"><a href="<?php echo $Education_And_Resources_Page; ?>" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
-                            <li class="nav-item"><a href="#" data-bs-toggle="modal" data-bs-target="#symptomstrackingModal" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
+                            <li class="nav-item"><a href="<?php echo $Symptoms_Tracking_Page; ?>" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
                             <li class="nav-item"><a href="<?php echo $Emergency_Support; ?>" class="nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
                         </ul>
 
@@ -392,7 +390,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
                                 </select>
                             </div>
 
-                            
+
 
 
                             <div class="col-md-12">
@@ -400,7 +398,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
                                 <input type="number" name="phone" class="form-control" id="contact_number" required>
 
                             </div>
-                            
+
                             <div class="col-12">
                                 <button class="btn cust-bg-color1 w-100" type="submit">Register</button>
                             </div>
@@ -433,7 +431,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
 
 
-                        <div class="col-md-6">
+                            <div class="col-md-6">
                                 <label for="patient_name" class="form-label">Name</label>
                                 <input type="text" class="form-control" id="patient_name" required>
 
@@ -465,14 +463,14 @@ $Logout_Controller = $backend_routes['logout_controller'];
                                 </select>
                             </div>
 
-                            
+
 
                             <div class="col-md-12">
                                 <label for="contact_number" class="form-label">Contact Number</label>
                                 <input type="number" class="form-control" id="contact_number" required>
 
                             </div>
-                            
+
                             <div class="col-12">
                                 <button class="btn cust-bg-color1 w-100" type="submit">Update</button>
                             </div>
@@ -499,18 +497,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
 
 
- <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Fetch modal content from progresstrackingmodal.html
-            fetch('symptoms_tracking_behaviour.php')
-                .then(response => response.text())
-                .then(data => {
-                    // Inject modal content into the modalContainer div
-                    document.getElementById('symptomsmodalContainer').innerHTML = data;
-                })
-                .catch(error => console.error(error));
-        });
-        // JavaScript to toggle visibility of details
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             const toggleLinks = document.querySelectorAll('.toggle-details');
 
@@ -527,13 +514,9 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
 
     <script>
-        
-        
-        
-        
         $(document).ready(function() {
-        new DataTable('#patientlist');
-            
+            new DataTable('#patientlist');
+
         });
 
     </script>
