@@ -27,6 +27,7 @@ $Emergency_Support = $routes['care_giver_emergency_support'];
 
 // Backend Redirections
 
+$add_patient_controller = $backend_routes['care_giver_add_a_patient_controller'];
 $Logout_Controller = $backend_routes['logout_controller'];
 
 
@@ -358,28 +359,28 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
 
 
-                        <form class="row g-3">
+                        <form class="row g-3" action="<?php echo $add_patient_controller; ?>" method="post">
                             <div class="col-md-6">
                                 <label for="patient_name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="patient_name" required>
+                                <input type="text" class="form-control" name="name" id="patient_name" required>
 
                             </div>
 
                             <div class="col-md-6">
                                 <label for="patient_age" class="form-label">Age</label>
-                                <input type="number" class="form-control" id="patient_age" required>
+                                <input type="number" class="form-control" name="age" id="patient_age" required>
 
                             </div>
                             <div class="col-md-6">
                                 <label for="patient_diagnosis" class="form-label">Diagnosis</label>
-                                <input type="text" class="form-control" id="patient_diagnosis" required>
+                                <input type="text" name="diagnosis" class="form-control" id="patient_diagnosis" required>
 
                             </div>
 
 
                             <div class="col-md-6">
                                 <label for="patient_medication" class="form-label">Medication</label>
-                                <input type="text" class="form-control" id="patient_medication" required>
+                                <input type="text" name="medication" class="form-control" id="patient_medication" required>
 
                             </div>
                             <div class="col-md-12">
@@ -396,7 +397,7 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
                             <div class="col-md-12">
                                 <label for="contact_number" class="form-label">Contact Number</label>
-                                <input type="number" class="form-control" id="contact_number" required>
+                                <input type="number" name="phone" class="form-control" id="contact_number" required>
 
                             </div>
                             
