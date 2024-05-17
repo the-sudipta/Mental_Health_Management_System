@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2024 at 10:32 PM
+-- Generation Time: May 17, 2024 at 04:13 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -40,64 +40,7 @@ CREATE TABLE `care_giver` (
 --
 
 INSERT INTO `care_giver` (`id`, `name`, `gender`, `phone`, `user_id`) VALUES
-(2, 'Test Name', 'Male', '01931117419', 14);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `diagnosis`
---
-
-CREATE TABLE `diagnosis` (
-  `id` int(50) NOT NULL,
-  `diagnosis_name` varchar(50) NOT NULL,
-  `patient_id` int(50) NOT NULL,
-  `date` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `diagnosis`
---
-
-INSERT INTO `diagnosis` (`id`, `diagnosis_name`, `patient_id`, `date`) VALUES
-(1, 'Depression', 1, '2024-01-12'),
-(2, 'Anxiety', 2, '2024-01-12'),
-(3, 'Bipolar Disorder', 3, '2024-01-12'),
-(4, 'Schizophrenia', 4, '2024-02-12'),
-(5, 'Obsessive Compulsive Disorder', 5, '2024-03-12'),
-(6, 'Post-Traumatic Stress Disorder', 6, '2024-01-12'),
-(7, 'Eating Disorders', 7, '2024-04-12'),
-(8, 'Borderline Personality Disorder', 8, '2024-01-15'),
-(9, 'Attention Deficit Hyperactivity Disorder', 9, '2024-01-18'),
-(10, 'Substance Use Disorder', 10, '2024-05-15');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `medication`
---
-
-CREATE TABLE `medication` (
-  `id` int(50) NOT NULL,
-  `medication_name` varchar(50) NOT NULL,
-  `patient_id` int(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `medication`
---
-
-INSERT INTO `medication` (`id`, `medication_name`, `patient_id`) VALUES
-(1, 'Sertraline', 1),
-(2, 'Lorazepam', 2),
-(3, 'Lithium', 3),
-(4, 'Olanzapine', 4),
-(5, 'Fluoxetine', 5),
-(6, 'Paroxetine', 6),
-(7, 'Quetiapine', 7),
-(8, 'Venlafaxine', 8),
-(9, 'Methylphenidate', 9),
-(10, 'Buprenorphine', 10);
+(2, 'Test Name', 'Male', '01931117419', 1);
 
 -- --------------------------------------------------------
 
@@ -111,24 +54,29 @@ CREATE TABLE `patient` (
   `age` varchar(50) NOT NULL,
   `phone` varchar(50) NOT NULL,
   `care_giver_id` int(50) NOT NULL,
-  `gender` varchar(50) NOT NULL
+  `gender` varchar(50) NOT NULL,
+  `medication` varchar(50) NOT NULL,
+  `diagnosis` varchar(300) NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `patient`
 --
 
-INSERT INTO `patient` (`id`, `name`, `age`, `phone`, `care_giver_id`, `gender`) VALUES
-(1, 'John Doe', '35', '+1234567890', 1, 'MALE'),
-(2, 'Jane Smith', '28', '+1987654321', 1, 'FEMALE'),
-(3, 'Alice Johnson', '45', '+1122334455', 1, 'FEMALE'),
-(4, 'Bob Williams', '40', '+1555666777', 1, 'MALE'),
-(5, 'Emma Brown', '30', '+1444333222', 1, 'FEMALE'),
-(6, 'Michael Davis', '50', '+1777888999', 2, 'MALE'),
-(7, 'Olivia Wilson', '32', '+1666777888', 1, 'FEMALE'),
-(8, 'William Taylor', '38', '+1999888777', 3, 'MALE'),
-(9, 'Sophia Martinez', '42', '+1223344556', 5, 'FEMALE'),
-(10, 'James Anderson', '48', '+1444555666', 1, 'MALE');
+INSERT INTO `patient` (`id`, `name`, `age`, `phone`, `care_giver_id`, `gender`, `medication`, `diagnosis`, `date`) VALUES
+(1, 'John Doe', '35', '+1234567890', 1, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
+(2, 'Jane Smith', '28', '+1987654321', 1, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
+(3, 'Alice Johnson', '45', '+1122334455', 1, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
+(4, 'Bob Williams', '40', '+1555666777', 1, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
+(5, 'Emma Brown', '30', '+1444333222', 1, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
+(6, 'Michael Davis', '50', '+1777888999', 2, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
+(7, 'Olivia Wilson', '32', '+1666777888', 1, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
+(8, 'William Taylor', '38', '+1999888777', 3, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
+(9, 'Sophia Martinez', '42', '+1223344556', 5, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
+(10, 'James Anderson', '48', '+1444555666', 1, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
+(14, 'Ada Loveless', '22', '12312313422', 1, 'Female', 'Gastrid', 'Blood Test', '2024-05-17'),
+(15, 'Test Name', '30', '34352353', 1, 'Male', '12431sfda', 'Blood XXY', '2024-05-17');
 
 -- --------------------------------------------------------
 
@@ -173,14 +121,14 @@ CREATE TABLE `schedule` (
   `time` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'Pending',
   `patient_id` int(11) NOT NULL,
-  `TYPE` varchar(50) NOT NULL
+  `type` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `schedule`
 --
 
-INSERT INTO `schedule` (`id`, `date`, `time`, `status`, `patient_id`, `TYPE`) VALUES
+INSERT INTO `schedule` (`id`, `date`, `time`, `status`, `patient_id`, `type`) VALUES
 (1, '2024-05-17', '09:00 AM', 'Confirmed', 1, 'Online'),
 (2, '2024-05-18', '10:30 AM', 'Confirmed', 2, 'Offline'),
 (3, '2024-05-19', '11:00 AM', 'Pending', 3, 'Offline'),
@@ -200,35 +148,20 @@ INSERT INTO `schedule` (`id`, `date`, `time`, `status`, `patient_id`, `TYPE`) VA
 
 CREATE TABLE `symptom_track` (
   `id` int(50) NOT NULL,
-  `mood_swings` varchar(50) NOT NULL,
-  `changes_in_appetite` varchar(50) NOT NULL,
-  `sleep_disturbances` varchar(50) NOT NULL,
-  `difficulty_concentrating` varchar(50) NOT NULL,
-  `loss_of_interest_in_activities` varchar(50) NOT NULL,
-  `feelings_of_hopelessness` varchar(50) NOT NULL,
-  `increased_irritability` varchar(50) NOT NULL,
-  `social_withdrawal` varchar(50) NOT NULL,
-  `lack_of_energy` varchar(50) NOT NULL,
-  `suicidal_thoughts` varchar(50) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `symptoms` varchar(255) NOT NULL,
   `date` varchar(50) NOT NULL,
-  `patient_id` varchar(50) NOT NULL
+  `patient_id` int(50) NOT NULL,
+  `care_giver_id` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `symptom_track`
 --
 
-INSERT INTO `symptom_track` (`id`, `mood_swings`, `changes_in_appetite`, `sleep_disturbances`, `difficulty_concentrating`, `loss_of_interest_in_activities`, `feelings_of_hopelessness`, `increased_irritability`, `social_withdrawal`, `lack_of_energy`, `suicidal_thoughts`, `date`, `patient_id`) VALUES
-(1, 'Mild', 'Decreased', 'Trouble falling asleep', 'Yes', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', '2024-05-17', '1'),
-(2, 'Moderate', 'Increased', 'Frequent waking up', 'Yes', 'No', 'Yes', 'No', 'Yes', 'No', 'Yes', '2024-05-18', '2'),
-(3, 'Severe', 'Decreased', 'Insomnia', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', '2024-05-19', '3'),
-(4, 'Mild', 'Increased', 'Trouble staying asleep', 'No', 'No', 'No', 'No', 'No', 'No', 'No', '2024-05-20', '4'),
-(5, 'Moderate', 'Decreased', 'Hypersomnia', 'Yes', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'No', '2024-05-21', '5'),
-(6, 'Severe', 'Increased', 'Nightmares', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', '2024-05-22', '6'),
-(7, 'Mild', 'Decreased', 'Frequent awakening', 'No', 'No', 'No', 'No', 'No', 'No', 'No', '2024-05-23', '7'),
-(8, 'Moderate', 'Increased', 'Night terrors', 'Yes', 'No', 'Yes', 'No', 'Yes', 'No', 'Yes', '2024-05-24', '8'),
-(9, 'Severe', 'Decreased', 'Sleepwalking', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', '2024-05-25', '9'),
-(10, 'Mild', 'Increased', 'Sleep paralysis', 'No', 'Yes', 'No', 'Yes', 'No', 'Yes', 'No', '2024-05-26', '10');
+INSERT INTO `symptom_track` (`id`, `name`, `symptoms`, `date`, `patient_id`, `care_giver_id`) VALUES
+(11, 'John Doe', 'Mood swings,\nChanges in appetite', '2024-05-17', 1, 1),
+(12, 'Sophia Martinez', 'Fatigue or lack of energy,\nPhysical symptoms without medical cause ,(headaches, stomachaches, etc.),\nSuicidal thoughts or self-harming behaviors,', '2024-05-17', 9, 15);
 
 -- --------------------------------------------------------
 
@@ -258,18 +191,6 @@ INSERT INTO `user` (`id`, `email`, `password`, `role`) VALUES
 -- Indexes for table `care_giver`
 --
 ALTER TABLE `care_giver`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `diagnosis`
---
-ALTER TABLE `diagnosis`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `medication`
---
-ALTER TABLE `medication`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -313,22 +234,10 @@ ALTER TABLE `care_giver`
   MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `diagnosis`
---
-ALTER TABLE `diagnosis`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `medication`
---
-ALTER TABLE `medication`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `progress`
@@ -346,7 +255,7 @@ ALTER TABLE `schedule`
 -- AUTO_INCREMENT for table `symptom_track`
 --
 ALTER TABLE `symptom_track`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `user`

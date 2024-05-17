@@ -194,29 +194,29 @@ $care_giver_id = $_SESSION['user_id'];
                                                             </thead>
                                                             <tbody id="symptoms-table-body">
                                                                 <?php
-                    // Call the PHP function to fetch data
-                    $symptoms = findAllSymptomsTrackForAllPatients();
-                    // Check if data is fetched successfully
-                    if ($symptoms) {
-                        // Loop through each symptom
-                        foreach ($symptoms as $index => $symptom) {
-                            if($symptom['care_giver_id']== $care_giver_id){
-                                
-                                // Output table row with symptom details
-                                echo "<tr>";
-                                echo "<td>" . ($index + 1) . "</td>"; // Increment index to start from 1
-                                echo "<td>" . $symptom['name'] . "</td>"; // Assuming 'name' is the column name for patient's name
-                                echo "<td>" . $symptom['symptoms'] . "</td>"; // Assuming 'behaviour' is the column name for symptom behavior
-                                echo "<td>" . $symptom['date'] . "</td>"; // Assuming 'date' is the column name for symptom date
-                                echo "</tr>";
-                                
-                            }
-                        }
-                    } else {
-                        // If no data is fetched, display a message in a single row
-                        echo "<tr><td colspan='4'>No symptoms found.</td></tr>";
-                    }
-                    ?>
+                                                                // Call the PHP function to fetch data
+                                                                $symptoms = findAllSymptomsTrackForAllPatients();
+                                                                // Check if data is fetched successfully
+                                                                if ($symptoms) {
+                                                                    // Loop through each symptom
+                                                                    foreach ($symptoms as $index => $symptom) {
+                                                                        if($symptom['care_giver_id']== $care_giver_id){
+                                                                            
+                                                                            // Output table row with symptom details
+                                                                            echo "<tr>";
+                                                                            echo "<td>" . ($index + 1) . "</td>"; // Increment index to start from 1
+                                                                            echo "<td>" . $symptom['name'] . "</td>"; // Assuming 'name' is the column name for patient's name
+                                                                            echo "<td>" . $symptom['symptoms'] . "</td>"; // Assuming 'behaviour' is the column name for symptom behavior
+                                                                            echo "<td>" . $symptom['date'] . "</td>"; // Assuming 'date' is the column name for symptom date
+                                                                            echo "</tr>";
+                                                                            
+                                                                        }
+                                                                    }
+                                                                } else {
+                                                                    // If no data is fetched, display a message in a single row
+                                                                    echo "<tr><td colspan='4'>No symptoms found.</td></tr>";
+                                                                }
+                                                                ?>
                                                             </tbody>
 
                                                         </table>
@@ -363,7 +363,6 @@ $care_giver_id = $_SESSION['user_id'];
 
                 </div>
             </div>
-<<<<<<< HEAD
             <div class="modal-body">
 
 
@@ -460,8 +459,6 @@ $care_giver_id = $_SESSION['user_id'];
 
             </div>
 
-=======
->>>>>>> 24a48a544ad458bedd76e7222a2787165fff9ed4
         </div>
 
 
