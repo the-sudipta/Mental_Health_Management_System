@@ -2,11 +2,10 @@
 
 require_once __DIR__ . '/../model/db_connect.php';
 
-
-function findAllProgresses()
+function findAllUsers()
 {
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `progress`';
+    $selectQuery = 'SELECT * FROM `user`';
 
     try {
         $result = $conn->query($selectQuery);
@@ -25,12 +24,12 @@ function findAllProgresses()
 
         // Check for an empty result set
         if (empty($rows)) {
-            throw new Exception("No rows found in the 'progress' table.");
+            throw new Exception("No rows found in the 'user' table.");
         }
 
         return $rows;
     } catch (Exception $e) {
-        echo 'progressRepo Error = ' . $e->getMessage();
+        echo "userRepo Error = " . $e->getMessage();
         return null;
     } finally {
         // Close the database connection
@@ -38,10 +37,57 @@ function findAllProgresses()
     }
 }
 
-function findProgressByID($id)
+
+function findUserByEmailAndPassword($email, $password) {
+
+    $conn = db_conn();
+
+    // Use prepared statement to prevent SQL injection
+    $selectQuery = 'SELECT * FROM `user` WHERE `email` = ?';
+
+    try {
+        $stmt = $conn->prepare($selectQuery);
+
+        // Bind parameters
+        $stmt->bind_param("s", $email);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the result
+        $result = $stmt->get_result();
+
+        // Fetch the user as an associative array
+        $user = $result->fetch_assoc();
+
+        // Close the result set
+        $result->close();
+
+        // Close the statement
+        $stmt->close();
+
+        // Check if the user exists and if the password matches
+        if ($user && password_verify($password, $user['password'])) {
+            // Password is correct
+            return $user;
+        } else {
+            // Password is incorrect or user doesn't exist
+            return null;
+        }
+    } catch (Exception $e) {
+        echo 'UserRepo Error = ' . $e->getMessage();
+        return null;
+    } finally {
+        // Close the database connection
+        $conn->close();
+    }
+}
+
+
+function findUserByUserID($id)
 {
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `progress` WHERE `id` = ?';
+    $selectQuery = 'SELECT * FROM `user` WHERE `id` = ?';
 
     try {
         $stmt = $conn->prepare($selectQuery);
@@ -65,7 +111,7 @@ function findProgressByID($id)
 
         // Check for an empty result set
         if (!$user) {
-            throw new Exception("No progress found with ID: " . $id);
+            throw new Exception("No user found with ID: " . $id);
         }
 
         // Close the statement
@@ -73,7 +119,7 @@ function findProgressByID($id)
 
         return $user;
     } catch (Exception $e) {
-        echo 'progressRepo Error = ' . $e->getMessage();
+        echo "userRepo Error = " . $e->getMessage();
         return null;
     } finally {
         // Close the database connection
@@ -81,52 +127,15 @@ function findProgressByID($id)
     }
 }
 
-function findAllProgressesByPatientID($id)
-{
-    $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `progress` WHERE `patient_id` = '.$id;
 
-    try {
-        $result = $conn->query($selectQuery);
-
-        // Check if the query was successful
-        if (!$result) {
-            throw new Exception("Query failed: " . $conn->error);
-        }
-
-        $rows = array();
-
-        // Fetch rows one by one
-        while ($row = $result->fetch_assoc()) {
-            $rows[] = $row;
-        }
-
-        // Check for an empty result set
-        if (empty($rows)) {
-            throw new Exception("No rows found in the 'progress' table.");
-        }
-
-        return $rows;
-    } catch (Exception $e) {
-        echo 'progressRepo Error = '. $e->getMessage();
-
-        return null;
-    } finally {
-        // Close the database connection
-        $conn->close();
-    }
-}
-
-function updateProgress($mood, $medicine, $therapy_name, $date, $id)
+function updateUser($email, $password, $id)
 {
     $conn = db_conn();
 
     // Construct the SQL query
-    $updateQuery = "UPDATE `progress` SET 
-                    mood = ?,
-                    medicine = ?,
-                    therapy_name = ?,
-                    date = ?
+    $updateQuery = "UPDATE `user` SET 
+                    email = ?,
+                    password = ?
                     WHERE id = ?";
 
     try {
@@ -139,7 +148,7 @@ function updateProgress($mood, $medicine, $therapy_name, $date, $id)
         }
 
         // Bind parameters
-        $stmt->bind_param('ssssi', $mood, $medicine, $therapy_name, $date, $id);
+        $stmt->bind_param('ssi', $email, $password, $id);
 
         // Execute the query
         $stmt->execute();
@@ -148,7 +157,7 @@ function updateProgress($mood, $medicine, $therapy_name, $date, $id)
         return true;
     } catch (Exception $e) {
         // Handle the exception, you might want to log it or return false
-        echo 'progressRepo Error = ' . $e->getMessage();
+        echo "userRepo Error = " . $e->getMessage();
         return false;
     } finally {
         // Close the statement
@@ -159,12 +168,12 @@ function updateProgress($mood, $medicine, $therapy_name, $date, $id)
     }
 }
 
-function deleteProgress($id) {
 
+function deleteUser($id) {
     $conn = db_conn();
 
     // Construct the SQL query
-    $updateQuery = "DELETE FROM `progress` WHERE id = ?";
+    $updateQuery = "DELETE FROM `user` WHERE id = ?";
 
     try {
         // Prepare the statement
@@ -185,8 +194,7 @@ function deleteProgress($id) {
         return true;
     } catch (Exception $e) {
         // Handle the exception, you might want to log it or return false
-        echo 'progressRepo Error = ' . $e->getMessage();
-
+        echo "userRepo Error = " . $e->getMessage();
         return false;
     } finally {
         // Close the statement
@@ -197,39 +205,36 @@ function deleteProgress($id) {
     }
 }
 
-function createProgress($mood, $medicine, $therapy_name, $patient_id, $date) {
 
+function createUser($email, $password, $role) {
     $conn = db_conn();
 
+    // Hash the password using a secure hashing algorithm (e.g., password_hash)
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Construct the SQL query
-    $insertQuery = "INSERT INTO `progress` (mood, medicine, therapy_name, patient_id, date) VALUES (?, ?, ?, ?, ?)";
+    $insertQuery = "INSERT INTO `user` (email, password, role) VALUES (?, ?, ?)";
 
     try {
         // Prepare the statement
         $stmt = $conn->prepare($insertQuery);
 
-        // Check if the prepare statement was successful
-        if (!$stmt) {
-            throw new Exception("Prepare statement for CreateMedicalHistory failed: " . $conn->error);
-        }
-
-
         // Bind parameters
-        $stmt->bind_param('sssis', $mood, $medicine, $therapy_name, $patient_id, $date);
+        $stmt->bind_param('sss', $email, $hashedPassword, $role);
 
         // Execute the query
         $stmt->execute();
 
         // Return the ID of the newly inserted user
-        $newUserId = $conn->insert_id;
+        $newUserId = $stmt->insert_id;
 
         // Close the statement
         $stmt->close();
 
         return $newUserId;
     } catch (Exception $e) {
-        echo 'progressRepo Error = '.$e->getMessage();
+        // Handle the exception, you might want to log it or return false
+        echo "userRepo Error = " . $e->getMessage();
         return -1;
     } finally {
         // Close the database connection

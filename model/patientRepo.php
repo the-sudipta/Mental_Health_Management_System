@@ -118,7 +118,7 @@ function findAllPatientsByCareGiverID($id)
 }
 
 
-function updatePatient($name, $age, $phone, $gender, $medication, $diagnosis, $id)
+function updatePatient($name, $age, $phone, $gender, $id)
 {
     $conn = db_conn();
 
@@ -127,9 +127,7 @@ function updatePatient($name, $age, $phone, $gender, $medication, $diagnosis, $i
                     name = ?,
                     age = ?,
                     phone = ?,
-                    gender = ?,
-                    medication = ?,
-                    diagnosis = ?
+                    gender = ?
                     WHERE id = ?";
 
     try {
@@ -142,7 +140,7 @@ function updatePatient($name, $age, $phone, $gender, $medication, $diagnosis, $i
         }
 
         // Bind parameters
-        $stmt->bind_param('ssssssi', $name, $age, $phone, $gender, $medication, $diagnosis, $id);
+        $stmt->bind_param('ssssi', $name, $age, $phone, $gender, $id);
 
         // Execute the query
         $stmt->execute();

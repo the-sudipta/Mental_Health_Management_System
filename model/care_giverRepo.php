@@ -3,45 +3,11 @@
 require_once __DIR__ . '/../model/db_connect.php';
 
 
-function findAllProgresses()
+
+function findCareGiverByUserID($id)
 {
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `progress`';
-
-    try {
-        $result = $conn->query($selectQuery);
-
-        // Check if the query was successful
-        if (!$result) {
-            throw new Exception("Query failed: " . $conn->error);
-        }
-
-        $rows = array();
-
-        // Fetch rows one by one
-        while ($row = $result->fetch_assoc()) {
-            $rows[] = $row;
-        }
-
-        // Check for an empty result set
-        if (empty($rows)) {
-            throw new Exception("No rows found in the 'progress' table.");
-        }
-
-        return $rows;
-    } catch (Exception $e) {
-        echo 'progressRepo Error = ' . $e->getMessage();
-        return null;
-    } finally {
-        // Close the database connection
-        $conn->close();
-    }
-}
-
-function findProgressByID($id)
-{
-    $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `progress` WHERE `id` = ?';
+    $selectQuery = 'SELECT * FROM `care_giver` WHERE `user_id` = ?';
 
     try {
         $stmt = $conn->prepare($selectQuery);
@@ -65,7 +31,7 @@ function findProgressByID($id)
 
         // Check for an empty result set
         if (!$user) {
-            throw new Exception("No progress found with ID: " . $id);
+            throw new Exception("No care_giver found with current user ID: " . $id);
         }
 
         // Close the statement
@@ -73,7 +39,7 @@ function findProgressByID($id)
 
         return $user;
     } catch (Exception $e) {
-        echo 'progressRepo Error = ' . $e->getMessage();
+        echo "care_giverRepo Error = " . $e->getMessage();
         return null;
     } finally {
         // Close the database connection
@@ -81,35 +47,43 @@ function findProgressByID($id)
     }
 }
 
-function findAllProgressesByPatientID($id)
+
+function findCareGiverByID($id)
 {
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `progress` WHERE `patient_id` = '.$id;
+    $selectQuery = 'SELECT * FROM `care_giver` WHERE `id` = ?';
 
     try {
-        $result = $conn->query($selectQuery);
+        $stmt = $conn->prepare($selectQuery);
 
-        // Check if the query was successful
-        if (!$result) {
-            throw new Exception("Query failed: " . $conn->error);
+        // Check if the prepare statement was successful
+        if (!$stmt) {
+            throw new Exception("Prepare statement failed: " . $conn->error);
         }
 
-        $rows = array();
+        // Bind the parameter
+        $stmt->bind_param("i", $id);
 
-        // Fetch rows one by one
-        while ($row = $result->fetch_assoc()) {
-            $rows[] = $row;
-        }
+        // Execute the query
+        $stmt->execute();
+
+        // Get the result
+        $result = $stmt->get_result();
+
+        // Fetch the user as an associative array
+        $user = $result->fetch_assoc();
 
         // Check for an empty result set
-        if (empty($rows)) {
-            throw new Exception("No rows found in the 'progress' table.");
+        if (!$user) {
+            throw new Exception("No care_giver found with current ID: " . $id);
         }
 
-        return $rows;
-    } catch (Exception $e) {
-        echo 'progressRepo Error = '. $e->getMessage();
+        // Close the statement
+        $stmt->close();
 
+        return $user;
+    } catch (Exception $e) {
+        echo "care_giverRepo Error = " . $e->getMessage();
         return null;
     } finally {
         // Close the database connection
@@ -117,16 +91,16 @@ function findAllProgressesByPatientID($id)
     }
 }
 
-function updateProgress($mood, $medicine, $therapy_name, $date, $id)
+
+function updateCareGiver($name, $gender, $phone, $id)
 {
     $conn = db_conn();
 
     // Construct the SQL query
-    $updateQuery = "UPDATE `progress` SET 
-                    mood = ?,
-                    medicine = ?,
-                    therapy_name = ?,
-                    date = ?
+    $updateQuery = "UPDATE `care_giver` SET 
+                    name = ?,
+                    gender = ?,
+                    phone = ?
                     WHERE id = ?";
 
     try {
@@ -139,7 +113,7 @@ function updateProgress($mood, $medicine, $therapy_name, $date, $id)
         }
 
         // Bind parameters
-        $stmt->bind_param('ssssi', $mood, $medicine, $therapy_name, $date, $id);
+        $stmt->bind_param('sssi', $name, $gender, $phone, $id);
 
         // Execute the query
         $stmt->execute();
@@ -148,7 +122,7 @@ function updateProgress($mood, $medicine, $therapy_name, $date, $id)
         return true;
     } catch (Exception $e) {
         // Handle the exception, you might want to log it or return false
-        echo 'progressRepo Error = ' . $e->getMessage();
+        echo "care_giverRepo Error = " . $e->getMessage();
         return false;
     } finally {
         // Close the statement
@@ -159,12 +133,12 @@ function updateProgress($mood, $medicine, $therapy_name, $date, $id)
     }
 }
 
-function deleteProgress($id) {
 
+function deleteCareGiver($id) {
     $conn = db_conn();
 
     // Construct the SQL query
-    $updateQuery = "DELETE FROM `progress` WHERE id = ?";
+    $updateQuery = "DELETE FROM `care_giver` WHERE id = ?";
 
     try {
         // Prepare the statement
@@ -185,8 +159,7 @@ function deleteProgress($id) {
         return true;
     } catch (Exception $e) {
         // Handle the exception, you might want to log it or return false
-        echo 'progressRepo Error = ' . $e->getMessage();
-
+        echo "care_giverRepo Error = " . $e->getMessage();
         return false;
     } finally {
         // Close the statement
@@ -197,39 +170,33 @@ function deleteProgress($id) {
     }
 }
 
-function createProgress($mood, $medicine, $therapy_name, $patient_id, $date) {
 
+function createCare_giver($name, $gender, $phone, $user_id) {
     $conn = db_conn();
 
-
     // Construct the SQL query
-    $insertQuery = "INSERT INTO `progress` (mood, medicine, therapy_name, patient_id, date) VALUES (?, ?, ?, ?, ?)";
+    $insertQuery = "INSERT INTO `care_giver` (name, gender, phone, user_id) VALUES (?, ?, ?, ?)";
 
     try {
         // Prepare the statement
         $stmt = $conn->prepare($insertQuery);
 
-        // Check if the prepare statement was successful
-        if (!$stmt) {
-            throw new Exception("Prepare statement for CreateMedicalHistory failed: " . $conn->error);
-        }
-
-
         // Bind parameters
-        $stmt->bind_param('sssis', $mood, $medicine, $therapy_name, $patient_id, $date);
+        $stmt->bind_param('sssi', $name, $gender, $phone, $user_id);
 
         // Execute the query
         $stmt->execute();
 
         // Return the ID of the newly inserted user
-        $newUserId = $conn->insert_id;
+        $newUserId = $stmt->insert_id;
 
         // Close the statement
         $stmt->close();
 
         return $newUserId;
     } catch (Exception $e) {
-        echo 'progressRepo Error = '.$e->getMessage();
+        // Handle the exception, you might want to log it or return false
+        echo "care_giverRepo Error = " . $e->getMessage();
         return -1;
     } finally {
         // Close the database connection

@@ -47,6 +47,7 @@ $image_routes = [
 
 
 $system_routes = [
+    'bootstrap' => '/Mental_Health_Management_System/bootstrap.php',
     'error_404' => '/Mental_Health_Management_System/error/404.php',
     'error_405' => '/Mental_Health_Management_System/error/405.php',
     'error_500' => '/Mental_Health_Management_System/error/500.php',

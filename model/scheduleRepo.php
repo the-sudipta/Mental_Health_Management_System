@@ -3,10 +3,10 @@
 require_once __DIR__ . '/../model/db_connect.php';
 
 
-function findAllProgresses()
+function findAllSchedules()
 {
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `progress`';
+    $selectQuery = 'SELECT * FROM `schedule`';
 
     try {
         $result = $conn->query($selectQuery);
@@ -25,12 +25,12 @@ function findAllProgresses()
 
         // Check for an empty result set
         if (empty($rows)) {
-            throw new Exception("No rows found in the 'progress' table.");
+            throw new Exception("No rows found in the 'schedule' table.");
         }
 
         return $rows;
     } catch (Exception $e) {
-        echo 'progressRepo Error = ' . $e->getMessage();
+        echo 'scheduleRepo Error = ' . $e->getMessage();
         return null;
     } finally {
         // Close the database connection
@@ -38,10 +38,10 @@ function findAllProgresses()
     }
 }
 
-function findProgressByID($id)
+function findScheduleByID($id)
 {
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `progress` WHERE `id` = ?';
+    $selectQuery = 'SELECT * FROM `schedule` WHERE `id` = ?';
 
     try {
         $stmt = $conn->prepare($selectQuery);
@@ -65,7 +65,7 @@ function findProgressByID($id)
 
         // Check for an empty result set
         if (!$user) {
-            throw new Exception("No progress found with ID: " . $id);
+            throw new Exception("No schedule found with ID: " . $id);
         }
 
         // Close the statement
@@ -73,7 +73,7 @@ function findProgressByID($id)
 
         return $user;
     } catch (Exception $e) {
-        echo 'progressRepo Error = ' . $e->getMessage();
+        echo 'scheduleRepo Error = ' . $e->getMessage();
         return null;
     } finally {
         // Close the database connection
@@ -81,10 +81,10 @@ function findProgressByID($id)
     }
 }
 
-function findAllProgressesByPatientID($id)
+function findAllSchedulesByPatientID($id)
 {
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `progress` WHERE `patient_id` = '.$id;
+    $selectQuery = 'SELECT * FROM `schedule` WHERE `patient_id` = '.$id;
 
     try {
         $result = $conn->query($selectQuery);
@@ -103,12 +103,12 @@ function findAllProgressesByPatientID($id)
 
         // Check for an empty result set
         if (empty($rows)) {
-            throw new Exception("No rows found in the 'progress' table.");
+            throw new Exception("No rows found in the 'schedule' table.");
         }
 
         return $rows;
     } catch (Exception $e) {
-        echo 'progressRepo Error = '. $e->getMessage();
+        echo 'scheduleRepo Error = '. $e->getMessage();
 
         return null;
     } finally {
@@ -117,16 +117,15 @@ function findAllProgressesByPatientID($id)
     }
 }
 
-function updateProgress($mood, $medicine, $therapy_name, $date, $id)
+function updateSchedule($date, $time, $type, $id)
 {
     $conn = db_conn();
 
     // Construct the SQL query
-    $updateQuery = "UPDATE `progress` SET 
-                    mood = ?,
-                    medicine = ?,
-                    therapy_name = ?,
-                    date = ?
+    $updateQuery = "UPDATE `schedule` SET 
+                    date = ?,
+                    time = ?,
+                    type = ?
                     WHERE id = ?";
 
     try {
@@ -139,7 +138,7 @@ function updateProgress($mood, $medicine, $therapy_name, $date, $id)
         }
 
         // Bind parameters
-        $stmt->bind_param('ssssi', $mood, $medicine, $therapy_name, $date, $id);
+        $stmt->bind_param('sssi', $date, $time, $type, $id);
 
         // Execute the query
         $stmt->execute();
@@ -148,7 +147,7 @@ function updateProgress($mood, $medicine, $therapy_name, $date, $id)
         return true;
     } catch (Exception $e) {
         // Handle the exception, you might want to log it or return false
-        echo 'progressRepo Error = ' . $e->getMessage();
+        echo 'scheduleRepo Error = ' . $e->getMessage();
         return false;
     } finally {
         // Close the statement
@@ -159,12 +158,51 @@ function updateProgress($mood, $medicine, $therapy_name, $date, $id)
     }
 }
 
-function deleteProgress($id) {
+function updateScheduleStatus($status, $id)
+{
+    $conn = db_conn();
+
+    // Construct the SQL query
+    $updateQuery = "UPDATE `schedule` SET 
+                    status = ?
+                    WHERE id = ?";
+
+    try {
+        // Prepare the statement
+        $stmt = $conn->prepare($updateQuery);
+
+        // Check if the prepare statement was successful
+        if (!$stmt) {
+            throw new Exception("Prepare statement failed: " . $conn->error);
+        }
+
+        // Bind parameters
+        $stmt->bind_param('si', $status, $id);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Return true if the update is successful
+        return true;
+    } catch (Exception $e) {
+        // Handle the exception, you might want to log it or return false
+        echo 'scheduleRepo Error = ' . $e->getMessage();
+        return false;
+    } finally {
+        // Close the statement
+        $stmt->close();
+
+        // Close the database connection
+        $conn->close();
+    }
+}
+
+function deleteSchedule($id) {
 
     $conn = db_conn();
 
     // Construct the SQL query
-    $updateQuery = "DELETE FROM `progress` WHERE id = ?";
+    $updateQuery = "DELETE FROM `schedule` WHERE id = ?";
 
     try {
         // Prepare the statement
@@ -185,7 +223,7 @@ function deleteProgress($id) {
         return true;
     } catch (Exception $e) {
         // Handle the exception, you might want to log it or return false
-        echo 'progressRepo Error = ' . $e->getMessage();
+        echo 'scheduleRepo Error = ' . $e->getMessage();
 
         return false;
     } finally {
@@ -197,13 +235,13 @@ function deleteProgress($id) {
     }
 }
 
-function createProgress($mood, $medicine, $therapy_name, $patient_id, $date) {
+function createSchedule($date, $time, $type, $status) {
 
     $conn = db_conn();
 
 
     // Construct the SQL query
-    $insertQuery = "INSERT INTO `progress` (mood, medicine, therapy_name, patient_id, date) VALUES (?, ?, ?, ?, ?)";
+    $insertQuery = "INSERT INTO `schedule` (date, time, type, status) VALUES (?, ?, ?, ?)";
 
     try {
         // Prepare the statement
@@ -216,7 +254,7 @@ function createProgress($mood, $medicine, $therapy_name, $patient_id, $date) {
 
 
         // Bind parameters
-        $stmt->bind_param('sssis', $mood, $medicine, $therapy_name, $patient_id, $date);
+        $stmt->bind_param('ssss', $date, $time, $type, $status);
 
         // Execute the query
         $stmt->execute();
@@ -229,7 +267,7 @@ function createProgress($mood, $medicine, $therapy_name, $patient_id, $date) {
 
         return $newUserId;
     } catch (Exception $e) {
-        echo 'progressRepo Error = '.$e->getMessage();
+        echo 'ScheduleRepo Error = '.$e->getMessage();
         return -1;
     } finally {
         // Close the database connection

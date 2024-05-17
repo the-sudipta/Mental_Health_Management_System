@@ -3,10 +3,10 @@
 require_once __DIR__ . '/../model/db_connect.php';
 
 
-function findAllProgresses()
+function findAllSymptomsTrackForAllPatients()
 {
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `progress`';
+    $selectQuery = 'SELECT * FROM `symptom_track`';
 
     try {
         $result = $conn->query($selectQuery);
@@ -25,12 +25,12 @@ function findAllProgresses()
 
         // Check for an empty result set
         if (empty($rows)) {
-            throw new Exception("No rows found in the 'progress' table.");
+            throw new Exception("No rows found in the 'symptom_track' table.");
         }
 
         return $rows;
     } catch (Exception $e) {
-        echo 'progressRepo Error = ' . $e->getMessage();
+        echo 'symptom_trackRepo Error = ' . $e->getMessage();
         return null;
     } finally {
         // Close the database connection
@@ -38,10 +38,10 @@ function findAllProgresses()
     }
 }
 
-function findProgressByID($id)
+function findSymptomsTrackByID($id)
 {
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `progress` WHERE `id` = ?';
+    $selectQuery = 'SELECT * FROM `symptom_track` WHERE `id` = ?';
 
     try {
         $stmt = $conn->prepare($selectQuery);
@@ -65,7 +65,7 @@ function findProgressByID($id)
 
         // Check for an empty result set
         if (!$user) {
-            throw new Exception("No progress found with ID: " . $id);
+            throw new Exception("No symptom_track found with ID: " . $id);
         }
 
         // Close the statement
@@ -73,7 +73,7 @@ function findProgressByID($id)
 
         return $user;
     } catch (Exception $e) {
-        echo 'progressRepo Error = ' . $e->getMessage();
+        echo 'symptom_trackRepo Error = ' . $e->getMessage();
         return null;
     } finally {
         // Close the database connection
@@ -81,10 +81,10 @@ function findProgressByID($id)
     }
 }
 
-function findAllProgressesByPatientID($id)
+function findAllSymptomsTrackByPatientID($id)
 {
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `progress` WHERE `patient_id` = '.$id;
+    $selectQuery = 'SELECT * FROM `symptom_track` WHERE `patient_id` = '.$id;
 
     try {
         $result = $conn->query($selectQuery);
@@ -103,12 +103,12 @@ function findAllProgressesByPatientID($id)
 
         // Check for an empty result set
         if (empty($rows)) {
-            throw new Exception("No rows found in the 'progress' table.");
+            throw new Exception("No rows found in the 'symptom_track' table.");
         }
 
         return $rows;
     } catch (Exception $e) {
-        echo 'progressRepo Error = '. $e->getMessage();
+        echo 'symptom_trackRepo Error = '. $e->getMessage();
 
         return null;
     } finally {
@@ -117,17 +117,26 @@ function findAllProgressesByPatientID($id)
     }
 }
 
-function updateProgress($mood, $medicine, $therapy_name, $date, $id)
+function updateSymptomsTrack($mood_swings, $changes_in_appetite, $sleep_disturbances, $difficulty_concentrating, $loss_of_interest_in_activities, $feelings_of_hopelessness,
+                        $increased_irritability, $social_withdrawal, $lack_of_energy, $suicidal_thoughts, $date, $id)
 {
     $conn = db_conn();
 
     // Construct the SQL query
-    $updateQuery = "UPDATE `progress` SET 
-                    mood = ?,
-                    medicine = ?,
-                    therapy_name = ?,
+    $updateQuery = "UPDATE `symptom_track` SET 
+                    mood_swings = ?,
+                    changes_in_appetite = ?,
+                    sleep_disturbances = ?,
+                    difficulty_concentrating = ?,
+                    loss_of_interest_in_activities = ?,
+                    feelings_of_hopelessness = ?,
+                    increased_irritability = ?,
+                    social_withdrawal = ?,
+                    lack_of_energy = ?,
+                    suicidal_thoughts = ?,
                     date = ?
                     WHERE id = ?";
+
 
     try {
         // Prepare the statement
@@ -139,7 +148,8 @@ function updateProgress($mood, $medicine, $therapy_name, $date, $id)
         }
 
         // Bind parameters
-        $stmt->bind_param('ssssi', $mood, $medicine, $therapy_name, $date, $id);
+        $stmt->bind_param('sssssssssssi', $mood_swings, $changes_in_appetite, $sleep_disturbances, $difficulty_concentrating, $loss_of_interest_in_activities,
+            $feelings_of_hopelessness, $increased_irritability, $social_withdrawal, $lack_of_energy, $suicidal_thoughts, $date, $id);
 
         // Execute the query
         $stmt->execute();
@@ -148,7 +158,7 @@ function updateProgress($mood, $medicine, $therapy_name, $date, $id)
         return true;
     } catch (Exception $e) {
         // Handle the exception, you might want to log it or return false
-        echo 'progressRepo Error = ' . $e->getMessage();
+        echo 'symptom_trackRepo Error = ' . $e->getMessage();
         return false;
     } finally {
         // Close the statement
@@ -159,12 +169,12 @@ function updateProgress($mood, $medicine, $therapy_name, $date, $id)
     }
 }
 
-function deleteProgress($id) {
+function deleteSymptom_track($id) {
 
     $conn = db_conn();
 
     // Construct the SQL query
-    $updateQuery = "DELETE FROM `progress` WHERE id = ?";
+    $updateQuery = "DELETE FROM `symptom_track` WHERE id = ?";
 
     try {
         // Prepare the statement
@@ -185,7 +195,7 @@ function deleteProgress($id) {
         return true;
     } catch (Exception $e) {
         // Handle the exception, you might want to log it or return false
-        echo 'progressRepo Error = ' . $e->getMessage();
+        echo 'symptom_trackRepo Error = ' . $e->getMessage();
 
         return false;
     } finally {
@@ -197,13 +207,15 @@ function deleteProgress($id) {
     }
 }
 
-function createProgress($mood, $medicine, $therapy_name, $patient_id, $date) {
+function createSymptom_track($mood_swings, $changes_in_appetite, $sleep_disturbances, $difficulty_concentrating, $loss_of_interest_in_activities, $feelings_of_hopelessness,
+                        $increased_irritability, $social_withdrawal, $lack_of_energy, $suicidal_thoughts, $date, $patient_id) {
 
     $conn = db_conn();
 
 
     // Construct the SQL query
-    $insertQuery = "INSERT INTO `progress` (mood, medicine, therapy_name, patient_id, date) VALUES (?, ?, ?, ?, ?)";
+    $insertQuery = "INSERT INTO `symptom_track` (mood_swings, changes_in_appetite, sleep_disturbances, difficulty_concentrating, loss_of_interest_in_activities, feelings_of_hopelessness,
+                        increased_irritability, social_withdrawal, lack_of_energy, suicidal_thoughts, date, patient_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     try {
         // Prepare the statement
@@ -216,7 +228,8 @@ function createProgress($mood, $medicine, $therapy_name, $patient_id, $date) {
 
 
         // Bind parameters
-        $stmt->bind_param('sssis', $mood, $medicine, $therapy_name, $patient_id, $date);
+        $stmt->bind_param('sssssssssssi', $mood_swings, $changes_in_appetite, $sleep_disturbances, $difficulty_concentrating, $loss_of_interest_in_activities, $feelings_of_hopelessness,
+            $increased_irritability, $social_withdrawal, $lack_of_energy, $suicidal_thoughts, $date, $patient_id);
 
         // Execute the query
         $stmt->execute();
@@ -229,7 +242,7 @@ function createProgress($mood, $medicine, $therapy_name, $patient_id, $date) {
 
         return $newUserId;
     } catch (Exception $e) {
-        echo 'progressRepo Error = '.$e->getMessage();
+        echo 'symptom_trackRepo Error = '.$e->getMessage();
         return -1;
     } finally {
         // Close the database connection
