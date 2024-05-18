@@ -201,32 +201,47 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <?php
+                                                            <?php
                                                                 $patients = findAllPatientsByCareGiverID($care_giver_id);
 
                                                                 if (!empty($patients)) { // Check if patients array is not empty
                                                                     $rowCounter = 1; // Initialize a row counter
+                                                                    $progressIds = array(); // Array to store progress IDs for sorting
+
                                                                     // Loop through each patient
                                                                     foreach ($patients as $patient) {
                                                                         $progressList = findAllProgressesByPatientID($patient['id']);
 
                                                                         // Check if progress data is fetched successfully and not an error message
                                                                         if ($progressList !== null && !in_array("No rows found in the 'progress' table.", $progressList)) {
-                                                                            // Loop through each progress record
+                                                                            // Add progress IDs to the array for sorting
                                                                             foreach ($progressList as $progress) {
-                                                                                // Output table row with progress details
-                                                                                echo "<tr>";
-                                                                                echo "<td>" . $rowCounter++ . "</td>"; // Use the row counter and increment it
-                                                                                echo "<td>" . htmlspecialchars($patient['name']) . "</td>";
-                                                                                echo "<td>" . htmlspecialchars($progress['mood']) . "</td>";
-                                                                                echo "<td>" . htmlspecialchars($progress['medication_adherence']) . "</td>";
-                                                                                echo "<td>" . htmlspecialchars($progress['therapy_attended']) . "</td>";
-                                                                                echo "<td>" . htmlspecialchars($progress['date']) . "</td>";
-                                                                                echo "</tr>";
+                                                                                $progressIds[] = $progress['id'];
                                                                             }
-                                                                        } else {
-                                                                            // Optionally, you can display a message when no progress records are found for a patient
-                                                                            // echo "<tr><td colspan='6'>No progress records found for " . htmlspecialchars($patient['name']) . ".</td></tr>";
+                                                                        }
+                                                                    }
+
+                                                                    // Sort progress IDs in descending order
+                                                                    rsort($progressIds);
+
+                                                                    // Loop through sorted progress IDs and display corresponding progress records
+                                                                    foreach ($progressIds as $progressId) {
+                                                                        // Find the progress record with this ID
+                                                                        foreach ($patients as $patient) {
+                                                                            $progressList = findAllProgressesByPatientID($patient['id']);
+                                                                            foreach ($progressList as $progress) {
+                                                                                if ($progress['id'] == $progressId) {
+                                                                                    // Display the progress record
+                                                                                    echo "<tr>";
+                                                                                    echo "<td>" . $rowCounter++ . "</td>"; // Use the row counter and increment it
+                                                                                    echo "<td>" . htmlspecialchars($patient['name']) . "</td>";
+                                                                                    echo "<td>" . htmlspecialchars($progress['mood']) . "</td>";
+                                                                                    echo "<td>" . htmlspecialchars($progress['medication_adherence']) . "</td>";
+                                                                                    echo "<td>" . htmlspecialchars($progress['therapy_attended']) . "</td>";
+                                                                                    echo "<td>" . htmlspecialchars($progress['date']) . "</td>";
+                                                                                    echo "</tr>";
+                                                                                }
+                                                                            }
                                                                         }
                                                                     }
                                                                 } else {
@@ -234,6 +249,7 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                                                     echo "<tr><td colspan='6'>No patients found.</td></tr>";
                                                                 }
                                                                 ?>
+
 
 
 
