@@ -277,13 +277,13 @@ function deleteAllSchedulesByPatientID($patient_id)
 }
 
 
-function createSchedule($date, $time, $type, $status) {
+function createSchedule($purpose, $type, $time_from, $time_to, $date, $status, $patient_id) {
 
     $conn = db_conn();
 
 
     // Construct the SQL query
-    $insertQuery = "INSERT INTO `schedule` (date, time, type, status) VALUES (?, ?, ?, ?)";
+    $insertQuery = "INSERT INTO `schedule` (purpose, type, time_from, time_to, date, status, patient_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     try {
         // Prepare the statement
@@ -296,7 +296,7 @@ function createSchedule($date, $time, $type, $status) {
 
 
         // Bind parameters
-        $stmt->bind_param('ssss', $date, $time, $type, $status);
+        $stmt->bind_param('ssssssi', $purpose, $type, $time_from, $time_to, $date, $status, $patient_id);
 
         // Execute the query
         $stmt->execute();

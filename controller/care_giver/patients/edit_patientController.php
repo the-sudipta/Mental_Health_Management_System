@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 //        $user_id = createUser($email, $password, "caregiver");
         echo '<br>Selected Patient ID = '.$selected_patient_id.'<br>';
 
-        echo "<br>Creating Patient Profile<br>";
+        echo "<br>Updating Patient Profile<br>";
 
         if($selected_patient_id > 0){
             $patient_id = updatePatient($name, $age, $phone, $gender, $medication, $diagnosis, $selected_patient_id);
@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 navigate($patient_page);
                 exit;
             }else{
-                echo '<br> <p style="color: #dc3545">Redirecting to Patient page BUT Patient Profile could not be created</p><br>';
+                echo '<br> <p style="color: #dc3545">Redirecting to Patient page BUT Patient Profile could not be Updated</p><br>';
                 navigate($patient_page);
                 exit;
             }
