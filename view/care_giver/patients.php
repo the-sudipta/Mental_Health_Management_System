@@ -31,6 +31,8 @@ $Emergency_Support = $routes['care_giver_emergency_support'];
 $add_patient_controller = $backend_routes['care_giver_add_a_patient_controller'];
 $delete_patient_controller = $backend_routes['care_giver_delete_patient_controller'];
 $Logout_Controller = $backend_routes['logout_controller'];
+$edit_patient_controller = $backend_routes['care_giver_edit_patient_controller'];
+
 
 $care_giver_id = $_SESSION['user_id'];
 
@@ -473,33 +475,34 @@ if($patient_by_id) {
                             <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                         </div>
                         <div class='modal-body'>
-                        <form class='row g-3'>
+                        <form action='".$edit_patient_controller."' method='POST' class='row g-3'>
+                            <input hidden name='selected_patient_id' value='".$patient_by_id['id']."' />
                         <div class='col-md-6'>
                             <label for='update_patient_name' class='form-label'>Name</label>
-                            <input type='text' class='form-control' id='update_patient_name' value='" . htmlspecialchars($patient_by_id['name'] ?? '') . "'>
+                            <input type='text' name='name' class='form-control' id='update_patient_name' value='" . htmlspecialchars($patient_by_id['name'] ? : '') . "'>
                         </div>
                         <div class='col-md-6'>
                             <label for='update_patient_age' class='form-label'>Age</label>
-                            <input type='number' class='form-control' id='update_patient_age' value='" . htmlspecialchars($patient_by_id['age'] ?? '') . "'>
+                            <input type='number' name='age' class='form-control' id='update_patient_age' value='" . htmlspecialchars($patient_by_id['age'] ? : '') . "'>
                         </div>
                         <div class='col-md-6'>
                             <label for='update_patient_diagnosis' class='form-label'>Diagnosis</label>
-                            <input type='text' class='form-control' id='update_patient_diagnosis' value='" . htmlspecialchars($patient_by_id['diagnosis'] ?? '') . "'>
+                            <input type='text' name='diagnosis' class='form-control' id='update_patient_diagnosis' value='" . htmlspecialchars($patient_by_id['diagnosis'] ? : '') . "'>
                         </div>
                         <div class='col-md-6'>
                             <label for='update_patient_medication' class='form-label'>Medication</label>
-                            <input type='text' class='form-control' id='update_patient_medication' value='" . htmlspecialchars($patient_by_id['medication'] ?? '') . "'>
+                            <input type='text' name='medication' class='form-control' id='update_patient_medication' value='" . htmlspecialchars($patient_by_id['medication'] ? : '') . "'>
                         </div>
                         <div class='col-md-12'>
                             <label for='update_patient_gender' class='form-label'>Gender</label>
-                            <select class='form-select' id='update_patient_gender'>
+                            <select class='form-select' name='patient_gender' id='update_patient_gender'>
                                 <option value='Male' " . (isset($patient_by_id['gender']) && $patient_by_id['gender'] == 'Male' ? 'selected' : '') . ">Male</option>
                                 <option value='Female' " . (isset($patient_by_id['gender']) && $patient_by_id['gender'] == 'Female' ? 'selected' : '') . ">Female</option>
                             </select>
                         </div>
                         <div class='col-md-12'>
                             <label for='contact_number' class='form-label'>Contact Number</label>
-                            <input type='text' class='form-control' id='contact_number' value='" . htmlspecialchars($patient_by_id['phone'] ?? '') . "'>
+                            <input type='text' name='phone' class='form-control' id='contact_number' value='" . htmlspecialchars($patient_by_id['phone'] ?? '') . "'>
                         </div>
                         <div class='col-12'>
                             <button class='btn cust-bg-color1 w-100' type='submit'>Update</button>
