@@ -30,7 +30,8 @@ function findAllSchedules()
 
         return $rows;
     } catch (Exception $e) {
-        echo 'scheduleRepo Error = ' . $e->getMessage();
+        echo 'progressRepo Error = '.$e->getMessage();
+        header("Location: /Mental_Health_Management_System/error/database_error.php?error_message=".$e->getMessage());
         return null;
     } finally {
         // Close the database connection
@@ -101,15 +102,14 @@ function findAllSchedulesByPatientID($id)
             $rows[] = $row;
         }
 
-        // Check for an empty result set
+        // Check for an empty result set and throw an exception if no rows are found
         if (empty($rows)) {
-            throw new Exception("No rows found in the 'schedule' table.");
+           return ["No rows found in the 'schedule' table."];
         }
 
         return $rows;
     } catch (Exception $e) {
         echo 'scheduleRepo Error = '. $e->getMessage();
-
         return null;
     } finally {
         // Close the database connection

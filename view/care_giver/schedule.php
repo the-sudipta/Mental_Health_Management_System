@@ -36,6 +36,7 @@ $delete_appointment_schedule = $backend_routes['care_giver_delete_a_schedule_con
 $Logout_Controller = $backend_routes['logout_controller'];
 $care_giver_id = $_SESSION['user_id'];
 
+//echo '<h1>'.$care_giver_id.'</h1>';
 $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
 
 ?>
@@ -207,30 +208,43 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                                                 <?php
 
                                                                     // Check if data is fetched successfully
-                                                                    if ($patients_of_care_giver) {
-                                                                        // Loop through each patient
-                                                                        foreach ($patients_of_care_giver as $index => $patients_of_care_givers) {
-                                                                            $schedule_Lists = findAllSchedulesByPatientID($patients_of_care_givers['id']);
-                                                                            // Check if progress data is fetched successfully
-                                                                            if ($schedule_Lists) {
-                                                                                // Loop through each progress record
-                                                                                foreach ($schedule_Lists as $schedule_List) {
+                                                                // Check if data is fetched successfully
+                                                                // Check if data is fetched successfully
+                                                                if (!empty($patients_of_care_giver)) {
+                                                                    // Loop through each patient
+                                                                    foreach ($patients_of_care_giver as $index => $patient) {
+//                                                                        echo '<h1 style="color: #dc3545">'.$patient['id'].'</h1>';
+
+                                                                        // Verify first if the patient has any schedule or not
+                                                                        $schedule_Lists = findAllSchedulesByPatientID($patient['id']);
+
+                                                                        // If there are schedules for the patient and the returned array does not contain the specific message
+                                                                        if ($schedule_Lists !== null && !in_array("No rows found in the 'schedule' table.", $schedule_Lists)) {
+                                                                            // Loop through each schedule record
+                                                                            foreach ($schedule_Lists as $schedule_List) {
+                                                                                if ($patient['id'] === $schedule_List['patient_id']) {
+//                                                                                    echo '<h1 style="color: #0f1b9d"> DATE = ' .$schedule_List['date'].'</h1>';
                                                                                     echo "<tr>";
                                                                                     echo "<td>" . ($index + 1) . "</td>"; // Increment index to start from 1
-                                                                                    echo "<td>" . htmlspecialchars($patients_of_care_givers['name']) . "</td>";
+                                                                                    echo "<td>" . htmlspecialchars($patient['name']) . "</td>";
                                                                                     echo "<td>" . htmlspecialchars($schedule_List['status']) . "</td>";
                                                                                     echo "<td>" . htmlspecialchars($schedule_List['type']) . "</td>";
                                                                                     echo "<td>" . htmlspecialchars($schedule_List['date']) . "</td>";
-                                                                                    echo "<td><a href='{$delete_appointment_schedule}?delete_schedule=".$schedule_List['id']."'  class='border text-danger btn-sm'><i class='fa-regular fa-trash-can'></i></a></td>";
+                                                                                    echo "<td><a href='{$delete_appointment_schedule}?delete_schedule=".$schedule_List['id']."' class='border text-danger btn-sm'><i class='fa-regular fa-trash-can'></i></a></td>";
                                                                                     echo "</tr>";
                                                                                 }
-                                                                            } 
+                                                                            }
+                                                                        } else {
+//                                                                            echo "<tr><td colspan='7'>No schedules found for " . htmlspecialchars($patient['name']) . ".</td></tr>";
                                                                         }
-                                                                    } else {
-                                                                        // If no patients found, display a message in a single row
-                                                                        echo "<tr><td colspan='6'>No patients found.</td></tr>";
                                                                     }
-                                                                    ?>
+                                                                } else {
+                                                                    // If no patients found, display a message in a single row
+                                                                    echo "<tr><td colspan='6'>No patients found.</td></tr>";
+                                                                }
+
+
+                                                                ?>
                                                             </tbody>
 
                                                         </table>

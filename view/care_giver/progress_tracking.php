@@ -204,33 +204,36 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                                                 <?php
                                                                     $patients = findAllPatientsByCareGiverID($care_giver_id);
 
-                                                                    // Check if data is fetched successfully
-                                                                    if ($patients) {
-                                                                        // Loop through each patient
-                                                                        foreach ($patients as $index => $patient) {
-                                                                            $progressList = findAllProgressesByPatientID($patient['id']);
+                                                                if (!empty($patients)) { // Check if patients array is not empty
+                                                                    // Loop through each patient
+                                                                    foreach ($patients as $index => $patient) {
+                                                                        $progressList = findAllProgressesByPatientID($patient['id']);
 
-                                                                            // Check if progress data is fetched successfully
-                                                                            if ($progressList) {
-                                                                                // Loop through each progress record
-                                                                                foreach ($progressList as $progress) {
-                                                                                    // Output table row with progress details
-                                                                                    echo "<tr>";
-                                                                                    echo "<td>" . ($index + 1) . "</td>"; // Increment index to start from 1
-                                                                                    echo "<td>" . htmlspecialchars($patient['name']) . "</td>";
-                                                                                    echo "<td>" . htmlspecialchars($progress['mood']) . "</td>";
-                                                                                    echo "<td>" . htmlspecialchars($progress['medication_adherence']) . "</td>";
-                                                                                    echo "<td>" . htmlspecialchars($progress['therapy_attended']) . "</td>";
-                                                                                    echo "<td>" . htmlspecialchars($progress['date']) . "</td>";
-                                                                                    echo "</tr>";
-                                                                                }
-                                                                            } 
+                                                                        // Check if progress data is fetched successfully and not an error message
+                                                                        if ($progressList !== null && !in_array("No rows found in the 'progress' table.", $progressList)) {
+                                                                            // Loop through each progress record
+                                                                            foreach ($progressList as $progress) {
+                                                                                // Output table row with progress details
+                                                                                echo "<tr>";
+                                                                                echo "<td>" . ($index + 1) . "</td>"; // Increment index to start from 1
+                                                                                echo "<td>" . htmlspecialchars($patient['name']) . "</td>";
+                                                                                echo "<td>" . htmlspecialchars($progress['mood']) . "</td>";
+                                                                                echo "<td>" . htmlspecialchars($progress['medication_adherence']) . "</td>";
+                                                                                echo "<td>" . htmlspecialchars($progress['therapy_attended']) . "</td>";
+                                                                                echo "<td>" . htmlspecialchars($progress['date']) . "</td>";
+                                                                                echo "</tr>";
+                                                                            }
+                                                                        } else {
+                                                                            // Optionally, you can display a message when no progress records are found for a patient
+//                                                                            echo "<tr><td colspan='6'>No progress records found for " . htmlspecialchars($patient['name']) . ".</td></tr>";
                                                                         }
-                                                                    } else {
-                                                                        // If no patients found, display a message in a single row
-                                                                        echo "<tr><td colspan='6'>No patients found.</td></tr>";
                                                                     }
-                                                                    ?>
+                                                                } else {
+                                                                    // If no patients found, display a message in a single row
+                                                                    echo "<tr><td colspan='6'>No patients found.</td></tr>";
+                                                                }
+
+                                                                ?>
 
 
 

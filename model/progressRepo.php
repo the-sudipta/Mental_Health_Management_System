@@ -103,7 +103,7 @@ function findAllProgressesByPatientID($id)
 
         // Check for an empty result set
         if (empty($rows)) {
-            throw new Exception("No rows found in the 'progress' table.");
+            return ["No rows found in the 'progress' table."];
         }
 
         return $rows;
