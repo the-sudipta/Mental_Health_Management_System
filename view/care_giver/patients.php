@@ -210,13 +210,15 @@ $care_giver_id = $_SESSION['user_id'];
                                                                 $patients = findAllPatientsByCareGiverID($care_giver_id);
                                                                 // Check if data is fetched successfully
                                                                 if ($patients) {
+                                                                    $rowCounter = 1;
+
                                                                     // Loop through each symptom
                                                                     foreach ($patients as $index => $patient) {
 //                                                                        if($patient['care_giver_id']== $care_giver_id){
                                                                             
                                                                             // Output table row with symptom details
                                                                             echo "<tr>";
-                                                                            echo "<td>" . ($index + 1) . "</td>"; // Increment index to start from 1
+                                                                            echo "<td>" . $rowCounter++ . "</td>"; // Increment index to start from 1
                                                                             echo "<td>" . $patient['name'] . "</td>"; // Assuming 'name' is the column name for patient's name
                                                                             echo "<td>" . $patient['age'] . "</td>"; // Assuming 'behaviour' is the column name for symptom behavior
                                                                             echo "<td>" . $patient['diagnosis'] . "</td>"; // Assuming 'date' is the column name for symptom date

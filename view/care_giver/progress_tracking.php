@@ -202,11 +202,12 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                                             </thead>
                                                             <tbody>
                                                                 <?php
-                                                                    $patients = findAllPatientsByCareGiverID($care_giver_id);
+                                                                $patients = findAllPatientsByCareGiverID($care_giver_id);
 
                                                                 if (!empty($patients)) { // Check if patients array is not empty
+                                                                    $rowCounter = 1; // Initialize a row counter
                                                                     // Loop through each patient
-                                                                    foreach ($patients as $index => $patient) {
+                                                                    foreach ($patients as $patient) {
                                                                         $progressList = findAllProgressesByPatientID($patient['id']);
 
                                                                         // Check if progress data is fetched successfully and not an error message
@@ -215,7 +216,7 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                                                             foreach ($progressList as $progress) {
                                                                                 // Output table row with progress details
                                                                                 echo "<tr>";
-                                                                                echo "<td>" . ($index + 1) . "</td>"; // Increment index to start from 1
+                                                                                echo "<td>" . $rowCounter++ . "</td>"; // Use the row counter and increment it
                                                                                 echo "<td>" . htmlspecialchars($patient['name']) . "</td>";
                                                                                 echo "<td>" . htmlspecialchars($progress['mood']) . "</td>";
                                                                                 echo "<td>" . htmlspecialchars($progress['medication_adherence']) . "</td>";
@@ -225,14 +226,13 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                                                             }
                                                                         } else {
                                                                             // Optionally, you can display a message when no progress records are found for a patient
-//                                                                            echo "<tr><td colspan='6'>No progress records found for " . htmlspecialchars($patient['name']) . ".</td></tr>";
+                                                                            // echo "<tr><td colspan='6'>No progress records found for " . htmlspecialchars($patient['name']) . ".</td></tr>";
                                                                         }
                                                                     }
                                                                 } else {
                                                                     // If no patients found, display a message in a single row
                                                                     echo "<tr><td colspan='6'>No patients found.</td></tr>";
                                                                 }
-
                                                                 ?>
 
 

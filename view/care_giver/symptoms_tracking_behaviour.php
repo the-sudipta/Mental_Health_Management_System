@@ -204,6 +204,7 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                                                 $symptoms = findAllSymptomsTrackForAllPatients();
                                                                 // Check if data is fetched successfully
                                                                 if ($symptoms) {
+                                                                    $rowCounter = 1;
                                                                     // Loop through each symptom
                                                                     foreach ($symptoms as $index => $symptom) {
                                                                         if($symptom['care_giver_id']== $care_giver_id){
@@ -211,7 +212,7 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                                                             $patient_data = findPatientByID($symptom['patient_id']);
                                                                             // Output table row with symptom details
                                                                             echo "<tr>";
-                                                                            echo "<td>" . ($index + 1) . "</td>"; // Increment index to start from 1
+                                                                            echo "<td>" . $rowCounter++ . "</td>"; // Increment index to start from 1
                                                                             echo "<td>" . $patient_data['name'] . "</td>"; // Assuming 'name' is the column name for patient's name
                                                                             echo "<td>" . $symptom['symptoms'] . "</td>"; // Assuming 'behaviour' is the column name for symptom behavior
                                                                             echo "<td>" . $symptom['date'] . "</td>"; // Assuming 'date' is the column name for symptom date
