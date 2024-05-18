@@ -324,13 +324,13 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                 <div class="d-flex align-items-center">
 
                                     <div class="form-check mx-1">
-                                        <input class="form-check-input" type="radio" name="type" id="Online">
+                                        <input class="form-check-input" value="Online" type="radio" name="type" id="Online">
                                         <label class="form-check-label" for="Online">
                                             Online
                                         </label>
                                     </div>
                                     <div class="form-check mx-1">
-                                        <input class="form-check-input" type="radio" name="type" id="Offline" checked>
+                                        <input class="form-check-input" value="Offline" type="radio" name="type" id="Offline" checked>
                                         <label class="form-check-label" for="Offline">
                                             Offline
                                         </label>

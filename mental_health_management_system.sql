@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2024 at 01:57 AM
+-- Generation Time: May 18, 2024 at 02:50 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -72,8 +72,7 @@ INSERT INTO `patient` (`id`, `name`, `age`, `phone`, `care_giver_id`, `gender`, 
 (5, 'Emma Brown', '30', '+1444333222', 1, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
 (6, 'Michael Davis', '50', '+1777888999', 2, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
 (8, 'William Taylor', '38', '+1999888777', 3, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
-(9, 'Sophia Martinez', '42', '+1223344556', 5, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
-(17, 'Test Patient', '40', '111111222334', 1, 'Male', '12431sfda', 'Test Problem', '2024-05-17');
+(9, 'Sophia Martinez', '42', '+1223344556', 5, 'Female', 'Napa', 'Head Pain', '2024-05-17');
 
 -- --------------------------------------------------------
 
@@ -111,7 +110,9 @@ INSERT INTO `progress` (`id`, `mood`, `medication_adherence`, `therapy_attended`
 (14, 'Very Happy', 'Excellent', '33', 3, '2024-05-25'),
 (15, 'Sad', 'Poor', '12', 2, '2024-05-29'),
 (16, 'Very Happy', 'Excellent', '1111', 2, '2026-06-25'),
-(18, 'Not Good 😔', 'Irregular', '3', 2, '2023-12-28');
+(18, 'Not Good 😔', 'Irregular', '3', 2, '2023-12-28'),
+(19, 'Sad 😐', 'Poor', '12', 3, '2024-05-23'),
+(20, 'Not Good 😔', 'Excellent', '500', 4, '2023-06-02');
 
 -- --------------------------------------------------------
 
@@ -122,27 +123,28 @@ INSERT INTO `progress` (`id`, `mood`, `medication_adherence`, `therapy_attended`
 CREATE TABLE `schedule` (
   `id` int(50) NOT NULL,
   `date` varchar(50) NOT NULL,
-  `time` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'Pending',
   `patient_id` int(11) NOT NULL,
-  `type` varchar(50) NOT NULL
+  `type` varchar(50) NOT NULL,
+  `purpose` varchar(50) NOT NULL,
+  `time_from` varchar(50) NOT NULL,
+  `time_to` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `schedule`
 --
 
-INSERT INTO `schedule` (`id`, `date`, `time`, `status`, `patient_id`, `type`) VALUES
-(1, '2024-05-17', '09:00 AM', 'Confirmed', 1, 'Online'),
-(2, '2024-05-18', '10:30 AM', 'Confirmed', 2, 'Offline'),
-(3, '2024-05-19', '11:00 AM', 'Pending', 3, 'Offline'),
-(4, '2024-05-20', '02:00 PM', 'Cancelled', 4, 'Offline'),
-(5, '2024-05-21', '03:30 PM', 'Completed', 5, 'Online'),
-(6, '2024-05-22', '04:00 PM', 'Completed', 6, 'Offline'),
-(7, '2024-05-23', '10:00 AM', 'Completed', 7, 'Online'),
-(8, '2024-05-24', '01:30 PM', 'Confirmed', 8, 'Online'),
-(9, '2024-05-25', '11:30 AM', 'Pending', 9, 'Offline'),
-(10, '2024-05-26', '12:00 PM', 'Cancelled', 10, 'Online');
+INSERT INTO `schedule` (`id`, `date`, `status`, `patient_id`, `type`, `purpose`, `time_from`, `time_to`) VALUES
+(1, '2024-05-17', 'Confirmed', 1, 'Online', 'test1', '12:00', '2:00'),
+(2, '2024-05-18', 'Confirmed', 2, 'Offline', 'test1', '12:00', '2:00'),
+(3, '2024-05-19', 'Pending', 3, 'Offline', 'test1', '12:00', '2:00'),
+(4, '2024-05-20', 'Cancelled', 4, 'Offline', 'test1', '12:00', '2:00'),
+(6, '2024-05-22', 'Completed', 6, 'Offline', 'test1', '12:00', '2:00'),
+(7, '2024-05-23', 'Completed', 7, 'Online', 'test1', '12:00', '2:00'),
+(8, '2024-05-24', 'Confirmed', 8, 'Online', 'test1', '12:00', '2:00'),
+(9, '2024-05-25', 'Pending', 9, 'Offline', 'test1', '12:00', '2:00'),
+(12, '2024-05-25', 'Pending', 2, 'Offline', 'Jane Test', '13:00', '15:00');
 
 -- --------------------------------------------------------
 
@@ -165,7 +167,7 @@ CREATE TABLE `symptom_track` (
 INSERT INTO `symptom_track` (`id`, `symptoms`, `date`, `patient_id`, `care_giver_id`) VALUES
 (11, 'Mood swings,\nChanges in appetite', '2024-05-17', 1, 1),
 (12, 'Fatigue or lack of energy,\nPhysical symptoms without medical cause ,(headaches, stomachaches, etc.),\nSuicidal thoughts or self-harming behaviors,', '2024-05-17', 9, 15),
-(13, 'Mood Swings, Sleep Disturbance, Difficulty Concentrating, Social Withdrawal, Suicidal Thoughts', '2024-05-16', 17, 1);
+(13, 'Mood Swings, Sleep Disturbance, Difficulty Concentrating, Social Withdrawal, Suicidal Thoughts', '2024-05-16', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -241,25 +243,25 @@ ALTER TABLE `care_giver`
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `progress`
 --
 ALTER TABLE `progress`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `symptom_track`
 --
 ALTER TABLE `symptom_track`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `user`

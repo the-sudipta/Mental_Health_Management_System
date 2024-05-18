@@ -104,42 +104,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($everythingOK && $everythingOKCounter === 0) {
 
         echo "<br>all ok<br>";
+
         $care_giver_id = $_SESSION['user_id'];
-//        $user_id = createUser($email, $password, "caregiver");
         echo '<br>Care giver ID = '.$care_giver_id.'<br>';
 
-        echo "<br>Creating Patient Profile<br>";
+        echo "<br>Creating Schedule<br>";
 
         if($care_giver_id > 0){
 
-//            $patient_id = 0;
             $patient_id = createSchedule($purpose, $type, $time_from, $time_to, $date, $status, $selected_patient_id );
 
             if($patient_id > 0){
                 echo '<br><p style="color: chartreuse">Redirecting to Patient Page</p><br>';
-//                navigate($schedule_page);
-//                exit;
+                navigate($schedule_page);
+                exit;
             }else{
                 echo '<br> <p style="color: #dc3545">Redirecting to Patient page BUT Patient Profile could not be created</p><br>';
-//                navigate($schedule_page);
-//                exit;
+                navigate($schedule_page);
+                exit;
             }
         }else{
             echo '<br><p style="color: #dc3545">Redirecting to Login Page Because Care Giver ID not Found</p><br>';
-//            navigate($Login_page);
-//            exit;
+            navigate($Login_page);
+            exit;
         }
     } else {
 
         echo '<br><p style="color: #dc3545">Redirecting to Patient Page BUT there is data validation issue</p><br>';
-//        navigate($schedule_page);
-//        exit;
+        navigate($schedule_page);
+        exit;
     }
 }else{
     http_response_code(405);
     navigate($schedule_page);
 
     echo '<h1 style="color: #ff8839">SORRY! GOT GET REQUEST</h1>';
-//    navigate($error_405);
-//    exit;
+    navigate($error_405);
+    exit;
 }
