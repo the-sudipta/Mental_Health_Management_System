@@ -7,10 +7,6 @@ global $routes, $backend_routes, $image_routes;
 require '../../routes.php';
 require '../../utils/system_functions.php';
 require '../../utils/calculationProvider.php';
-require '../../model/symptom_trackRepo.php';
-require '../../model/patientRepo.php';
-require '../../model/scheduleRepo.php';
-require '../../model/care_giverRepo.php';
 
 
 $Login_page = $routes['login'];
@@ -39,12 +35,6 @@ $care_giver_id = $_SESSION['user_id'];
 
 //echo '<h1>'.$care_giver_id.'</h1>';
 $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
-
-
-$care_giver_data = findCareGiverByUserID($care_giver_id);
-$currentDate = date('j, F Y');
-
-
 
 ?>
 
@@ -112,7 +102,7 @@ $currentDate = date('j, F Y');
                     <div class="mt-auto w-100">
                         <div class="mx-2 d-flex justify-content-center ">
                             <div class="user-title-box text-center d-lg-none d-block">
-                                <label class="cust-color1"><?php echo $care_giver_data['name']; ?></label><br>
+                                <label class="cust-color1">Tofayal Ahmed</label><br>
                                 <h6><b>Care Givers</b></h6>
 
                             </div>
@@ -121,7 +111,7 @@ $currentDate = date('j, F Y');
                         <div class="mx-2 text-center">
                             <div class="date m-2 d-lg-none d-block">
 
-                                <label><?php echo $currentDate; ?></label>
+                                <label>12,March 2024</label>
                             </div>
                         </div>
                     </div>
@@ -145,8 +135,8 @@ $currentDate = date('j, F Y');
                                 <div class="d-flex justify-content-center align-items-center">
                                     <div class="mx-2 d-flex justify-content-center ">
                                         <div class="user-title-box text-center d-lg-block d-none">
-                                            <label class="cust-color1"><?php echo $care_giver_data['name']; ?></label><br>
-                                            <h6><b>Care Givers</b></h6>
+                                            <label class="cust-color1">Tofayal Ahmed</label><br>
+                                            <h6><b>Care GIvers</b></h6>
 
                                         </div>
 
@@ -154,7 +144,7 @@ $currentDate = date('j, F Y');
                                     <div class="mx-2">
                                         <div class="date border p-1 px-2 d-lg-block d-none">
 
-                                            <label><?php echo $currentDate; ?></label>
+                                            <label>12,March 2024</label>
                                         </div>
                                     </div>
                                     <div class="mx-2">
@@ -210,7 +200,7 @@ $currentDate = date('j, F Y');
                                                                     <th>Action</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody id="symptoms-table-body">
+                                                            <tbody id="schedule_list">
 
                                                             <?php
 if (!empty($patients_of_care_giver)) {
@@ -254,6 +244,8 @@ if (!empty($patients_of_care_giver)) {
   echo "<tr><td colspan='6'>No patients found.</td></tr>";
 }
 ?>
+
+
 
 
                                                             </tbody>

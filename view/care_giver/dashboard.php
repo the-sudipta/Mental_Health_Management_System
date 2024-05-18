@@ -9,6 +9,7 @@ require '../../utils/system_functions.php';
 require '../../model/patientRepo.php';
 require '../../model/care_giverRepo.php';
 require '../../utils/calculationProvider.php';
+require '../../model/taskRepo.php';
 
 
 $Login_page = $routes['login'];
@@ -51,6 +52,7 @@ $online_schedule_percentage_change = getOnlineSchedulePercentageChange($care_giv
 $offline_schedule_percentage_change = getOfflineSchedulePercentageChange($care_giver_id);
 
 $care_giver_data = findCareGiverByUserID($care_giver_id);
+$tasks_data = findAllTasksByCareGiverID($care_giver_id);
 $currentDate = date('j, F Y');
 
 
@@ -283,6 +285,14 @@ $currentDate = date('j, F Y');
 
                                                             </div>
 
+
+                                                            <?php
+                                                                
+                                                                if ($tasks_data) {
+
+                                                                    // Loop through each symptom
+                                                                    foreach ($tasks_data as $index => $task_data) {
+                                                            ?>
                                                             <div class="col-12  mb-2">
                                                                 <div class="box">
                                                                     <div class="row">
@@ -290,10 +300,21 @@ $currentDate = date('j, F Y');
                                                                         <div class="col-8">
                                                                             <div class="left-box">
                                                                                 <div class="task-name d-flex">
+                                                                                    <?php
+                                                                                    if($task_data['status']=="Task Completed Successfully"){
+                                                                                        ?>
                                                                                     <i class="text-primary fa-solid fa-square-check"></i>
-                                                                                    <label class="mx-1"><b>Task Completed Successfully</b></label>
+
+                                                                                    <?php
+                                                                                    }else{
+                                                                                        ?>
+                                                                                    <i class="text-secondary fa-regular fa-square"></i>
+                                                                                    <?php
+                                                                                    }
+                                                                                    ?>
+                                                                                    <label class="mx-1"><b><?php echo $task_data['status']; ?></b></label>
                                                                                 </div>
-                                                                                <p class="px-md-3 px-0">Sign up for Medication training course for medicine.</p>
+                                                                                <p class="px-md-3 px-0"><?php echo $task_data['task_name']; ?></p>
 
                                                                             </div>
 
@@ -301,67 +322,7 @@ $currentDate = date('j, F Y');
                                                                         <div class="col-4">
 
                                                                             <div class="right-box">
-                                                                                <a href="#" class="d-block text-end text-primary" data-bs-toggle="modal" data-bs-target="#taskUpdateModal"><i class="text-right fa-solid fa-ellipsis"></i></a>
-
-                                                                                <label class="d-block text-end px-md-3 px-0">23, March 2024</label>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12  mb-2">
-                                                                <div class="box">
-
-                                                                    <div class="row">
-
-                                                                        <div class="col-8">
-                                                                            <div class="left-box">
-                                                                                <div class="task-name d-flex">
-                                                                                    <i class="text-primary fa-solid fa-square-check"></i>
-                                                                                    <label class="mx-1"><b>Task Completed Successfully</b></label>
-                                                                                </div>
-                                                                                <p class="px-md-3 px-0">Write down the todays behaviour of patients</p>
-
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div class="col-4">
-
-                                                                            <div class="right-box">
-                                                                                <a href="#" class="d-block text-end text-primary" data-bs-toggle="modal" data-bs-target="#taskUpdateModal"><i class="text-right fa-solid fa-ellipsis"></i></a>
-
-                                                                                <label class="d-block text-end px-md-3 px-0">23, March 2024</label>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 mb-2">
-                                                                <div class="box">
-
-                                                                    <div class="row">
-
-                                                                        <div class="col-8">
-                                                                            <div class="left-box">
-                                                                                <div class="task-name d-flex">
-                                                                                    <i class="text-primary fa-solid fa-square-check"></i>
-                                                                                    <label class="mx-1"><b>Task Completed Successfully</b></label>
-                                                                                </div>
-                                                                                <p class="px-md-3 px-0">Patients exercise</p>
-
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div class="col-4">
-
-                                                                            <div class="right-box">
-                                                                                <a href="#" class="d-block text-end text-primary" data-bs-toggle="modal" data-bs-target="#taskUpdateModal"><i class="text-right fa-solid fa-ellipsis"></i></a>
-
-                                                                                <label class="d-block text-end px-md-3 px-0">23, March 2024</label>
+                                                                                <label class="d-block text-end px-md-3 px-0"><?php echo $task_data['date']; ?></label>
                                                                             </div>
 
                                                                         </div>
@@ -370,37 +331,7 @@ $currentDate = date('j, F Y');
                                                                 </div>
                                                             </div>
 
-
-
-                                                            <div class="col-12 mb-2">
-                                                                <div class="box">
-
-                                                                    <div class="row">
-
-                                                                        <div class="col-8">
-                                                                            <div class="left-box">
-                                                                                <div class="task-name d-flex">
-                                                                                    <i class="text-secondary fa-regular fa-square"></i> <label class="mx-1"><b>Task Not Completed</b></label>
-                                                                                </div>
-                                                                                <p class="px-md-3 px-0">Set up afternoon meeting.</p>
-
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div class="col-4">
-
-                                                                            <div class="right-box">
-                                                                                <a href="#" class="d-block text-end text-primary" data-bs-toggle="modal" data-bs-target="#taskUpdateModal"><i class="text-right fa-solid fa-ellipsis"></i></a>
-
-                                                                                <label class="d-block text-end px-md-3 px-0">23, March 2024</label>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-
+                                                            <?php } } ?>
 
 
 
@@ -429,7 +360,7 @@ $currentDate = date('j, F Y');
 
                                                             </div>
 
-                                                            
+
                                                             <?php
 if (!empty($patients_of_care_giver)) {
   $rowCounter = 1;
@@ -500,11 +431,12 @@ if (!empty($patients_of_care_giver)) {
                                                                                         <li><b>Patient:</b> <?php echo $patient['name']; ?><?php
                                                                                         if($patient['gender']=="Male"){
                                                                                         ?>
-                                                                                        <small><span class="p-1  rounded-0  text-primary">(Male)</span></small>
-                                                                                        <?php } else { ?>
-                                                                                        <small><span class="p-1  rounded-0  text-danger">(Female)</span></small>
-                                                                                        <?php } ?></li>
-                                                                                        
+                                                                                            <small><span class="p-1  rounded-0  text-primary">(Male)</span></small>
+                                                                                            <?php } else { ?>
+                                                                                            <small><span class="p-1  rounded-0  text-danger">(Female)</span></small>
+                                                                                            <?php } ?>
+                                                                                        </li>
+
                                                                                         <li><b>Time:</b> <?php echo $schedule_List['time_from'].' - '. $schedule_List['time_to'] ?></li>
                                                                                         <li><b>Purpose:</b> <?php echo $schedule_List['purpose']; ?></li>
                                                                                         <li><b>Type:</b> <?php echo $schedule_List['type']; ?></li>
@@ -518,7 +450,7 @@ if (!empty($patients_of_care_giver)) {
 
 
                                                                         </ul>
-                                                                        
+
                                                                     </li>
 
                                                                 </ul>
@@ -606,55 +538,6 @@ if (!empty($patients_of_care_giver)) {
 
 
 
-        <!-- Task Update -->
-        <div class="modal fade" id="taskUpdateModal" tabindex="-1" aria-labelledby="taskUpdateModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Task Update</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-
-
-                        <form class="row g-3">
-
-
-                            <div class="col-md-12">
-                                <label for="taskname" class="form-label">Task name</label>
-                                <input type="text" disabled class="form-control" id="taskname" value="Set up afternoon meeting.">
-
-                            </div>
-
-
-                            <div class="col-md-12">
-                                <label for="validationCustom04" class="form-label">Status</label>
-                                <select class="form-select" id="status">
-                                    <option selected>Task Completed Successfully</option>
-                                    <option>Task Not Completed</option>
-                                </select>
-
-                            </div>
-                            <div class="col-md-12">
-                                <label for="date" class="form-label">Date</label>
-                                <input type="date" class="form-control" id="date">
-
-                            </div>
-                            <div class="col-12">
-                                <button class="btn btn-danger" type="submit">Delete</button>
-                                <button class="btn cust-bg-color1" type="submit">Update</button>
-                            </div>
-                        </form>
-
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
 
 
         <!-- Add Appointment -->
@@ -669,7 +552,7 @@ if (!empty($patients_of_care_giver)) {
 
 
 
-                    <form action="<?php echo $add_schedule_controller; ?>" method="post" class="row g-3" id="appointmentForm">
+                        <form action="<?php echo $add_schedule_controller; ?>" method="post" class="row g-3" id="appointmentForm">
 
 
                             <div class="col-md-12">
@@ -700,7 +583,7 @@ if (!empty($patients_of_care_giver)) {
 
 
 
-                            
+
 
                             <div class="col-12">
                                 <label for="fromtime" class="form-label">Type</label>
@@ -724,12 +607,12 @@ if (!empty($patients_of_care_giver)) {
                             </div>
                             <div class="col-12">
                                 <label for="fromtime" class="form-label">Time Duration</label>
-                               <div class="row">
+                                <div class="row">
                                     <div class="col-6">
                                         <input type="time" name="time_from" class="form-control" id="fromtime">
 
                                     </div>
-                                    
+
                                     <div class="col-6">
                                         <input type="time" name="time_to" class="form-control" id="totime">
 
@@ -738,7 +621,7 @@ if (!empty($patients_of_care_giver)) {
 
 
                                     <div class="col-12 time_duration" id="time_duration"></div>
-                               </div>
+                                </div>
 
                             </div>
                             <div class="col-12">
@@ -805,65 +688,65 @@ if (!empty($patients_of_care_giver)) {
 
 
         $(document).ready(function() {
-    $('#appointmentForm').submit(function(e) {
-        // Prevent the form from submitting
-        e.preventDefault();
+            $('#appointmentForm').submit(function(e) {
+                // Prevent the form from submitting
+                e.preventDefault();
 
-        // Remove any existing error messages
-        $('.error-message').remove();
+                // Remove any existing error messages
+                $('.error-message').remove();
 
-        var isValid = true;
+                var isValid = true;
 
-        // Validate appointment name
-        var appointmentName = $('#patient_name').val().trim();
-        if (appointmentName === "" || appointmentName === "Select Your Patient") {
-            $('#patient_name').after('<div class="error-message text-danger">Please select a patient</div>');
-            isValid = false;
-        }
+                // Validate appointment name
+                var appointmentName = $('#patient_name').val().trim();
+                if (appointmentName === "" || appointmentName === "Select Your Patient") {
+                    $('#patient_name').after('<div class="error-message text-danger">Please select a patient</div>');
+                    isValid = false;
+                }
 
-        // Validate purpose
-        var purpose = $('#purpose').val().trim();
-        if (purpose === "") {
-            $('#purpose').after('<div class="error-message text-danger">Please enter the purpose</div>');
-            isValid = false;
-        }
+                // Validate purpose
+                var purpose = $('#purpose').val().trim();
+                if (purpose === "") {
+                    $('#purpose').after('<div class="error-message text-danger">Please enter the purpose</div>');
+                    isValid = false;
+                }
 
-        // Validate schedule date
-        var scheduleDate = $('#schedule_date').val().trim();
-        if (scheduleDate === "") {
-            $('#schedule_date').after('<div class="error-message text-danger">Please enter the date</div>');
-            isValid = false;
-        }
+                // Validate schedule date
+                var scheduleDate = $('#schedule_date').val().trim();
+                if (scheduleDate === "") {
+                    $('#schedule_date').after('<div class="error-message text-danger">Please enter the date</div>');
+                    isValid = false;
+                }
 
-        // Validate time duration
-        var fromTime = $('#fromtime').val();
-        var toTime = $('#totime').val();
-        if (fromTime === "" || toTime === "") {
-            $('#fromtime').after('<div class="error-message text-danger">Please enter both start and end time</div>');
-            isValid = false;
-        } else if (fromTime >= toTime) {
-            $('#totime').after('<div class="error-message text-danger">End time must be after start time</div>');
-            isValid = false;
-        }
+                // Validate time duration
+                var fromTime = $('#fromtime').val();
+                var toTime = $('#totime').val();
+                if (fromTime === "" || toTime === "") {
+                    $('#fromtime').after('<div class="error-message text-danger">Please enter both start and end time</div>');
+                    isValid = false;
+                } else if (fromTime >= toTime) {
+                    $('#totime').after('<div class="error-message text-danger">End time must be after start time</div>');
+                    isValid = false;
+                }
 
-        // Validate type
-        var type = $('input[name="type"]:checked').length;
-        if (type === 0) {
-            $('#type-label').after('<div class="error-message text-danger">Please select a type</div>'); // Assuming you have an element with id "type-label"
-            isValid = false;
-        }
+                // Validate type
+                var type = $('input[name="type"]:checked').length;
+                if (type === 0) {
+                    $('#type-label').after('<div class="error-message text-danger">Please select a type</div>'); // Assuming you have an element with id "type-label"
+                    isValid = false;
+                }
 
-        // If all validation passes, submit the form
-        if (isValid) {
-            this.submit();
-        }
-    });
+                // If all validation passes, submit the form
+                if (isValid) {
+                    this.submit();
+                }
+            });
 
-    // Remove error message on input change
-    $('input, select').on('input change', function() {
-        $(this).next('.error-message').remove();
-    });
-});
+            // Remove error message on input change
+            $('input, select').on('input change', function() {
+                $(this).next('.error-message').remove();
+            });
+        });
 
     </script>
 

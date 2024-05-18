@@ -519,13 +519,24 @@ if($patient_by_id) {
                 </div>
             </div>
             `;
-            
-            // Append modal HTML to the body
-            $('body').append(modalHTML);
-            
-            // Show the modal
-            $('#updatepatientsModal').modal('show');
-        });
+           
+                // Append modal HTML to the body
+                $('body').append(modalHTML);
+
+                // Show the modal
+                $('#updatepatientsModal').modal('show');
+
+                // Event listener for modal hidden event
+                $('#updatepatientsModal').on('hidden.bs.modal', function () {
+                    // Remove the patient_id parameter from the URL
+                    var url = new URL(window.location.href);
+                    url.searchParams.delete('patient_id');
+                    window.history.replaceState({}, document.title, url.toString());
+
+                    // Optionally, remove the modal HTML from the body
+                    $('#updatepatientsModal').remove();
+                });
+            });
     </script>
     ";
 } else {
