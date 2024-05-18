@@ -62,12 +62,12 @@
 
                 </div>
 
-               <div class="text-center">
-                 <p class="mb-2"><b>Additional Resources:</b></p>
-                <ul>
-                    <li>National Alliance on Mental Illness (NAMI): https://www.nami.org/Home</li>
-                    <li>MentalHealth.gov: https://www.samhsa.gov/</li>
-                </ul>
+                <div class="text-center">
+                    <p class="mb-2"><b>Additional Resources:</b></p>
+                    <ul>
+                        <li>National Alliance on Mental Illness (NAMI): https://www.nami.org/Home</li>
+                        <li>MentalHealth.gov: https://www.samhsa.gov/</li>
+                    </ul>
                 </div>
             </div>
 

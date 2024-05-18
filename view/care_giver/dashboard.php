@@ -602,247 +602,189 @@ $Logout_Controller = $backend_routes['logout_controller'];
 
     <section class="modals">
 
-        <div class="tasks-modal">
 
 
 
-            <!-- Task Add -->
-            <div class="modal fade" id="taskAddModal" tabindex="-1" aria-labelledby="taskAddModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Task</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
+        <!-- Task Add -->
+        <div class="modal fade" id="taskAddModal" tabindex="-1" aria-labelledby="taskAddModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Task</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
 
 
 
-                            <form class="row g-3">
+                        <form class="row g-3">
 
 
-                                <div class="col-md-12">
-                                    <label for="taskname" class="form-label">Task name</label>
-                                    <input type="text" class="form-control" id="taskname" required>
+                            <div class="col-md-12">
+                                <label for="taskname" class="form-label">Task name</label>
+                                <input type="text" class="form-control" id="taskname">
 
-                                </div>
-
-
-                                <div class="col-md-12">
-                                    <label for="validationCustom04" class="form-label">Status</label>
-                                    <select class="form-select" id="status" required>
-                                        <option selected disabled value="">Choose...</option>
-                                        <option>Task Completed Successfully</option>
-                                        <option>Task Not Completed</option>
-                                    </select>
-
-                                </div>
-                                <div class="col-md-12">
-                                    <label for="date" class="form-label">Date</label>
-                                    <input type="date" class="form-control" id="date" required>
-
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn cust-bg-color1" type="submit">Submit</button>
-                                </div>
-                            </form>
+                            </div>
 
 
-                        </div>
+                            <div class="col-md-12">
+                                <label for="validationCustom04" class="form-label">Status</label>
+                                <select class="form-select" id="status">
+                                    <option selected disabled value="">Choose...</option>
+                                    <option>Task Completed Successfully</option>
+                                    <option>Task Not Completed</option>
+                                </select>
+
+                            </div>
+                            <div class="col-md-12">
+                                <label for="date" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="date">
+
+                            </div>
+                            <div class="col-12">
+                                <button class="btn cust-bg-color1" type="submit">Submit</button>
+                            </div>
+                        </form>
+
 
                     </div>
+
                 </div>
             </div>
-
-
-
-            <!-- Task Update -->
-            <div class="modal fade" id="taskUpdateModal" tabindex="-1" aria-labelledby="taskUpdateModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Task Update</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-
-
-
-                            <form class="row g-3">
-
-
-                                <div class="col-md-12">
-                                    <label for="taskname" class="form-label">Task name</label>
-                                    <input type="text" disabled class="form-control" id="taskname" value="Set up afternoon meeting." required>
-
-                                </div>
-
-
-                                <div class="col-md-12">
-                                    <label for="validationCustom04" class="form-label">Status</label>
-                                    <select class="form-select" id="status" required>
-                                        <option selected>Task Completed Successfully</option>
-                                        <option>Task Not Completed</option>
-                                    </select>
-
-                                </div>
-                                <div class="col-md-12">
-                                    <label for="date" class="form-label">Date</label>
-                                    <input type="date" class="form-control" id="date" required>
-
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-danger" type="submit">Delete</button>
-                                    <button class="btn cust-bg-color1" type="submit">Update</button>
-                                </div>
-                            </form>
-
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-
-
-
-            <!-- Add Appointment -->
-            <div class="modal fade" id="addAppointmentModal" tabindex="-1" aria-labelledby="addAppointmentModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Appointment</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-
-
-
-                            <form class="row g-3">
-
-
-                                <div class="col-md-12">
-                                    <label for="taskname" class="form-label">Appointment name</label>
-                                    <input type="text" class="form-control" id="taskname" required>
-
-                                </div>
-
-                                <div class="col-md-12">
-                                    <label for="purpose" class="form-label">Purpose</label>
-                                    <input type="text" class="form-control" id="purpose" required>
-
-                                </div>
-
-
-
-                                <div class="col-6">
-                                    <label for="fromtime" class="form-label">Time Duration</label>
-                                    <input type="time" class="form-control" id="fromtime" required>
-
-                                </div>
-                                <div class="col-6">
-                                    <label for="totime" class="form-label mb-4"></label>
-                                    <input type="time" class="form-control" id="totime" required>
-
-                                </div>
-
-                                <div class="col-12">
-                                    <label for="fromtime" class="form-label">Type</label>
-
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="type" id="Online">
-                                        <label class="form-check-label" for="Online">
-                                            Online
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="type" id="Offline" checked>
-                                        <label class="form-check-label" for="Offline">
-                                            Offline
-                                        </label>
-                                    </div>
-
-                                </div>
-
-
-
-                                <div class="col-12">
-                                    <button class="btn cust-bg-color1" type="submit">Submit</button>
-                                </div>
-                            </form>
-
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-
-
-
-            <!-- Update Appointment -->
-            <div class="modal fade" id="updateAppointmentModal" tabindex="-1" aria-labelledby="updateAppointmentModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Update Appointment</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-
-
-
-                            <form class="row g-3">
-
-
-                                <div class="col-md-12">
-                                    <label for="taskname" class="form-label">Appointment name</label>
-                                    <input type="text" class="form-control" id="taskname" required>
-
-                                </div>
-
-                                <div class="col-md-12">
-                                    <label for="purpose" class="form-label">Purpose</label>
-                                    <input type="text" class="form-control" id="purpose" required>
-
-                                </div>
-
-
-
-                                <div class="col-6">
-                                    <label for="fromtime" class="form-label">Time Duration</label>
-                                    <input type="time" class="form-control" id="fromtime" required>
-
-                                </div>
-                                <div class="col-6">
-                                    <label for="totime" class="form-label mb-4"></label>
-                                    <input type="time" class="form-control" id="totime" required>
-
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn cust-bg-color1" type="submit">Update</button>
-                                </div>
-                            </form>
-
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
-
-
-
-
-
         </div>
+
+
+
+        <!-- Task Update -->
+        <div class="modal fade" id="taskUpdateModal" tabindex="-1" aria-labelledby="taskUpdateModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Task Update</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+
+
+                        <form class="row g-3">
+
+
+                            <div class="col-md-12">
+                                <label for="taskname" class="form-label">Task name</label>
+                                <input type="text" disabled class="form-control" id="taskname" value="Set up afternoon meeting.">
+
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <label for="validationCustom04" class="form-label">Status</label>
+                                <select class="form-select" id="status">
+                                    <option selected>Task Completed Successfully</option>
+                                    <option>Task Not Completed</option>
+                                </select>
+
+                            </div>
+                            <div class="col-md-12">
+                                <label for="date" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="date">
+
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                                <button class="btn cust-bg-color1" type="submit">Update</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- Add Appointment -->
+        <div class="modal fade" id="addAppointmentModal" tabindex="-1" aria-labelledby="addAppointmentModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Appointment</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+
+
+                        <form class="row g-3" id="appointmentForm">
+
+
+                            <div class="col-md-12">
+                                <label for="appointment_name" class="form-label">Appointment name</label>
+                                <input type="text" class="form-control" id="appointment_name">
+
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="purpose" class="form-label">Purpose</label>
+                                <input type="text" class="form-control" id="purpose">
+
+                            </div>
+
+
+
+                            <div class="col-6">
+                                <label for="fromtime" class="form-label">Time Duration</label>
+                                <input type="time" class="form-control" id="fromtime">
+
+                            </div>
+                            <div class="col-6">
+                                <label for="totime" class="form-label mb-4"></label>
+                                <input type="time" class="form-control" id="totime">
+
+                            </div>
+
+                            <div class="col-12">
+                                <label for="fromtime" class="form-label">Type</label>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="type" id="Online">
+                                    <label class="form-check-label" for="Online">
+                                        Online
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="type" id="Offline" checked>
+                                    <label class="form-check-label" for="Offline">
+                                        Offline
+                                    </label>
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="col-12">
+                                <button class="btn cust-bg-color1" type="submit">Submit</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
 
 
     </section>
@@ -851,10 +793,24 @@ $Logout_Controller = $backend_routes['logout_controller'];
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
-    <script src="js/jquery-3.7.1.min.js"></script>
-    <script src="../js/main.js"></script>
+    <script src="../../js/jquery-3.7.1.min.js"></script>
+    <script src="../../js/main.js"></script>
 
     <script>
+        $(document).ready(function() {
+            $('.appointment').click(function(event) {
+                var details = $(this).find('.appointment-details');
+                var shortDetails = $(this).find('.appointment-short-details');
+                var angleDown = $(this).find('.fa-angle-down');
+                if (!$(event.target).closest('.appointment-details').length) {
+                    details.toggleClass('active');
+                    shortDetails.toggleClass('appointment-short-details-active');
+                    angleDown.toggleClass('active');
+                    angleDown.toggleClass('rotate', details.hasClass('active'));
+                }
+            });
+        });
+
         document.addEventListener("DOMContentLoaded", function() {
             // Fetch modal content from progresstrackingmodal.html
             fetch('education_resources.php')
@@ -865,6 +821,82 @@ $Logout_Controller = $backend_routes['logout_controller'];
                 })
                 .catch(error => console.error(error));
 
+        });
+        $(document).ready(function() {
+            $('.appointment').click(function(event) {
+                var details = $(this).find('.appointment-details');
+                var shortDetails = $(this).find('.appointment-short-details');
+                var angleDown = $(this).find('.fa-angle-down');
+                if (!$(event.target).closest('.appointment-details').length) {
+                    details.toggleClass('active');
+                    shortDetails.toggleClass('appointment-short-details-active');
+                    angleDown.toggleClass('active');
+                    angleDown.toggleClass('rotate', details.hasClass('active'));
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $('#appointmentForm').submit(function(e) {
+                // Prevent the form from submitting
+                e.preventDefault();
+
+                // Remove any existing error messages
+                $('.error-message').remove();
+
+                var isValid = true;
+
+                // Validate appointment name
+                var appointmentName = $('#appointment_name').val().trim();
+                if (appointmentName === "") {
+                    $('#appointment_name').after('<div class="error-message text-danger">Please enter the appointment name</div>');
+                    isValid = false;
+                }
+
+                // Validate purpose
+                var purpose = $('#purpose').val().trim();
+                if (purpose === "") {
+                    $('#purpose').after('<div class="error-message text-danger">Please enter the purpose</div>');
+                    isValid = false;
+                }
+
+                // Validate time duration
+                var fromTime = $('#fromtime').val();
+                var toTime = $('#totime').val();
+                if (fromTime === "") {
+                    $('#fromtime').after('<div class="error-message text-danger">Please enter the start time</div>');
+                    isValid = false;
+                }
+                if (toTime === "") {
+                    $('#totime').after('<div class="error-message text-danger">Please enter the end time</div>');
+                    isValid = false;
+                }
+                if (fromTime !== "" && toTime !== "" && fromTime >= toTime) {
+                    $('#totime').after('<div class="error-message text-danger">End time must be after start time</div>');
+                    isValid = false;
+                }
+
+                // Validate type
+                var type = $('input[name="type"]:checked').length;
+                if (type === 0) {
+                    $('input[name="type"]').parent().last().after('<div class="error-message text-danger">Please select a type</div>');
+                    isValid = false;
+                }
+
+                // If all validation passes, submit the form
+                if (isValid) {
+                    this.submit();
+                }
+            });
+
+            // Remove error message on input change
+            $('input').on('input change', function() {
+                $(this).next('.error-message').remove();
+            });
+
+            $('input[name="type"]').on('change', function() {
+                $('.error-message').remove();
+            });
         });
 
     </script>

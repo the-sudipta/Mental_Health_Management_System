@@ -1,26 +1,32 @@
 <?php
 
+require_once __DIR__ . '/../model/db_connect.php';
 
-session_start();
-global $routes, $backend_routes, $image_routes;
-//include_once '../Navigation_Links.php';
-require 'patientRepo.php';
-$care_giver_id = $_SESSION['user_id'];
-$patientId = $_GET['id'];
-// Get caregiver ID from current user (replace with your logic)
+// Function to fetch patient data by ID using a direct query
+function getPatientData($patientId) {
+    $conn = db_conn();
+    $patientId = intval($patientId); // Sanitize the input to prevent SQL injection
+    $sql = "SELECT name, age, diagnosis, medication, gender, phone FROM patient WHERE id = $patientId";
+    $result = $conn->query($sql);
 
-$patients = findAllPatientsByCareGiverID($care_giver_id); // Call the function
-
-if (isset($patients) && !empty($patients)) {
-    foreach ($patients as $patient) {
-        if ($patient['id'] == $patientId) {
-            echo json_encode($patient); // Encode data as JSON
-            exit(); // Stop script after finding the specific patient
-        }
+    if ($result && $result->num_rows > 0) {
+        $data = $result->fetch_assoc();
+    } else {
+        $data = ['error' => 'No patient found with the given ID'];
     }
-} 
 
-echo json_encode(['error' => 'Patient not found']);
+    $conn->close();
+    return $data;
+}
 
+// Main script execution
+header('Content-Type: application/json');
 
+if (isset($_GET['id'])) {
+    $patientId = intval($_GET['id']); // Convert to integer to avoid SQL injection
+    $data = getPatientData($patientId);
+    echo json_encode($data);
+} else {
+    echo json_encode(['error' => 'No ID provided']);
+}
 ?>

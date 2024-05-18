@@ -9,6 +9,7 @@ require '../../utils/system_functions.php';
 require '../../utils/calculationProvider.php';
 require '../../model/symptom_trackRepo.php';
 require '../../model/patientRepo.php';
+require '../../model/scheduleRepo.php';
 
 
 $Login_page = $routes['login'];
@@ -31,6 +32,7 @@ $Emergency_Support = $routes['care_giver_emergency_support'];
 
 
 $add_symptoms_tracking_controller = $backend_routes['care_giver_add_symptoms_tracking_controller'];
+$delete_appointment_schedule = $backend_routes['care_giver_delete_a_schedule_controller'];
 $Logout_Controller = $backend_routes['logout_controller'];
 $care_giver_id = $_SESSION['user_id'];
 
@@ -86,7 +88,7 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
 
                             <li class="nav-item"><a href="<?php echo $Dashboard_Page; ?>" class=" nav-link "><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
                             <li class="nav-item"><a href="<?php echo $Patients_Page; ?>" class=" nav-link"><i class="fa-solid fa-user-group"></i> Patients</a></li>
-                            <li class="nav-item"><a href="<?php echo $Schedule_Page; ?>" class="nav-link"><i class="fa-solid fa-calendar"></i> Schedule</a></li>
+                            <li class="nav-item"><a href="<?php echo $Schedule_Page; ?>" class="active-sidebar-button nav-link"><i class="fa-solid fa-calendar"></i> Schedule</a></li>
                             <!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Tasks</a></li>-->
                             <!--                            <li class="nav-item"><a href="#" class="nav-link"><i class="fa-regular fa-envelope"></i> Chats</a></li>-->
                             <li class="nav-item"><a href="<?php echo $Progress_Tracking_Page; ?>" class=" nav-link"><i class="fa-solid fa-chart-simple"></i> Progress Tracking</a></li>
@@ -94,7 +96,7 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                             <li class="nav-item"><a href="#" data-bs-toggle="modal" data-bs-target="#education_resourcesModal" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
                             <!-- This is a popup link -->
 
-                            <li class="nav-item"><a href="<?php echo $Symptoms_Tracking_Page; ?>" class="active-sidebar-button nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
+                            <li class="nav-item"><a href="<?php echo $Symptoms_Tracking_Page; ?>" class=" nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
                             <li class="nav-item"><a href="<?php echo $Emergency_Support; ?>" class="nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
                         </ul>
 
@@ -189,41 +191,46 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
 
                                                 <div class="col-12 mt-3">
                                                     <div class="table-container">
-                                                        <table class="table table-bordered  mt-2" id="symptoms-table-body">
+                                                        <table class="table table-bordered  mt-2" id="schedule_list">
                                                             <thead>
                                                                 <tr>
                                                                     <th>No</th>
                                                                     <th>Name</th>
-                                                                    <th>Symptoms</th>
+                                                                    <th>Status</th>
+                                                                    <th>Type</th>
                                                                     <th>Date</th>
+                                                                    <th>Action</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
-                                                                <?php
-                                                                // Call the PHP function to fetch data
-                                                                $symptoms = findAllSymptomsTrackForAllPatients();
-                                                                // Check if data is fetched successfully
-                                                                if ($symptoms) {
-                                                                    // Loop through each symptom
-                                                                    foreach ($symptoms as $index => $symptom) {
-                                                                        if($symptom['care_giver_id']== $care_giver_id){
+                                                            <tbody id="symptoms-table-body">
 
-                                                                            $patient_data = findPatientByID($symptom['patient_id']);
-                                                                            // Output table row with symptom details
-                                                                            echo "<tr>";
-                                                                            echo "<td>" . ($index + 1) . "</td>"; // Increment index to start from 1
-                                                                            echo "<td>" . $patient_data['name'] . "</td>"; // Assuming 'name' is the column name for patient's name
-                                                                            echo "<td>" . $symptom['symptoms'] . "</td>"; // Assuming 'behaviour' is the column name for symptom behavior
-                                                                            echo "<td>" . $symptom['date'] . "</td>"; // Assuming 'date' is the column name for symptom date
-                                                                            echo "</tr>";
-                                                                            
+                                                                <?php
+
+                                                                    // Check if data is fetched successfully
+                                                                    if ($patients_of_care_giver) {
+                                                                        // Loop through each patient
+                                                                        foreach ($patients_of_care_giver as $index => $patients_of_care_givers) {
+                                                                            $schedule_Lists = findAllSchedulesByPatientID($patients_of_care_givers['id']);
+                                                                            // Check if progress data is fetched successfully
+                                                                            if ($schedule_Lists) {
+                                                                                // Loop through each progress record
+                                                                                foreach ($schedule_Lists as $schedule_List) {
+                                                                                    echo "<tr>";
+                                                                                    echo "<td>" . ($index + 1) . "</td>"; // Increment index to start from 1
+                                                                                    echo "<td>" . htmlspecialchars($patients_of_care_givers['name']) . "</td>";
+                                                                                    echo "<td>" . htmlspecialchars($schedule_List['status']) . "</td>";
+                                                                                    echo "<td>" . htmlspecialchars($schedule_List['type']) . "</td>";
+                                                                                    echo "<td>" . htmlspecialchars($schedule_List['date']) . "</td>";
+                                                                                    echo "<td><a href='{$delete_appointment_schedule}?delete_schedule=".$schedule_List['id']."'  class='border text-danger btn-sm'><i class='fa-regular fa-trash-can'></i></a></td>";
+                                                                                    echo "</tr>";
+                                                                                }
+                                                                            } 
                                                                         }
+                                                                    } else {
+                                                                        // If no patients found, display a message in a single row
+                                                                        echo "<tr><td colspan='6'>No patients found.</td></tr>";
                                                                     }
-                                                                } else {
-                                                                    // If no data is fetched, display a message in a single row
-                                                                    echo "<tr><td colspan='4'>No symptoms found.</td></tr>";
-                                                                }
-                                                                ?>
+                                                                    ?>
                                                             </tbody>
 
                                                         </table>
@@ -252,7 +259,7 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
 
 
 
-        <!-- Task Add -->
+        <!-- Schedule Add -->
         <div class="modal fade" id="addpatientsModal" tabindex="-1" aria-labelledby="addpatientsModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -263,105 +270,59 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                     <div class="modal-body">
 
 
-
-                        <form class="row g-3" action="<?php echo $add_symptoms_tracking_controller; ?>" method="post" id="symptomsaddform">
-
+                        <form class="row g-3" id="appointmentForm">
 
 
+                            <div class="col-md-12">
+                                <label for="appointment_name" class="form-label">Appointment name</label>
+                                <input type="text" class="form-control" id="appointment_name">
 
-                            <div id="patient_name_id" class="col-12">
-                                <label for="patient_name" class="form-label"><b>Patient Name</b></label>
-                                <input type="hidden" id="selected_symptoms" name="symptoms_data">
-                                <select id="patient_name" class="form-control" name="selected_patient_id">
-                                    <option selected>Select Your Patient</option>
-                                    <?php
-                                    if (!empty($patients_of_care_giver)) {
-                                        // Iterate through each patient
-                                        foreach ($patients_of_care_giver as $patient) {
-                                            if ($patient['care_giver_id'] == $care_giver_id) {
-                                                // Output the option for each patient
-                                                echo '<option value="'.$patient['id'].'" >' . $patient['name'] . '</option>';
-//                                                echo '<input hidden name="selected_patient_id" type="number" value="'.$patient['id'].'"/>';
+                            </div>
 
-                                            }
-                                        }
-                                    }
-                                    ?>
-                                </select>
+                            <div class="col-md-12">
+                                <label for="purpose" class="form-label">Purpose</label>
+                                <input type="text" class="form-control" id="purpose">
+
                             </div>
 
 
 
-
-
-                            <div id="symptoms_checkboxes" class="col-12">
-                                <label for="Behaviour" class="form-label" class="form-label"><b>Behaviour</b></label>
-
-
-                                <div class="symptom form-check">
-                                    <input type="checkbox" value="Mood Swings" id="mood_swings" class="form-check-input">
-                                    <label class="form-check-label" for="mood_swings"><span>Mood swings</span></label>
-                                </div>
-
-                                <div class="symptom form-check">
-                                    <input type="checkbox" value="Changes In Appetite" id="changes_in_appetite" class="form-check-input">
-                                    <label class="form-check-label" for="changes_in_appetite"><span>Changes in appetite</span></label>
-                                </div>
-
-                                <div class="symptom form-check">
-                                    <input type="checkbox" value="Sleep Disturbance" id="sleep_disturbances" class="form-check-input">
-                                    <label class="form-check-label" for="sleep_disturbances"><span>Sleep disturbances</span></label>
-                                </div>
-
-                                <div class="symptom form-check">
-                                    <input type="checkbox" value="Difficulty Concentrating" id="difficulty_concentrating" class="form-check-input">
-                                    <label class="form-check-label" for="difficulty_concentrating"><span>Difficulty concentrating</span></label>
-                                </div>
-
-                                <div class="symptom form-check">
-                                    <input type="checkbox" value="Loss of Interest" id="loss_of_interest" class="form-check-input">
-                                    <label class="form-check-label" for="loss_of_interest"><span>Loss of interest in activities</span></label>
-                                </div>
-
-                                <div class="symptom form-check">
-                                    <input type="checkbox" value="Feelings of Hopelessness" id="feelings_of_hopelessness" class="form-check-input">
-                                    <label class="form-check-label" for="feelings_of_hopelessness"><span>Feelings of hopelessness or worthlessness</span></label>
-                                </div>
-
-                                <div class="symptom form-check">
-                                    <input type="checkbox" value="Increased Irritability" id="increased_irritability" class="form-check-input">
-                                    <label class="form-check-label" for="increased_irritability"><span>Increased irritability</span></label>
-                                </div>
-
-                                <div class="symptom form-check">
-                                    <input type="checkbox" value="Social Withdrawal" id="social_withdrawal" class="form-check-input">
-                                    <label class="form-check-label" for="social_withdrawal"><span>Social withdrawal</span></label>
-                                </div>
-                                <div class="symptom form-check">
-                                    <input type="checkbox" value="Fatigue or Lack of Energy" id="fatigue_or_lack_of_energy" class="form-check-input">
-                                    <label class="form-check-label" for="fatigue_or_lack_of_energy"><span>Fatigue or lack of energy</span></label>
-                                </div>
-
-                                <div class="symptom form-check">
-                                    <input value="Physical Symptoms" type="checkbox" id="physical_symptoms" class="form-check-input">
-                                    <label class="form-check-label" for="physical_symptoms"><span>Physical symptoms without medical cause (headaches, stomachaches, etc.)</span></label>
-                                </div>
-
-                                <div class="symptom form-check">
-                                    <input type="checkbox" value="Suicidal Thoughts" id="suicidal_thoughts" class="form-check-input">
-                                    <label class="form-check-label" for="suicidal_thoughts"><span>Suicidal thoughts or self-harming behaviors</span></label>
-                                </div>
+                            <div class="col-6">
+                                <label for="fromtime" class="form-label">Time Duration</label>
+                                <input type="time" class="form-control" id="fromtime">
 
                             </div>
-                            <div class="col-md-12 ">
-                                <label for="date" class="form-label"><b>Date</b></label>
-                                <input type="date" class="form-control" name="date" id="date">
+                            <div class="col-6">
+                                <label for="totime" class="form-label mb-4"></label>
+                                <input type="time" class="form-control" id="totime">
 
                             </div>
+
                             <div class="col-12">
-                                <button class="btn-symptomstracking btn btn-primary w-100" id="submitSymptoms">Submit</button>
+                                <label for="fromtime" class="form-label">Type</label>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="type" id="Online">
+                                    <label class="form-check-label" for="Online">
+                                        Online
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="type" id="Offline" checked>
+                                    <label class="form-check-label" for="Offline">
+                                        Offline
+                                    </label>
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="col-12">
+                                <button class="btn cust-bg-color1" type="submit">Submit</button>
                             </div>
                         </form>
+
 
 
                     </div>
@@ -401,69 +362,75 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
         });
 
         $(document).ready(function() {
-            new DataTable('#symptoms-table-body');
+            new DataTable('#schedule_list');
 
         });
 
-        document.getElementById('submitSymptoms').addEventListener('click', function() {
-            var checkboxes = document.querySelectorAll('.symptom input[type="checkbox"]:checked');
-            var selectedSymptoms = Array.from(checkboxes).map(function(checkbox) {
-                return checkbox.value; // Get the value attribute instead of id
-            }).join(', ');
-            console.log(selectedSymptoms); // Add this line for debugging
-            document.getElementById('selected_symptoms').value = selectedSymptoms;
-        });
 
-    </script>
-    <script>
         $(document).ready(function() {
-            $('#symptomsaddform').submit(function(e) {
+            $('#appointmentForm').submit(function(e) {
+                // Prevent the form from submitting
+                e.preventDefault();
+
                 // Remove any existing error messages
                 $('.error-message').remove();
 
-                // Validate patient name
-                var patientName = $('#patient_name').val();
-                if (patientName === "Select Your Patient") {
-                    $('#patient_name').after('<div class="error-message text-danger">Please select a patient</div>');
-                    return false;
+                var isValid = true;
+
+                // Validate appointment name
+                var appointmentName = $('#appointment_name').val().trim();
+                if (appointmentName === "") {
+                    $('#appointment_name').after('<div class="error-message text-danger">Please enter the appointment name</div>');
+                    isValid = false;
                 }
 
-                // Validate at least one symptom is checked
-                var symptomsChecked = $('#symptoms_checkboxes input:checked').length;
-                if (symptomsChecked === 0) {
-                    $('#symptoms_checkboxes').append('<div class="error-message text-danger">Please select at least one symptom</div>');
-                    return false;
+                // Validate purpose
+                var purpose = $('#purpose').val().trim();
+                if (purpose === "") {
+                    $('#purpose').after('<div class="error-message text-danger">Please enter the purpose</div>');
+                    isValid = false;
                 }
 
-                // Validate date
-                var date = $('#date').val();
-                if (date === "") {
-                    $('#date').after('<div class="error-message text-danger">Please select a date</div>');
-                    return false;
+                // Validate time duration
+                var fromTime = $('#fromtime').val();
+                var toTime = $('#totime').val();
+                if (fromTime === "") {
+                    $('#fromtime').after('<div class="error-message text-danger">Please enter the start time</div>');
+                    isValid = false;
+                }
+                if (toTime === "") {
+                    $('#totime').after('<div class="error-message text-danger">Please enter the end time</div>');
+                    isValid = false;
+                }
+                if (fromTime !== "" && toTime !== "" && fromTime >= toTime) {
+                    $('#totime').after('<div class="error-message text-danger">End time must be after start time</div>');
+                    isValid = false;
+                }
+
+                // Validate type
+                var type = $('input[name="type"]:checked').length;
+                if (type === 0) {
+                    $('input[name="type"]').parent().last().after('<div class="error-message text-danger">Please select a type</div>');
+                    isValid = false;
                 }
 
                 // If all validation passes, submit the form
-                this.submit();
+                if (isValid) {
+                    this.submit();
+                }
             });
 
-            // Remove error message on change of patient name
-            $('#patient_name').change(function() {
-                $('.error-message').remove();
+            // Remove error message on input change
+            $('input').on('input change', function() {
+                $(this).next('.error-message').remove();
             });
 
-            // Remove error message on change of symptoms
-            $('#symptoms_checkboxes input').change(function() {
-                $('.error-message').remove();
-            });
-
-            // Remove error message on change of date
-            $('#date').change(function() {
+            $('input[name="type"]').on('change', function() {
                 $('.error-message').remove();
             });
         });
 
     </script>
-
 
 </body>
 

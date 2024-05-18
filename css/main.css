@@ -130,7 +130,8 @@ body {
 
 .dashboard-part .sidebar-part {
     background: #FFFFFF;
-        height: 100% ;
+        height: 100vh ;
+
 
 }
 

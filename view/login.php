@@ -155,14 +155,8 @@ $sign_in_icon = $image_routes['sign_in_icon'];
                     $(".password-error").text("Please enter your password").show();
                     isValid = false;
                 } else {
-                    // Check password strength using checkPasswordStrength function
-                    var strength = checkPasswordStrength(password);
-                    if (strength !== "Strong") {
-                        $(".password-error").text("Password is not strong enough. Please consider using a combination of uppercase, lowercase, numbers, and symbols.").show();
-                        isValid = false;
-                    } else {
+                    
                         $(".password-error").hide();
-                    }
                 }
 
                 if (!isValid) {
@@ -172,33 +166,7 @@ $sign_in_icon = $image_routes['sign_in_icon'];
         });
 
         // Function to check password strength (informational only)
-        function checkPasswordStrength(password) {
-            var score = 0;
-            var hasUpper = /[A-Z]/.test(password);
-            var hasLower = /[a-z]/.test(password);
-            var hasNumber = /[0-9]/.test(password);
-            var hasSymbol = /[^\w\s]/.test(password);
-            var lengthBonus = Math.min(password.length, 10);
-
-            if (hasUpper) score++;
-            if (hasLower) score++;
-            if (hasNumber) score++;
-            if (hasSymbol) score++;
-
-            score += lengthBonus;
-
-            var strength = "";
-            if (score < 3) {
-                strength = "Weak";
-            } else if (score < 6) {
-                strength = "Medium";
-            } else {
-                strength = "Strong";
-            }
-
-            document.getElementById("password-strength").innerText = strength;
-            return strength;
-        }
+        
 
     </script>
 

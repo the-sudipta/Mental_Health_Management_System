@@ -7,7 +7,8 @@ global $routes, $backend_routes, $image_routes;
 require '../../routes.php';
 require '../../utils/system_functions.php';
 require '../../utils/calculationProvider.php';
-
+require '../../model/patientRepo.php';
+require '../../model/progressRepo.php';
 
 $Login_page = $routes['login'];
 if($_SESSION["user_id"] <= 0 && $_SESSION["role"] !== "caregiver"){
@@ -31,6 +32,9 @@ $Logout_Controller = $backend_routes['logout_controller'];
 $add_progressController = $backend_routes['care_giver_add_progress_controller'];
 
 
+$care_giver_id = $_SESSION['user_id'];
+
+$patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
 
 ?>
 
@@ -89,7 +93,7 @@ $add_progressController = $backend_routes['care_giver_add_progress_controller'];
                             <li class="nav-item"><a href="#" data-bs-toggle="modal" data-bs-target="#education_resourcesModal" class="nav-link"><i class="fa-regular fa-calendar-check"></i> Education And Resource</a></li>
                             <!-- This is a popup link -->
 
-                           
+
                             <li class="nav-item"><a href="<?php echo $Symptoms_Tracking_Page; ?>" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Symptom Tracking</a></li>
                             <li class="nav-item"><a href="<?php echo $Emergency_Support; ?>" class="nav-link"><i class="fa-solid fa-file-waveform"></i> Emergency Support</a></li>
                         </ul>
@@ -185,7 +189,7 @@ $add_progressController = $backend_routes['care_giver_add_progress_controller'];
 
                                                 <div class="col-12 mt-3">
                                                     <div class="table-container">
-                                                        <table class="table" id="patient_progress">
+                                                        <table class="table table-bordered  mt-2" id="patient_progress">
                                                             <thead>
                                                                 <tr>
                                                                     <th>No</th>
@@ -197,94 +201,40 @@ $add_progressController = $backend_routes['care_giver_add_progress_controller'];
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
-                                                                    <td>1</td>
-                                                                    <td>John Doe</td>
-                                                                    <td>Regular</td>
-                                                                    <td>😊</td>
-                                                                    <td>5</td>
-                                                                    <td>10/05/2023</td>
-                                                                </tr>
-                                                                <tr>
-                                                                      <td>2</td>
-                                                                      <td>Jane Smith</td>
-                                                                      <td>Irregular</td>
-                                                                      <td>😐</td>
-                                                                      <td>3</td>
-                                                                      <td>15/08/2023</td>
-                                                                </tr>
-                                                                <tr>
-                                                                      <td>3</td>
-                                                                      <td>Michael Johnson</td>
-                                                                      <td>Regular</td>
-                                                                      <td>😔</td>
-                                                                      <td>8</td>
-                                                                      <td>22/06/2023</td>
-                                                                </tr>
-                                                                <tr>
-                                                                      <td>4</td>
-                                                                      <td>Emily Davis</td>
-                                                                      <td>Irregular</td>
-                                                                      <td>😊</td>
-                                                                      <td>4</td>
-                                                                      <td>01/09/2023</td>
-                                                                </tr>
-                                                                <tr>
-                                                                      <td>5</td>
-                                                                      <td>William Brown</td>
-                                                                      <td>Regular</td>
-                                                                      <td>😐</td>
-                                                                      <td>6</td>
-                                                                      <td>11/11/2023</td>
-                                                                </tr>
-                                                                <tr>
-                                                                      <td>6</td>
-                                                                      <td>Sarah Wilson</td>
-                                                                      <td>Regular</td>
-                                                                      <td>😊</td>
-                                                                      <td>7</td>
-                                                                      <td>03/04/2023</td>
-                                                                </tr>
-                                                                <tr>
-                                                                      <td>7</td>
-                                                                      <td>David Martinez</td>
-                                                                      <td>Irregular</td>
-                                                                      <td>😔</td>
-                                                                      <td>2</td>
-                                                                      <td>19/07/2023</td>
-                                                                </tr>
-                                                                <tr>
-                                                                      <td>8</td>
-                                                                      <td>Emma Garcia</td>
-                                                                      <td>Regular</td>
-                                                                      <td>😊</td>
-                                                                      <td>9</td>
-                                                                      <td>28/10/2023</td>
-                                                                </tr>
-                                                                <tr>
-                                                                      <td>9</td>
-                                                                      <td>James Rodriguez</td>
-                                                                      <td>Irregular</td>
-                                                                      <td>😐</td>
-                                                                      <td>5</td>
-                                                                      <td>07/12/2023</td>
-                                                                </tr>
-                                                                <tr>
-                                                                      <td>10</td>
-                                                                      <td>Ava Lopez</td>
-                                                                      <td>Regular</td>
-                                                                      <td>😊</td>
-                                                                      <td>4</td>
-                                                                      <td>14/02/2023</td>
-                                                                </tr>
-                                                                <tr>
-                                                                      <td>11</td>
-                                                                      <td>Benjamin Lee</td>
-                                                                      <td>Regular</td>
-                                                                      <td>😔</td>
-                                                                      <td>6</td>
-                                                                      <td>25/05/2023</td>
-                                                                </tr>
+                                                                <?php
+                                                                    $patients = findAllPatientsByCareGiverID($care_giver_id);
+
+                                                                    // Check if data is fetched successfully
+                                                                    if ($patients) {
+                                                                        // Loop through each patient
+                                                                        foreach ($patients as $index => $patient) {
+                                                                            $progressList = findAllProgressesByPatientID($patient['id']);
+
+                                                                            // Check if progress data is fetched successfully
+                                                                            if ($progressList) {
+                                                                                // Loop through each progress record
+                                                                                foreach ($progressList as $progress) {
+                                                                                    // Output table row with progress details
+                                                                                    echo "<tr>";
+                                                                                    echo "<td>" . ($index + 1) . "</td>"; // Increment index to start from 1
+                                                                                    echo "<td>" . htmlspecialchars($patient['name']) . "</td>";
+                                                                                    echo "<td>" . htmlspecialchars($progress['mood']) . "</td>";
+                                                                                    echo "<td>" . htmlspecialchars($progress['medication_adherence']) . "</td>";
+                                                                                    echo "<td>" . htmlspecialchars($progress['therapy_attended']) . "</td>";
+                                                                                    echo "<td>" . htmlspecialchars($progress['date']) . "</td>";
+                                                                                    echo "</tr>";
+                                                                                }
+                                                                            } 
+                                                                        }
+                                                                    } else {
+                                                                        // If no patients found, display a message in a single row
+                                                                        echo "<tr><td colspan='6'>No patients found.</td></tr>";
+                                                                    }
+                                                                    ?>
+
+
+
+
 
                                                             </tbody>
 
@@ -327,23 +277,35 @@ $add_progressController = $backend_routes['care_giver_add_progress_controller'];
 
 
 
-                        <form class="row g-3" action="<?php echo $add_progressController; ?>" method="post">
+                        <form class="row g-3" action="<?php echo $add_progressController; ?>" method="post" id="progressForm">
 
 
 
                             <div class="col-md-6">
                                 <label for="patient_name" class="form-label">Select Patient</label>
-                                <select class="form-select" aria-label="Default select example" name="patient_id" required>
+
+
+                                <select class="form-select" aria-label="Default select example" name="patient_id" id="patient_name">
                                     <option selected>Select Your Patient</option>
-                                    <option value="1">John Doe</option>
-                                    <option value="2">Jane Smith</option>
-                                    <option value="3">Michael Johnson</option>
+                                    <?php
+                                    if (!empty($patients_of_care_giver)) {
+                                        // Iterate through each patient
+                                        foreach ($patients_of_care_giver as $patient) {
+                                            if ($patient['care_giver_id'] == $care_giver_id) {
+                                                // Output the option for each patient
+                                                echo '<option value="'.$patient['id'].'" >' . $patient['name'] . '</option>';
+//                                                echo '<input hidden name="selected_patient_id" type="number" value="'.$patient['id'].'"/>';
+
+                                            }
+                                        }
+                                    }
+                                    ?>
                                 </select>
 
                             </div>
                             <div class="col-md-6">
                                 <label for="medication_adherence" class="form-label">Medication Adherence</label>
-                                <select class="form-select" aria-label="Default select example" name="medication_adherence" required>
+                                <select class="form-select" aria-label="Default select example" name="medication_adherence" id="medication_adherence">
                                     <option selected>Select Adherence</option>
                                     <option value="Irregular">Irregular</option>
                                     <option value="Poor">Poor</option>
@@ -354,7 +316,7 @@ $add_progressController = $backend_routes['care_giver_add_progress_controller'];
                             </div>
                             <div class="col-md-12">
                                 <label for="patient_mood" class="form-label">Patients Mood</label>
-                                <select class="form-select" aria-label="Default select example" name="patient_mood" required>
+                                <select class="form-select" aria-label="Default select example" name="patient_mood" id="patient_mood">
                                     <option selected>Select Patient Current Mood</option>
                                     <option value="Very Happy 😁">😁 (Very Happy)</option>
                                     <option value="Happy 😃">😃 (Happy)</option>
@@ -367,14 +329,14 @@ $add_progressController = $backend_routes['care_giver_add_progress_controller'];
 
                             <div class="col-md-12">
                                 <label for="therapy" class="form-label">Therapy Sessions Attended</label>
-                                <input placeholder="0" type="number" class="form-control" name="therapy" id="therapy" required>
+                                <input placeholder="0" type="number" class="form-control" name="therapy" id="therapy">
 
                             </div>
 
 
                             <div class="col-md-12">
                                 <label for="date" class="form-label">Date</label>
-                                <input type="date" class="form-control" id="date" name="date" required>
+                                <input type="date" class="form-control" id="date" name="date">
 
                             </div>
 
@@ -426,6 +388,70 @@ $add_progressController = $backend_routes['care_giver_add_progress_controller'];
                 })
                 .catch(error => console.error(error));
 
+        });
+
+
+
+
+
+        $(document).ready(function() {
+            $('#progressForm').submit(function(e) {
+                // Prevent the form from submitting
+                e.preventDefault();
+
+                // Remove any existing error messages
+                $('.error-message').remove();
+
+                var isValid = true;
+
+                // Validate patient name
+                var patientName = $('#patient_name').val();
+                if (patientName === "Select Your Patient") {
+                    $('#patient_name').after('<div class="error-message text-danger">Please select a patient</div>');
+                    isValid = false;
+                }
+
+                // Validate medication adherence
+                var medicationAdherence = $('#medication_adherence').val();
+                if (medicationAdherence === "Select Adherence") {
+                    $('#medication_adherence').after('<div class="error-message text-danger">Please select medication adherence</div>');
+                    isValid = false;
+                }
+
+                // Validate patient mood
+                var patientMood = $('#patient_mood').val();
+                if (patientMood === "Select Patient Current Mood") {
+                    $('#patient_mood').after('<div class="error-message text-danger">Please select the patients current mood</div>');
+                    isValid = false;
+                }
+
+                // Validate therapy sessions
+                var therapy = $('#therapy').val();
+                if (therapy === "") {
+                    $('#therapy').after('<div class="error-message text-danger">Please enter the number of therapy sessions attended</div>');
+                    isValid = false;
+                } else if (therapy < 0) {
+                    $('#therapy').after('<div class="error-message text-danger">Therapy sessions attended cannot be negative</div>');
+                    isValid = false;
+                }
+
+                // Validate date
+                var date = $('#date').val();
+                if (date === "") {
+                    $('#date').after('<div class="error-message text-danger">Please select a date</div>');
+                    isValid = false;
+                }
+
+                // If all validation passes, submit the form
+                if (isValid) {
+                    this.submit();
+                }
+            });
+
+            // Remove error message on change or input
+            $('select, input').on('change input', function() {
+                $(this).next('.error-message').remove();
+            });
         });
 
     </script>

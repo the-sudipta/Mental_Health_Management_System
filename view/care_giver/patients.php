@@ -190,7 +190,7 @@ $care_giver_id = $_SESSION['user_id'];
 
                                                 <div class="col-12 mt-3">
                                                     <div class="table-container">
-                                                        <table class="table " id="patientlist">
+                                                        <table class="table table-bordered mt-2" id="patientlist">
                                                             <thead>
                                                                 <tr>
                                                                     <th>No</th>
@@ -205,8 +205,7 @@ $care_giver_id = $_SESSION['user_id'];
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
-                                                                    <?php
+                                                                <?php
                                                                 // Call the PHP function to fetch data
                                                                 $patients = findAllPatientsByCareGiverID($care_giver_id);
                                                                 // Check if data is fetched successfully
@@ -227,7 +226,7 @@ $care_giver_id = $_SESSION['user_id'];
                                                                             echo "<td>" . $patient['date'] . "</td>"; // Assuming 'date' is the column name for symptom date
                                                                             echo "<td>
                                                                             
-                                                                                    <a href='?patient_id=".$patient['id']."' class='border text-primary btn-sm edit-button' data-bs-toggle='modal' data-bs-target='#updatepatientsModal'><i class='fa-regular fa-pen-to-square'></i></a>
+                                                                                    <a href='#' class='border text-primary btn-sm edit-button' data-id=". $patient['id'] . " data-bs-toggle='modal' data-bs-target='#updatepatientsModal'><i class='fa-regular fa-pen-to-square'></i></a>
                                                                                     <a href='{$delete_patient_controller}?delete_patient=".$patient['id']."'  class='border text-danger btn-sm'><i class='fa-regular fa-trash-can'></i></a>
                                                                                     
                                                                                 </td>";
@@ -235,14 +234,10 @@ $care_giver_id = $_SESSION['user_id'];
                                                                             
 //                                                                        }
                                                                     }
-                                                                } else {
-                                                                    // If no data is fetched, display a message in a single row
-                                                                    echo "<tr><td colspan='4'>No symptoms found.</td></tr>";
-                                                                }
+                                                                } 
                                                                 ?>
 
 
-                                                                </tr>
 
 
                                                             </tbody>
@@ -285,33 +280,33 @@ $care_giver_id = $_SESSION['user_id'];
 
 
 
-                        <form class="row g-3" action="<?php echo $add_patient_controller; ?>" method="post">
+                        <form class="row g-3" action="<?php echo $add_patient_controller; ?>" method="post" id="addpatientForm">
                             <div class="col-md-6">
                                 <label for="patient_name" class="form-label">Name</label>
-                                <input type="text" class="form-control" name="name" id="patient_name" required>
+                                <input type="text" class="form-control" name="name" id="patient_name">
 
                             </div>
 
                             <div class="col-md-6">
                                 <label for="patient_age" class="form-label">Age</label>
-                                <input type="number" class="form-control" name="age" id="patient_age" required>
+                                <input type="number" class="form-control" name="age" id="patient_age">
 
                             </div>
                             <div class="col-md-6">
                                 <label for="patient_diagnosis" class="form-label">Diagnosis</label>
-                                <input type="text" name="diagnosis" class="form-control" id="patient_diagnosis" required>
+                                <input type="text" name="diagnosis" class="form-control" id="patient_diagnosis">
 
                             </div>
 
 
                             <div class="col-md-6">
                                 <label for="patient_medication" class="form-label">Medication</label>
-                                <input type="text" name="medication" class="form-control" id="patient_medication" required>
+                                <input type="text" name="medication" class="form-control" id="patient_medication">
 
                             </div>
                             <div class="col-md-12">
                                 <label for="patient_gender" class="form-label">Gender</label>
-                                <select class="form-select" name="patient_gender" id="patient_gender" aria-label="Default select example" required>
+                                <select class="form-select" name="patient_gender" id="patient_gender" aria-label="Default select example">
                                     <option selected value="null">Select</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
@@ -323,7 +318,7 @@ $care_giver_id = $_SESSION['user_id'];
 
                             <div class="col-md-12">
                                 <label for="contact_number" class="form-label">Contact Number</label>
-                                <input type="number" name="phone" class="form-control" id="contact_number" required>
+                                <input type="number" name="phone" class="form-control" id="contact_number">
 
                             </div>
 
@@ -360,31 +355,31 @@ $care_giver_id = $_SESSION['user_id'];
 
 
                             <div class="col-md-6">
-                                <label for="patient_name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="patient_name" required>
+                                <label for="update_patient_name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="update_patient_name">
 
                             </div>
 
                             <div class="col-md-6">
                                 <label for="patient_age" class="form-label">Age</label>
-                                <input type="number" class="form-control" id="patient_age" required>
+                                <input type="number" class="form-control" id="update_patient_age">
 
                             </div>
                             <div class="col-md-6">
-                                <label for="patient_diagnosis" class="form-label">Diagnosis</label>
-                                <input type="text" class="form-control" id="patient_diagnosis" required>
+                                <label for="update_patient_diagnosis" class="form-label">Diagnosis</label>
+                                <input type="text" class="form-control" id="update_patient_diagnosis">
 
                             </div>
 
 
                             <div class="col-md-6">
-                                <label for="patient_medication" class="form-label">Medication</label>
-                                <input type="text" class="form-control" id="patient_medication" required>
+                                <label for="update_patient_medication" class="form-label">Medication</label>
+                                <input type="text" class="form-control" id="update_patient_medication">
 
                             </div>
                             <div class="col-md-12">
-                                <label for="patient_gender" class="form-label">Gender</label>
-                                <select class="form-select" name="patient_gender" id="patient_gender" aria-label="Default select example" required>
+                                <label for="update_patient_gender" class="form-label">Gender</label>
+                                <select class="form-select" name="patient_gender" id="update_patient_gender" aria-label="Default select example">
                                     <option selected value="null">Select</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
@@ -395,7 +390,7 @@ $care_giver_id = $_SESSION['user_id'];
 
                             <div class="col-md-12">
                                 <label for="contact_number" class="form-label">Contact Number</label>
-                                <input type="number" class="form-control" id="contact_number" required>
+                                <input type="number" class="form-control" id="contact_number">
 
                             </div>
 
@@ -428,38 +423,32 @@ $care_giver_id = $_SESSION['user_id'];
 
     <script>
         $(document).ready(function() {
-            new DataTable('#patientlist');
-
-        });
-
-        $(document).ready(function() {
             $('.edit-button').on('click', function(event) {
-                const patientId = $(this).data('patientId');
+                const patientId = $(this).data('id');
 
                 $.ajax({
-                    url: '../../model/symptom_trackRepo.php?id=' + patientId,
+                    url: '../../model/patientRepobyid.php',
                     type: 'GET',
+                    data: {
+                        id: patientId
+                    },
                     dataType: 'json',
                     success: function(data) {
-                        if (data.error) {
-                            console.error(data.error);
-                            // Handle error message (optional)
-                            return;
-                        }
+                        alert("success");
 
-                        $('#patient_name').val(data.name);
-                        $('#patient_age').val(data.age);
+                        $('#update_patient_name').val(data.name);
+                        $('#update_patient_age').val(data.age);
                         // ... and so on for other fields
-                        $('#patient_diagnosis').val(data.diagnosis);
-                        $('#patient_medication').val(data.medication);
-                        $('#patient_gender').val(data.gender);
-                        $('#contact_number').val(data.phone); // Assuming 'phone' column for contact number
+                        $('#update_patient_diagnosis').val(data.diagnosis);
+                        $('#update_patient_medication').val(data.medication);
+                        $('#update_patient_gender').val(data.gender);
+                        $('#update_contact_number').val(data.phone); // Assuming 'phone' column for contact number
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        alert('panna');
-
                         console.error('Error fetching patient data:', textStatus, errorThrown);
                         // Handle error message (optional)
+                        alert("error");
+
                     }
                 });
             });
@@ -474,6 +463,79 @@ $care_giver_id = $_SESSION['user_id'];
                 })
                 .catch(error => console.error(error));
 
+        });
+        $(document).ready(function() {
+            new DataTable('#patientlist');
+
+        });
+        $(document).ready(function() {
+            $('#addpatientForm').submit(function(e) {
+                // Prevent the form from submitting
+                e.preventDefault();
+
+                // Remove any existing error messages
+                $('.error-message').remove();
+
+                var isValid = true;
+
+                // Validate name
+                var name = $('#patient_name').val().trim();
+                if (name === "") {
+                    $('#patient_name').after('<div class="error-message text-danger">Please enter the patient\'s name</div>');
+                    isValid = false;
+                }
+
+                // Validate age
+                var age = $('#patient_age').val();
+                if (age === "") {
+                    $('#patient_age').after('<div class="error-message text-danger">Please enter the patient\'s age</div>');
+                    isValid = false;
+                } else if (age < 0) {
+                    $('#patient_age').after('<div class="error-message text-danger">Age cannot be negative</div>');
+                    isValid = false;
+                }
+
+                // Validate diagnosis
+                var diagnosis = $('#patient_diagnosis').val().trim();
+                if (diagnosis === "") {
+                    $('#patient_diagnosis').after('<div class="error-message text-danger">Please enter the diagnosis</div>');
+                    isValid = false;
+                }
+
+                // Validate medication
+                var medication = $('#patient_medication').val().trim();
+                if (medication === "") {
+                    $('#patient_medication').after('<div class="error-message text-danger">Please enter the medication</div>');
+                    isValid = false;
+                }
+
+                // Validate gender
+                var gender = $('#patient_gender').val();
+                if (gender === "null") {
+                    $('#patient_gender').after('<div class="error-message text-danger">Please select the patient\'s gender</div>');
+                    isValid = false;
+                }
+
+                // Validate contact number
+                var contactNumber = $('#contact_number').val().trim();
+                if (contactNumber === "") {
+                    $('#contact_number').after('<div class="error-message text-danger">Please enter the contact number</div>');
+                    isValid = false;
+                } else if (!/^\d+$/.test(contactNumber)) {
+                    $('#contact_number').after('<div class="error-message text-danger">Please enter a valid contact number</div>');
+                    isValid = false;
+                }
+
+                // If all validation passes, submit the form
+                if (isValid) {
+                    this.submit();
+                }
+            });
+
+            // Remove error message on change or input
+            $('select, input').on('change input', function() {
+                $(this).next('.error-message').remove();
+            });
         });
 
     </script>

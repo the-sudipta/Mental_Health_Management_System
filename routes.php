@@ -13,7 +13,7 @@ $routes = [
     'care_givers_patients' => '/Mental_Health_Management_System/view/care_giver/patients.php',
     'care_giver_progress_tracking' => '/Mental_Health_Management_System/view/care_giver/progress_tracking.php',
     'care_giver_symptoms_tracking_behaviour' => '/Mental_Health_Management_System/view/care_giver/symptoms_tracking_behaviour.php',
-    'care_giver_schedule_page' => '/Mental_Health_Management_System/YOUR_PAGE_HERE',
+    'care_giver_schedule_page' => '/Mental_Health_Management_System/view/care_giver/schedule.php',
     'care_giver_education_and_resource' => '/Mental_Health_Management_System/view/care_giver/education_resources.php',
 
 ];
