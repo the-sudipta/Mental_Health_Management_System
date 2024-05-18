@@ -801,19 +801,7 @@ if (!empty($patients_of_care_giver)) {
                 .catch(error => console.error(error));
 
         });
-        $(document).ready(function() {
-            $('.appointment').click(function(event) {
-                var details = $(this).find('.appointment-details');
-                var shortDetails = $(this).find('.appointment-short-details');
-                var angleDown = $(this).find('.fa-angle-down');
-                if (!$(event.target).closest('.appointment-details').length) {
-                    details.toggleClass('active');
-                    shortDetails.toggleClass('appointment-short-details-active');
-                    angleDown.toggleClass('active');
-                    angleDown.toggleClass('rotate', details.hasClass('active'));
-                }
-            });
-        });
+
 
 
         $(document).ready(function() {
