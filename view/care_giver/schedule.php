@@ -167,7 +167,7 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                     <div class="dash-summery patinet-summery">
                         <div class="container-fluid mt-3">
 
-                            <label class="text-secondary mb-3">Dashboard > Symptoms</label>
+                            <label class="text-secondary mb-3">Schedule</label>
                             <div class="content-box rounded bg-white p-4 px-3">
                                 <div class="overall-patient-ratio ">
 
@@ -182,9 +182,9 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
 
                                                 <div class="col-12 ">
                                                     <div class="d-flex justify-content-between pb-2">
-                                                        <h6><b>Patients Symptoms List</b></h6>
+                                                        <h6><b>Patients Schedule List</b></h6>
 
-                                                        <a href="#" class="cust-color1" data-bs-toggle="modal" data-bs-target="#addpatientsModal">Add new symptoms <span class="border p-1"><i class="fa-solid fa-plus"></i></span></a>
+                                                        <a href="#" class="cust-color1" data-bs-toggle="modal" data-bs-target="#addpatientsModal">Add new schedule <span class="border p-1"><i class="fa-solid fa-plus"></i></span></a>
                                                     </div>
 
                                                 </div>
