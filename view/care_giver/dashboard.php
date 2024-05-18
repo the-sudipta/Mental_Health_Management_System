@@ -7,6 +7,7 @@ global $routes, $backend_routes, $image_routes;
 require '../../routes.php';
 require '../../utils/system_functions.php';
 require '../../utils/calculationProvider.php';
+require '../../model/patientRepo.php';
 
 
 $Login_page = $routes['login'];
@@ -29,7 +30,9 @@ $Emergency_Support = $routes['care_giver_emergency_support'];
 
 $Logout_Controller = $backend_routes['logout_controller'];
 
+$care_giver_id = $_SESSION['user_id'];
 
+$patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
 
 ?>
 

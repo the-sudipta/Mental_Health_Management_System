@@ -429,7 +429,7 @@ $care_giver_id = $_SESSION['user_id'];
                 const patientId = $(this).data('id');
 
                 $.ajax({
-                    url: '../../model/patientRepobyid.php',
+                    url: '/',
                     type: 'GET',
                     data: {
                         id: patientId
