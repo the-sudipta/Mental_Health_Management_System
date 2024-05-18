@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $everythingOKCounter += 1;
         echo "<br><p style='color: #dc3545'>Type cannot be empty</p><br>";
     } else {
-        echo "<br>Age = ".$type."<br>";
+        echo "<br>Type  ".$type."<br>";
         $everythingOK = TRUE;
     }
 
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $everythingOKCounter += 1;
         echo "<br><p style='color: #dc3545'>Starting Time Can not be Empty</p><br>";
     } else {
-        echo "<br>Purpose = ".$time_from."<br>";
+        echo "<br>Starting Time = ".$time_from."<br>";
         $everythingOK = TRUE;
     }
 
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $everythingOKCounter += 1;
         echo "<br><p style='color: #dc3545'>Ending Time Can not be Empty</p><br>";
     } else {
-        echo "<br>Purpose = ".$time_to."<br>";
+        echo "<br>Ending Time = ".$time_to."<br>";
         $everythingOK = TRUE;
     }
 
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $everythingOKCounter += 1;
         echo "<br><p style='color: #dc3545'>Date Can not be Empty</p><br>";
     } else {
-        echo "<br>Purpose = ".$date."<br>";
+        echo "<br>Date = ".$date."<br>";
         $everythingOK = TRUE;
     }
 

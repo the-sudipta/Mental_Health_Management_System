@@ -29,6 +29,7 @@ $Emergency_Support = $routes['care_giver_emergency_support'];
 // Backend Redirections
 
 $Logout_Controller = $backend_routes['logout_controller'];
+$add_schedule_controller = $backend_routes['care_giver_add_a_schedule_controller'];
 
 $care_giver_id = $_SESSION['user_id'];
 
@@ -721,7 +722,7 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
 
 
 
-                    <form class="row g-3" id="appointmentForm">
+                    <form action="<?php echo $add_schedule_controller; ?>" method="post" class="row g-3" id="appointmentForm">
 
 
                             <div class="col-md-12">
@@ -746,7 +747,7 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
 
                             <div class="col-md-12">
                                 <label for="purpose" class="form-label">Purpose</label>
-                                <input type="text" class="form-control" id="purpose">
+                                <input name="purpose" type="text" class="form-control" id="purpose">
 
                             </div>
 
@@ -760,13 +761,13 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                 <div class="d-flex align-items-center">
 
                                     <div class="form-check mx-1">
-                                        <input class="form-check-input" type="radio" name="type" id="Online">
+                                        <input class="form-check-input" value="Online" type="radio" name="type" id="Online">
                                         <label class="form-check-label" for="Online">
                                             Online
                                         </label>
                                     </div>
                                     <div class="form-check mx-1">
-                                        <input class="form-check-input" type="radio" name="type" id="Offline" checked>
+                                        <input class="form-check-input" value="Offline" type="radio" name="type" id="Offline" checked>
                                         <label class="form-check-label" for="Offline">
                                             Offline
                                         </label>
@@ -778,12 +779,12 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                 <label for="fromtime" class="form-label">Time Duration</label>
                                <div class="row">
                                     <div class="col-6">
-                                        <input type="time" class="form-control" id="fromtime">
+                                        <input type="time" name="time_from" class="form-control" id="fromtime">
 
                                     </div>
                                     
                                     <div class="col-6">
-                                        <input type="time" class="form-control" id="totime">
+                                        <input type="time" name="time_to" class="form-control" id="totime">
 
                                     </div>
 
