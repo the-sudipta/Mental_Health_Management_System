@@ -205,47 +205,64 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                                             </thead>
                                                             <tbody id="symptoms-table-body">
 
-                                                                <?php
-
-                                                                    // Check if data is fetched successfully
-                                                                // Check if data is fetched successfully
-                                                                // Check if data is fetched successfully
+                                                            <?php
                                                                 if (!empty($patients_of_care_giver)) {
                                                                     $rowCounter = 1;
+
+                                                                    // Array to store schedule IDs for sorting
+                                                                    $scheduleIds = array();
+
                                                                     // Loop through each patient
                                                                     foreach ($patients_of_care_giver as $index => $patient) {
-//                                                                        echo '<h1 style="color: #dc3545">'.$patient['id'].'</h1>';
 
                                                                         // Verify first if the patient has any schedule or not
                                                                         $schedule_Lists = findAllSchedulesByPatientID($patient['id']);
 
                                                                         // If there are schedules for the patient and the returned array does not contain the specific message
                                                                         if ($schedule_Lists !== null && !in_array("No rows found in the 'schedule' table.", $schedule_Lists)) {
-                                                                            // Loop through each schedule record
+                                                                            // Add schedule IDs to the array for sorting
                                                                             foreach ($schedule_Lists as $schedule_List) {
                                                                                 if ($patient['id'] === $schedule_List['patient_id']) {
-//                                                                                    echo '<h1 style="color: #0f1b9d"> DATE = ' .$schedule_List['date'].'</h1>';
-                                                                                    echo "<tr>";
-                                                                                    echo "<td>" .$rowCounter++ . "</td>"; // Increment index to start from 1
-                                                                                    echo "<td>" . htmlspecialchars($patient['name']) . "</td>";
-                                                                                    echo "<td>" . htmlspecialchars($schedule_List['status']) . "</td>";
-                                                                                    echo "<td>" . htmlspecialchars($schedule_List['type']) . "</td>";
-                                                                                    echo "<td>" . htmlspecialchars($schedule_List['date']) . "</td>";
-                                                                                    echo "<td><a href='{$delete_appointment_schedule_controller}?delete_schedule=".$schedule_List['id']."' class='border text-danger btn-sm'><i class='fa-regular fa-trash-can'></i></a></td>";
-                                                                                    echo "</tr>";
+                                                                                    $scheduleIds[] = $schedule_List['id'];
                                                                                 }
                                                                             }
-                                                                        } else {
-//                                                                            echo "<tr><td colspan='7'>No schedules found for " . htmlspecialchars($patient['name']) . ".</td></tr>";
+                                                                        }
+                                                                    }
+
+                                                                    // Sort schedule IDs in descending order
+                                                                    rsort($scheduleIds);
+
+                                                                    // Loop through sorted schedule IDs and display corresponding schedule records
+                                                                    foreach ($scheduleIds as $scheduleId) {
+                                                                        // Loop through each patient again to find the schedule record with this ID
+                                                                        foreach ($patients_of_care_giver as $index => $patient) {
+                                                                            // Verify first if the patient has any schedule or not
+                                                                            $schedule_Lists = findAllSchedulesByPatientID($patient['id']);
+
+                                                                            // If there are schedules for the patient and the returned array does not contain the specific message
+                                                                            if ($schedule_Lists !== null && !in_array("No rows found in the 'schedule' table.", $schedule_Lists)) {
+                                                                                // Loop through each schedule record
+                                                                                foreach ($schedule_Lists as $schedule_List) {
+                                                                                    if ($schedule_List['id'] == $scheduleId && $patient['id'] === $schedule_List['patient_id']) {
+                                                                                        echo "<tr>";
+                                                                                        echo "<td>" . $rowCounter++ . "</td>"; // Increment index to start from 1
+                                                                                        echo "<td>" . htmlspecialchars($patient['name']) . "</td>";
+                                                                                        echo "<td>" . htmlspecialchars($schedule_List['status']) . "</td>";
+                                                                                        echo "<td>" . htmlspecialchars($schedule_List['type']) . "</td>";
+                                                                                        echo "<td>" . htmlspecialchars($schedule_List['date']) . "</td>";
+                                                                                        echo "<td><a href='{$delete_appointment_schedule_controller}?delete_schedule=" . $schedule_List['id'] . "' class='border text-danger btn-sm'><i class='fa-regular fa-trash-can'></i></a></td>";
+                                                                                        echo "</tr>";
+                                                                                    }
+                                                                                }
+                                                                            }
                                                                         }
                                                                     }
                                                                 } else {
                                                                     // If no patients found, display a message in a single row
                                                                     echo "<tr><td colspan='6'>No patients found.</td></tr>";
                                                                 }
-
-
                                                                 ?>
+
                                                             </tbody>
 
                                                         </table>
