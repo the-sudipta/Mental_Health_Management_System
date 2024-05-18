@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2024 at 02:50 PM
+-- Generation Time: May 18, 2024 at 04:01 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -144,7 +144,8 @@ INSERT INTO `schedule` (`id`, `date`, `status`, `patient_id`, `type`, `purpose`,
 (7, '2024-05-23', 'Completed', 7, 'Online', 'test1', '12:00', '2:00'),
 (8, '2024-05-24', 'Confirmed', 8, 'Online', 'test1', '12:00', '2:00'),
 (9, '2024-05-25', 'Pending', 9, 'Offline', 'test1', '12:00', '2:00'),
-(12, '2024-05-25', 'Pending', 2, 'Offline', 'Jane Test', '13:00', '15:00');
+(12, '2024-05-25', 'Pending', 2, 'Offline', 'Jane Test', '13:00', '15:00'),
+(13, '2024-06-01', 'Pending', 5, 'Online', 'Test EMA', '17:15', '18:10');
 
 -- --------------------------------------------------------
 
@@ -168,6 +169,36 @@ INSERT INTO `symptom_track` (`id`, `symptoms`, `date`, `patient_id`, `care_giver
 (11, 'Mood swings,\nChanges in appetite', '2024-05-17', 1, 1),
 (12, 'Fatigue or lack of energy,\nPhysical symptoms without medical cause ,(headaches, stomachaches, etc.),\nSuicidal thoughts or self-harming behaviors,', '2024-05-17', 9, 15),
 (13, 'Mood Swings, Sleep Disturbance, Difficulty Concentrating, Social Withdrawal, Suicidal Thoughts', '2024-05-16', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `task`
+--
+
+CREATE TABLE `task` (
+  `id` int(50) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `task_name` varchar(50) NOT NULL,
+  `date` varchar(50) NOT NULL,
+  `care_giver_id` int(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `task`
+--
+
+INSERT INTO `task` (`id`, `status`, `task_name`, `date`, `care_giver_id`) VALUES
+(1, 'Task Not Completed', 'Administer medication to patient', '2024-05-18', 1),
+(2, 'Task Completed Successfully', 'Conduct therapy session with patient', '2024-05-17', 2),
+(3, 'Task Not Completed', 'Update patient medical records', '2024-05-18', 2),
+(4, 'Task Completed Successfully', 'Prepare treatment plan for new patient', '2024-05-18', 1),
+(5, 'Task Not Completed', 'Follow up on discharged patient', '2024-05-16', 1),
+(6, 'Task Completed Successfully', 'Organize group therapy session', '2024-05-19', 1),
+(7, 'Task Not Completed', 'Monitor patient vital signs', '2024-05-17', 3),
+(8, 'Task Completed Successfully', 'Assist patient with daily activities', '2024-05-18', 3),
+(9, 'Task Not Completed', 'Schedule next appointment with psychiatrist', '2024-05-19', 1),
+(10, 'Task Completed Successfully', 'Coordinate with family for patient care', '2024-05-15', 1);
 
 -- --------------------------------------------------------
 
@@ -224,6 +255,12 @@ ALTER TABLE `symptom_track`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `task`
+--
+ALTER TABLE `task`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -255,13 +292,19 @@ ALTER TABLE `progress`
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `symptom_track`
 --
 ALTER TABLE `symptom_track`
   MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `task`
+--
+ALTER TABLE `task`
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `user`
