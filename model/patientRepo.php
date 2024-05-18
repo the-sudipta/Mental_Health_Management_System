@@ -104,7 +104,7 @@ function findAllPatientsByCareGiverID($id)
 
         // Check for an empty result set
         if (empty($rows)) {
-            throw new Exception("No rows found in the 'patient' table. Created By Current Care Giver");
+//            throw new Exception("No rows found in the 'patient' table. Created By Current Care Giver");
         }
 
         return $rows;

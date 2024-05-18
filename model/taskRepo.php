@@ -25,7 +25,7 @@ function findAllTasksByCareGiverID($id)
 
         // Check for an empty result set
         if (empty($rows)) {
-            throw new Exception("No rows found in the 'task' table. Created By Current Care Giver");
+//            throw new Exception("No rows found in the 'task' table. Created By Current Care Giver");
         }
 
         return $rows;

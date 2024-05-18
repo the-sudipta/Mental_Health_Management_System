@@ -107,13 +107,21 @@ function getTotal_MALE_PatientCountByCareGiverID($care_giver_id): int
 {
     // Step 1: Fetch all the Patients from patients table by Care Giver ID
     $patients = findAllPatientsByCareGiverID($care_giver_id);
+
+    // Initialize the male patient count to 0
     $malePatientCount = 0;
 
-    // Step 2: Count the Number of Rows if gender is 'Male'
-    foreach ($patients as $patient) {
-        if ($patient['gender'] === 'Male') {
-            $malePatientCount++;
+    // Check if $patients is an array and not null
+    if (is_array($patients)) {
+        // Step 2: Count the Number of Rows if gender is 'Male'
+        foreach ($patients as $patient) {
+            if ($patient['gender'] === 'Male') {
+                $malePatientCount++;
+            }
         }
+    } else {
+        // Log an error message or handle the case where no patients are found
+        error_log("No patients found for Care Giver ID: " . $care_giver_id);
     }
 
     return $malePatientCount;
@@ -125,11 +133,17 @@ function getTotal_FEMALE_PatientCountByCareGiverID($care_giver_id): int
     $patients = findAllPatientsByCareGiverID($care_giver_id);
     $femalePatientCount = 0;
 
-    // Step 2: Count the Number of Rows if gender is 'Female'
-    foreach ($patients as $patient) {
-        if ($patient['gender'] === 'Female') {
-            $femalePatientCount++;
+    // Check if $patients is an array and not null
+    if (is_array($patients)) {
+        // Step 2: Count the Number of Rows if gender is 'Female'
+        foreach ($patients as $patient) {
+            if ($patient['gender'] === 'Female') {
+                $femalePatientCount++;
+            }
         }
+    } else {
+        // Log an error message or handle the case where no patients are found
+        error_log("No patients found for Care Giver ID: " . $care_giver_id);
     }
 
     return $femalePatientCount;
@@ -160,21 +174,21 @@ function getOnlineSchedulePercentageChange($care_giver_id): string
             $schedules = findAllSchedulesByPatientID($patient['id']);
             if($schedules !== null){
                 foreach ($schedules as $schedule) {
-                   if(isset($schedule)){
-                       $scheduleDate = new DateTime($schedule['date']);
-                       $scheduleYear = $scheduleDate->format('Y');
-                       $scheduleMonth = $scheduleDate->format('m');
+                    if(isset($schedule)){
+                        $scheduleDate = new DateTime($schedule['date']);
+                        $scheduleYear = $scheduleDate->format('Y');
+                        $scheduleMonth = $scheduleDate->format('m');
 
-                       if(isset($schedule['type'])){
-                           if ($schedule['type'] === 'Online') {
-                               if ($scheduleYear == $currentYear && $scheduleMonth == $currentMonth) {
-                                   $currentMonthCount++;
-                               } elseif ($scheduleYear == $previousYear && $scheduleMonth == $previousMonth) {
-                                   $previousMonthCount++;
-                               }
-                           }
-                       }
-                   }
+                        if(isset($schedule['type'])){
+                            if ($schedule['type'] === 'Online') {
+                                if ($scheduleYear == $currentYear && $scheduleMonth == $currentMonth) {
+                                    $currentMonthCount++;
+                                } elseif ($scheduleYear == $previousYear && $scheduleMonth == $previousMonth) {
+                                    $previousMonthCount++;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
