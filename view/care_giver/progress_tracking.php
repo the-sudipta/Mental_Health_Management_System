@@ -234,16 +234,18 @@ $currentDate = date('j, F Y');
                                                                         foreach ($patients as $patient) {
                                                                             $progressList = findAllProgressesByPatientID($patient['id']);
                                                                             foreach ($progressList as $progress) {
-                                                                                if ($progress['id'] == $progressId) {
-                                                                                    // Display the progress record
-                                                                                    echo "<tr>";
-                                                                                    echo "<td>" . $rowCounter++ . "</td>"; // Use the row counter and increment it
-                                                                                    echo "<td>" . htmlspecialchars($patient['name']) . "</td>";
-                                                                                    echo "<td>" . htmlspecialchars($progress['mood']) . "</td>";
-                                                                                    echo "<td>" . htmlspecialchars($progress['medication_adherence']) . "</td>";
-                                                                                    echo "<td>" . htmlspecialchars($progress['therapy_attended']) . "</td>";
-                                                                                    echo "<td>" . htmlspecialchars($progress['date']) . "</td>";
-                                                                                    echo "</tr>";
+                                                                                if(isset($progress['id'])){
+                                                                                    if ($progress['id'] == $progressId) {
+                                                                                        // Display the progress record
+                                                                                        echo "<tr>";
+                                                                                        echo "<td>" . $rowCounter++ . "</td>"; // Use the row counter and increment it
+                                                                                        echo "<td>" . htmlspecialchars($patient['name']) . "</td>";
+                                                                                        echo "<td>" . htmlspecialchars($progress['mood']) . "</td>";
+                                                                                        echo "<td>" . htmlspecialchars($progress['medication_adherence']) . "</td>";
+                                                                                        echo "<td>" . htmlspecialchars($progress['therapy_attended']) . "</td>";
+                                                                                        echo "<td>" . htmlspecialchars($progress['date']) . "</td>";
+                                                                                        echo "</tr>";
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
