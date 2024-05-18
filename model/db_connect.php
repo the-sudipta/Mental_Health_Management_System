@@ -1,11 +1,11 @@
 <?php
 
 require_once __DIR__ . '/../model/db_connect.php';
-//require '../routes.php';
+require_once __DIR__ . '/../routes.php';
 //require '../utils/system_functions.php';
 
 global $system_routes, $error_page;
-$error_page = $system_routes['error_500'];
+$error_page = $system_routes['error_database'];
 
 
 function db_conn()

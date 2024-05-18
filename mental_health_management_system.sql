@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2024 at 04:01 PM
+-- Generation Time: May 18, 2024 at 06:02 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -68,7 +68,7 @@ INSERT INTO `patient` (`id`, `name`, `age`, `phone`, `care_giver_id`, `gender`, 
 (1, 'John Doe', '35', '+1234567890', 1, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
 (2, 'Jane Smith', '28', '+1987654321', 1, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
 (3, 'Alice Johnson', '45', '+1122334455', 1, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
-(4, 'Bob Williams', '40', '+1555666777', 1, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
+(4, 'Bob Williams', '40', '1555666777', 1, 'Male', 'Death', 'Head Pain', '2024-05-17'),
 (5, 'Emma Brown', '30', '+1444333222', 1, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
 (6, 'Michael Davis', '50', '+1777888999', 2, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
 (8, 'William Taylor', '38', '+1999888777', 3, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
@@ -136,16 +136,24 @@ CREATE TABLE `schedule` (
 --
 
 INSERT INTO `schedule` (`id`, `date`, `status`, `patient_id`, `type`, `purpose`, `time_from`, `time_to`) VALUES
-(1, '2024-05-17', 'Confirmed', 1, 'Online', 'test1', '12:00', '2:00'),
-(2, '2024-05-18', 'Confirmed', 2, 'Offline', 'test1', '12:00', '2:00'),
-(3, '2024-05-19', 'Pending', 3, 'Offline', 'test1', '12:00', '2:00'),
-(4, '2024-05-20', 'Cancelled', 4, 'Offline', 'test1', '12:00', '2:00'),
-(6, '2024-05-22', 'Completed', 6, 'Offline', 'test1', '12:00', '2:00'),
-(7, '2024-05-23', 'Completed', 7, 'Online', 'test1', '12:00', '2:00'),
-(8, '2024-05-24', 'Confirmed', 8, 'Online', 'test1', '12:00', '2:00'),
-(9, '2024-05-25', 'Pending', 9, 'Offline', 'test1', '12:00', '2:00'),
-(12, '2024-05-25', 'Pending', 2, 'Offline', 'Jane Test', '13:00', '15:00'),
-(13, '2024-06-01', 'Pending', 5, 'Online', 'Test EMA', '17:15', '18:10');
+(2, '2024-05-18', 'Pending', 2, 'Offline', 'Back pain', '10:30', '11:30'),
+(3, '2024-05-18', 'Confirmed', 3, 'Online', 'Headache', '14:00', '15:00'),
+(4, '2024-05-20', 'Pending', 4, 'Offline', 'Joint stiffness', '09:00', '10:00'),
+(5, '2024-05-18', 'Confirmed', 5, 'Online', 'Allergy consultation', '11:00', '12:00'),
+(6, '2024-05-20', 'Pending', 4, 'Offline', 'Sprained ankle', '16:30', '17:30'),
+(7, '2024-05-25', 'Confirmed', 1, 'Online', 'Respiratory issues', '13:30', '14:30'),
+(8, '2024-05-24', 'Pending', 5, 'Offline', 'Eye checkup', '15:00', '16:00'),
+(9, '2024-05-25', 'Confirmed', 3, 'Online', 'Skin rash', '10:00', '11:00'),
+(10, '2024-05-26', 'Pending', 10, 'Offline', 'Dental cleaning', '08:30', '09:30'),
+(11, '2024-05-18', 'Confirmed', 11, 'Online', 'Counseling session', '17:00', '18:00'),
+(21, '2024-05-25', 'Confirmed', 1, 'Online', 'Follow-up appointment', '09:00', '10:00'),
+(22, '2024-05-30', 'Pending', 5, 'Offline', 'Annual physical', '10:30', '11:30'),
+(23, '2024-05-25', 'Confirmed', 23, 'Online', 'Medication refill', '12:00', '13:00'),
+(24, '2024-05-31', 'Pending', 24, 'Offline', 'Blood test', '14:00', '15:00'),
+(25, '2024-05-31', 'Confirmed', 3, 'Online', 'Nutritional consultation', '15:30', '16:30'),
+(26, '2024-06-01', 'Pending', 26, 'Offline', 'Physical therapy', '17:00', '18:00'),
+(28, '2024-06-02', 'Pending', 28, 'Offline', 'Dietary advice', '20:00', '21:00'),
+(29, '2024-06-02', 'Confirmed', 1, 'Online', 'Yoga therapy', '21:30', '22:30');
 
 -- --------------------------------------------------------
 
@@ -292,7 +300,7 @@ ALTER TABLE `progress`
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `symptom_track`

@@ -6,7 +6,6 @@ global $routes, $backend_routes, $image_routes;
 //include_once '../Navigation_Links.php';
 require '../../routes.php';
 require '../../utils/system_functions.php';
-require '../../utils/calculationProvider.php';
 
 
 $Login_page = $routes['login'];

@@ -6,8 +6,8 @@ global $routes, $backend_routes, $image_routes;
 //include_once '../Navigation_Links.php';
 require '../../routes.php';
 require '../../utils/system_functions.php';
-require '../../utils/calculationProvider.php';
 require '../../model/patientRepo.php';
+require '../../utils/calculationProvider.php';
 
 
 $Login_page = $routes['login'];
@@ -34,6 +34,21 @@ $add_schedule_controller = $backend_routes['care_giver_add_a_schedule_controller
 $care_giver_id = $_SESSION['user_id'];
 
 $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
+
+//echo '<h1>Total Online Schedule = '.getOnlineScheduleCountByThePatientsAddedByTheCareGiver($care_giver_id).'</h1>';
+//echo '<h1>Total Offline Schedule = '.getOfflineScheduleCountByThePatientsAddedByTheCareGiver($care_giver_id).'</h1>';
+//echo '<h1>Total Patients = '.getTotalPatientCountByCareGiverID($care_giver_id).'</h1>';
+//echo '<h1>Total Male Patients = '.getTotal_MALE_PatientCountByCareGiverID($care_giver_id).'</h1>';
+//echo '<h1>Total Female Patients = '.getTotal_FEMALE_PatientCountByCareGiverID($care_giver_id).'</h1>';
+
+$total_online_schedule = getOnlineScheduleCountByThePatientsAddedByTheCareGiver($care_giver_id);
+$total_offline_schedule = getOfflineScheduleCountByThePatientsAddedByTheCareGiver($care_giver_id);
+$total_patients = getTotalPatientCountByCareGiverID($care_giver_id);
+$total_male_patients = getTotal_MALE_PatientCountByCareGiverID($care_giver_id);
+$total_female_patients = getTotal_FEMALE_PatientCountByCareGiverID($care_giver_id);
+$online_schedule_percentage_change = getOnlineSchedulePercentageChange($care_giver_id);
+$offline_schedule_percentage_change = getOfflineSchedulePercentageChange($care_giver_id);
+
 
 ?>
 
@@ -178,13 +193,13 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                                         </div>
 
                                                         <div class="d-flex p-4 px-0 justify-content-between  align-items-center">
-                                                            <h1 class="text-left"><b>31</b></h1>
+                                                            <h1 class="text-left"><b><?php echo $total_online_schedule; ?></b></h1>
                                                             <div class="graph">
                                                             </div>
                                                         </div>
 
                                                         <div class="d-flex ">
-                                                            <label class="text-success"><i class="fa-solid fa-circle-arrow-up"></i> +71.99%</label>
+                                                            <label class="text-success"><i class="fa-solid fa-circle-arrow-up"></i> <?php echo $online_schedule_percentage_change; ?></label>
                                                         </div>
                                                     </div>
 
@@ -199,7 +214,7 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                                         </div>
 
                                                         <div class="d-flex p-4 px-0 justify-content-between  align-items-center">
-                                                            <h1 class="text-left"><b>10</b></h1>
+                                                            <h1 class="text-left"><b><?php echo $total_offline_schedule; ?></b></h1>
                                                             <div class="graph">
 
 
@@ -208,7 +223,7 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
 
 
                                                         <div class="d-flex">
-                                                            <label class="text-danger"><i class="fa-solid fa-circle-arrow-up"></i> -29.01%</label>
+                                                            <label class="text-danger"><i class="fa-solid fa-circle-arrow-up"></i> <?php echo $offline_schedule_percentage_change; ?></label>
 
                                                         </div>
 
@@ -225,14 +240,14 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                                         </div>
 
                                                         <div class="d-flex justify-content-between align-items-center">
-                                                            <h1 class="text-left"><b>7</b></h1>
+                                                            <h1 class="text-left"><b><?php echo $total_patients; ?></b></h1>
                                                             <div class="graph">
                                                                 <div class="ratio">
 
                                                                 </div>
                                                                 <div class="label-container">
-                                                                    <label class="text-danger"><b>4 Female</b></label>
-                                                                    <label class="cust-color2"><b>3 Men</b></label>
+                                                                    <label class="text-danger"><b><?php echo $total_female_patients; ?> Female</b></label>
+                                                                    <label class="cust-color2"><b><?php echo $total_male_patients; ?> Male</b></label>
                                                                 </div>
 
                                                             </div>
