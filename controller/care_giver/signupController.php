@@ -110,19 +110,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if($care_giver_id > 0){
                 echo 'Redirecting to Login file';
-//                navigate($Login_page);
-//                exit;
+               navigate($Login_page);
+               exit;
 
             }else{
                 echo 'Redirecting to Signup file because Care Giver Profile not created';
-//                navigate($signup_page);
-//                exit;
+               navigate($signup_page);
+               exit;
             }
 
         }else{
             echo 'Redirecting to Signup file because user Account not created';
-//            navigate($signup_page);
-//            exit;
+           navigate($signup_page);
+           exit;
         }
 
 
@@ -131,12 +131,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
 
         echo 'Redirecting to Signup file because of data validation issue';
-//        navigate($signup_page);
-//        exit;
+       navigate($signup_page);
+       exit;
     }
 
 }else{
     echo '<h1>SORRY! GOT GET REQUEST</h1>';
-//    navigate($INDEX_page);
-//    exit;
+   navigate($INDEX_page);
+   exit;
 }

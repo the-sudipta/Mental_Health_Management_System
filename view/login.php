@@ -11,7 +11,7 @@ $signup_decider = '';
 
 $sign_in_icon = $image_routes['sign_in_icon'];
 
-
+$sign_up_page=$routes['care_giver_signup'];
 
 
 ?>
@@ -110,7 +110,7 @@ $sign_in_icon = $image_routes['sign_in_icon'];
                                     </div>
                                     <div class="form-group form-button">
                                         <input type="submit" name="signin" id="signin" class="form-submit btn-primary btn mt-3 w-100" value="Sign In" />
-                                        <a href="<?php echo $signup_decider; ?>" class="mt-3 d-block">Create an account</a>
+                                        <a href="<?php echo $sign_up_page; ?>" class="mt-3 d-block">Create an account</a>
                                     </div>
                                 </form>
 

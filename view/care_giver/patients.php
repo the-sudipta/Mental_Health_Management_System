@@ -36,7 +36,7 @@ $edit_patient_controller = $backend_routes['care_giver_edit_patient_controller']
 
 $care_giver_id = $_SESSION['user_id'];
 
-
+$patient_by_id='';
 if(isset($_GET['patient_id'])) {
     $patient_id = $_GET['patient_id'];
 
@@ -168,8 +168,6 @@ $currentDate = date('j, F Y');
                                     </div>
                                     <div class="mx-2">
                                         <div class="icon-group">
-                                            <a href="#" class="text-secondary "> <i class="fa-regular fa-envelope"></i> <i class="fa-solid fa-circle  notification-active"></i></a>
-                                            <a href="#" class="text-secondary"> <i class="fa-regular fa-bell"></i> <i class="fa-solid fa-circle  notification-active"></i></a>
                                             <a href="<?php echo $Logout_Controller;?>" class="text-secondary"> <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
                                             <button id="sidebarToggler" class="border-0 bg-white d-lg-none"><i class="fa-solid fa-bars-staggered"></i></button>
 
@@ -223,39 +221,42 @@ $currentDate = date('j, F Y');
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <?php
-                                                                // Call the PHP function to fetch data
-                                                                $patients = findAllPatientsByCareGiverID($care_giver_id);
-                                                                // Check if data is fetched successfully
-                                                                if ($patients) {
-                                                                    $rowCounter = 1;
+                                                            <?php
+                                                            // Call the PHP function to fetch data
+                                                            $patients = findAllPatientsByCareGiverID($care_giver_id);
 
-                                                                    // Loop through each symptom
-                                                                    foreach ($patients as $index => $patient) {
-//                                                                        if($patient['care_giver_id']== $care_giver_id){
-                                                                            
-                                                                            // Output table row with symptom details
-                                                                            echo "<tr>";
-                                                                            echo "<td>" . $rowCounter++ . "</td>"; // Increment index to start from 1
-                                                                            echo "<td>" . $patient['name'] . "</td>"; // Assuming 'name' is the column name for patient's name
-                                                                            echo "<td>" . $patient['age'] . "</td>"; // Assuming 'behaviour' is the column name for symptom behavior
-                                                                            echo "<td>" . $patient['diagnosis'] . "</td>"; // Assuming 'date' is the column name for symptom date
-                                                                            echo "<td>" . $patient['medication'] . "</td>"; // Assuming 'date' is the column name for symptom date
-                                                                            echo "<td>" . $patient['gender'] . "</td>"; // Assuming 'date' is the column name for symptom date
-                                                                            echo "<td>" . $patient['phone'] . "</td>"; // Assuming 'date' is the column name for symptom date
-                                                                            echo "<td>" . $patient['date'] . "</td>"; // Assuming 'date' is the column name for symptom date
-                                                                            echo "<td>
-                                                                            
-                                                                                    <a href='?patient_id=".$patient['id']."' class='border text-primary btn-sm edit-button'><i class='fa-regular fa-pen-to-square'></i></a>
-                                                                                    <a href='{$delete_patient_controller}?delete_patient=".$patient['id']."'  class='border text-danger btn-sm'><i class='fa-regular fa-trash-can'></i></a>
-                                                                                    
-                                                                                </td>";
-                                                                            echo "</tr>";
-                                                                            
-//                                                                        }
-                                                                    }
-                                                                } 
-                                                                ?>
+                                                            // Check if data is fetched successfully
+                                                            if ($patients) {
+                                                                $rowCounter = 1;
+
+                                                                // Sort patients by date in descending order
+                                                                usort($patients, function($a, $b) {
+                                                                    return strtotime($b['date']) - strtotime($a['date']);
+                                                                });
+
+                                                                // Loop through each patient and display their details
+                                                                foreach ($patients as $patient) {
+                                                                    echo "<tr>";
+                                                                    echo "<td>" . $rowCounter++ . "</td>"; // Increment index to start from 1
+                                                                    echo "<td>" . htmlspecialchars($patient['name']) . "</td>"; // Patient's name
+                                                                    echo "<td>" . htmlspecialchars($patient['age']) . "</td>"; // Patient's age
+                                                                    echo "<td>" . htmlspecialchars($patient['diagnosis']) . "</td>"; // Patient's diagnosis
+                                                                    echo "<td>" . htmlspecialchars($patient['medication']) . "</td>"; // Patient's medication
+                                                                    echo "<td>" . htmlspecialchars($patient['gender']) . "</td>"; // Patient's gender
+                                                                    echo "<td>" . htmlspecialchars($patient['phone']) . "</td>"; // Patient's phone
+                                                                    echo "<td>" . htmlspecialchars($patient['date']) . "</td>"; // Date (assuming it's the registration date or similar)
+                                                                    echo "<td>";
+                                                                    echo "<a href='?patient_id=" . htmlspecialchars($patient['id']) . "' class='border mx-1 text-primary btn-sm edit-button'><i class='fa-regular fa-pen-to-square'></i></a>";
+                                                                    echo "<a href='{$delete_patient_controller}?delete_patient=" . htmlspecialchars($patient['id']) . "' class='border mx-1 text-danger btn-sm'><i class='fa-regular fa-trash-can'></i></a>";
+                                                                    echo "</td>";
+                                                                    echo "</tr>";
+                                                                }
+                                                            } else {
+                                                                // If no data is fetched, display a message in a single row
+                                                                echo "<tr><td colspan='9'>No patients found.</td></tr>";
+                                                            }
+                                                            ?>
+
 
 
 
@@ -539,10 +540,7 @@ if($patient_by_id) {
             });
     </script>
     ";
-} else {
-    // Handle case where patient details are not found
-    echo "Patient details not found.";
-}
+} 
 ?>
 </body>
 

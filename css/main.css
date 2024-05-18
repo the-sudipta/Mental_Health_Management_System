@@ -172,6 +172,8 @@ body {
 
 .dashboard-part .dash-header .right-box {}
 
+.dashboard-part .dash-header .right-box .icon-group{
+}
 .dashboard-part .dash-header .right-box .icon-group a {
     position: relative;
     margin: 5px;

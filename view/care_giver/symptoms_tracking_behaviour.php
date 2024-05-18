@@ -155,8 +155,6 @@ $currentDate = date('j, F Y');
                                     </div>
                                     <div class="mx-2">
                                         <div class="icon-group">
-                                            <a href="#" class="text-secondary "> <i class="fa-regular fa-envelope"></i> <i class="fa-solid fa-circle  notification-active"></i></a>
-                                            <a href="#" class="text-secondary"> <i class="fa-regular fa-bell"></i> <i class="fa-solid fa-circle  notification-active"></i></a>
                                             <a href="<?php echo $Logout_Controller;?>" class="text-secondary"> <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
                                             <button id="sidebarToggler" class="border-0 bg-white d-lg-none"><i class="fa-solid fa-bars-staggered"></i></button>
 
@@ -205,32 +203,48 @@ $currentDate = date('j, F Y');
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <?php
-                                                                // Call the PHP function to fetch data
+                                                            <?php
+                                                                // Call the PHP function to fetch all symptoms for all patients
                                                                 $symptoms = findAllSymptomsTrackForAllPatients();
+
                                                                 // Check if data is fetched successfully
                                                                 if ($symptoms) {
                                                                     $rowCounter = 1;
-                                                                    // Loop through each symptom
-                                                                    foreach ($symptoms as $index => $symptom) {
-                                                                        if($symptom['care_giver_id']== $care_giver_id){
+                                                                    $patients = []; // To cache patient data
 
-                                                                            $patient_data = findPatientByID($symptom['patient_id']);
-                                                                            // Output table row with symptom details
-                                                                            echo "<tr>";
-                                                                            echo "<td>" . $rowCounter++ . "</td>"; // Increment index to start from 1
-                                                                            echo "<td>" . $patient_data['name'] . "</td>"; // Assuming 'name' is the column name for patient's name
-                                                                            echo "<td>" . $symptom['symptoms'] . "</td>"; // Assuming 'behaviour' is the column name for symptom behavior
-                                                                            echo "<td>" . $symptom['date'] . "</td>"; // Assuming 'date' is the column name for symptom date
-                                                                            echo "</tr>";
-                                                                            
+                                                                    // Filter symptoms by caregiver ID
+                                                                    $filteredSymptoms = array_filter($symptoms, function($symptom) use ($care_giver_id) {
+                                                                        return $symptom['care_giver_id'] == $care_giver_id;
+                                                                    });
+
+                                                                    // Sort symptoms by date in descending order
+                                                                    usort($filteredSymptoms, function($a, $b) {
+                                                                        return strtotime($b['date']) - strtotime($a['date']);
+                                                                    });
+
+                                                                    // Loop through each sorted symptom and display the data
+                                                                    foreach ($filteredSymptoms as $symptom) {
+                                                                        // Check if patient data is already fetched and cached
+                                                                        if (!isset($patients[$symptom['patient_id']])) {
+                                                                            // Fetch and cache patient data
+                                                                            $patients[$symptom['patient_id']] = findPatientByID($symptom['patient_id']);
                                                                         }
+                                                                        $patient_data = $patients[$symptom['patient_id']];
+
+                                                                        // Output table row with symptom details
+                                                                        echo "<tr>";
+                                                                        echo "<td>" . $rowCounter++ . "</td>"; // Increment index to start from 1
+                                                                        echo "<td>" . htmlspecialchars($patient_data['name']) . "</td>"; // Assuming 'name' is the column name for patient's name
+                                                                        echo "<td>" . htmlspecialchars($symptom['symptoms']) . "</td>"; // Assuming 'symptoms' is the column name for symptom behavior
+                                                                        echo "<td>" . htmlspecialchars($symptom['date']) . "</td>"; // Assuming 'date' is the column name for symptom date
+                                                                        echo "</tr>";
                                                                     }
                                                                 } else {
                                                                     // If no data is fetched, display a message in a single row
                                                                     echo "<tr><td colspan='4'>No symptoms found.</td></tr>";
                                                                 }
                                                                 ?>
+
                                                             </tbody>
 
                                                         </table>
