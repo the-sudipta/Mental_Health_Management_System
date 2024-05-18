@@ -35,6 +35,17 @@ $Logout_Controller = $backend_routes['logout_controller'];
 $care_giver_id = $_SESSION['user_id'];
 
 
+if(isset($_GET['patient_id'])) {
+    $patient_id = $_GET['patient_id'];
+
+    // Fetch patient details from the database based on the patient_id
+    $patient_by_id = findPatientByID($patient_id);
+
+    // Check if patient details are fetched successfully
+
+}
+
+
 ?>
 
 
@@ -228,7 +239,7 @@ $care_giver_id = $_SESSION['user_id'];
                                                                             echo "<td>" . $patient['date'] . "</td>"; // Assuming 'date' is the column name for symptom date
                                                                             echo "<td>
                                                                             
-                                                                                    <a href='#' class='border text-primary btn-sm edit-button' data-id=". $patient['id'] . " data-bs-toggle='modal' data-bs-target='#updatepatientsModal'><i class='fa-regular fa-pen-to-square'></i></a>
+                                                                                    <a href='?patient_id=".$patient['id']."' class='border text-primary btn-sm edit-button'><i class='fa-regular fa-pen-to-square'></i></a>
                                                                                     <a href='{$delete_patient_controller}?delete_patient=".$patient['id']."'  class='border text-danger btn-sm'><i class='fa-regular fa-trash-can'></i></a>
                                                                                     
                                                                                 </td>";
@@ -336,78 +347,6 @@ $care_giver_id = $_SESSION['user_id'];
             </div>
         </div>
 
-
-
-        <!-- Edit Patient Update -->
-        <div class="modal fade" id="updatepatientsModal" tabindex="-1" aria-labelledby="updatepatientsModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Patient Info</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-
-
-                        <form class="row g-3">
-
-
-
-
-                            <div class="col-md-6">
-                                <label for="update_patient_name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="update_patient_name">
-
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="patient_age" class="form-label">Age</label>
-                                <input type="number" class="form-control" id="update_patient_age">
-
-                            </div>
-                            <div class="col-md-6">
-                                <label for="update_patient_diagnosis" class="form-label">Diagnosis</label>
-                                <input type="text" class="form-control" id="update_patient_diagnosis">
-
-                            </div>
-
-
-                            <div class="col-md-6">
-                                <label for="update_patient_medication" class="form-label">Medication</label>
-                                <input type="text" class="form-control" id="update_patient_medication">
-
-                            </div>
-                            <div class="col-md-12">
-                                <label for="update_patient_gender" class="form-label">Gender</label>
-                                <select class="form-select" name="patient_gender" id="update_patient_gender" aria-label="Default select example">
-                                    <option selected value="null">Select</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </div>
-
-
-
-                            <div class="col-md-12">
-                                <label for="contact_number" class="form-label">Contact Number</label>
-                                <input type="number" class="form-control" id="contact_number">
-
-                            </div>
-
-                            <div class="col-12">
-                                <button class="btn cust-bg-color1 w-100" type="submit">Update</button>
-                            </div>
-                        </form>
-
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
     </section>
 
 
@@ -426,33 +365,7 @@ $care_giver_id = $_SESSION['user_id'];
     <script>
         $(document).ready(function() {
             $('.edit-button').on('click', function(event) {
-                const patientId = $(this).data('id');
 
-                $.ajax({
-                    url: '/',
-                    type: 'GET',
-                    data: {
-                        id: patientId
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        alert("success");
-
-                        $('#update_patient_name').val(data.name);
-                        $('#update_patient_age').val(data.age);
-                        // ... and so on for other fields
-                        $('#update_patient_diagnosis').val(data.diagnosis);
-                        $('#update_patient_medication').val(data.medication);
-                        $('#update_patient_gender').val(data.gender);
-                        $('#update_contact_number').val(data.phone); // Assuming 'phone' column for contact number
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error('Error fetching patient data:', textStatus, errorThrown);
-                        // Handle error message (optional)
-                        alert("error");
-
-                    }
-                });
             });
         });
         document.addEventListener("DOMContentLoaded", function() {
@@ -541,7 +454,77 @@ $care_giver_id = $_SESSION['user_id'];
         });
 
     </script>
+    <?php
+if($patient_by_id) {
+    // Output patient name
+    echo $patient_by_id['name'];
 
+    // Output modal script
+    echo "
+    <script>
+        $(document).ready(function() {
+            // Dynamically create modal HTML
+            var modalHTML = `
+            <div class='modal fade' id='updatepatientsModal' tabindex='-1' aria-labelledby='updatepatientsModalLabel' aria-hidden='true'>
+                <div class='modal-dialog'>
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <h1 class='modal-title fs-5' id='exampleModalLabel'>Update Patient Info</h1>
+                            <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                        </div>
+                        <div class='modal-body'>
+                        <form class='row g-3'>
+                        <div class='col-md-6'>
+                            <label for='update_patient_name' class='form-label'>Name</label>
+                            <input type='text' class='form-control' id='update_patient_name' value='" . htmlspecialchars($patient_by_id['name'] ?? '') . "'>
+                        </div>
+                        <div class='col-md-6'>
+                            <label for='update_patient_age' class='form-label'>Age</label>
+                            <input type='number' class='form-control' id='update_patient_age' value='" . htmlspecialchars($patient_by_id['age'] ?? '') . "'>
+                        </div>
+                        <div class='col-md-6'>
+                            <label for='update_patient_diagnosis' class='form-label'>Diagnosis</label>
+                            <input type='text' class='form-control' id='update_patient_diagnosis' value='" . htmlspecialchars($patient_by_id['diagnosis'] ?? '') . "'>
+                        </div>
+                        <div class='col-md-6'>
+                            <label for='update_patient_medication' class='form-label'>Medication</label>
+                            <input type='text' class='form-control' id='update_patient_medication' value='" . htmlspecialchars($patient_by_id['medication'] ?? '') . "'>
+                        </div>
+                        <div class='col-md-12'>
+                            <label for='update_patient_gender' class='form-label'>Gender</label>
+                            <select class='form-select' id='update_patient_gender'>
+                                <option value='Male' " . (isset($patient_by_id['gender']) && $patient_by_id['gender'] == 'Male' ? 'selected' : '') . ">Male</option>
+                                <option value='Female' " . (isset($patient_by_id['gender']) && $patient_by_id['gender'] == 'Female' ? 'selected' : '') . ">Female</option>
+                            </select>
+                        </div>
+                        <div class='col-md-12'>
+                            <label for='contact_number' class='form-label'>Contact Number</label>
+                            <input type='text' class='form-control' id='contact_number' value='" . htmlspecialchars($patient_by_id['phone'] ?? '') . "'>
+                        </div>
+                        <div class='col-12'>
+                            <button class='btn cust-bg-color1 w-100' type='submit'>Update</button>
+                        </div>
+                    </form>
+                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+            
+            // Append modal HTML to the body
+            $('body').append(modalHTML);
+            
+            // Show the modal
+            $('#updatepatientsModal').modal('show');
+        });
+    </script>
+    ";
+} else {
+    // Handle case where patient details are not found
+    echo "Patient details not found.";
+}
+?>
 </body>
 
 </html>
