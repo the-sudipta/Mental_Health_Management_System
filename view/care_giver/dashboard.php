@@ -429,31 +429,65 @@ $currentDate = date('j, F Y');
 
                                                             </div>
 
+                                                            
+                                                            <?php
+if (!empty($patients_of_care_giver)) {
+  $rowCounter = 1;
+  $scheduleIds = [];
+  $lastDate = null;
+
+  foreach ($patients_of_care_giver as $patient) {
+    $schedule_Lists = findAllSchedulesByPatientID($patient['id']);
+    if ($schedule_Lists && !in_array("No rows found in the 'schedule' table.", $schedule_Lists)) {
+      foreach ($schedule_Lists as $schedule_List) {
+        if ($patient['id'] === $schedule_List['patient_id']) {
+          $scheduleIds[] = $schedule_List['id'];
+        }
+      }
+    }
+  }
+
+  rsort($scheduleIds);
+
+  foreach ($scheduleIds as $scheduleId) {
+    foreach ($patients_of_care_giver as $patient) {
+      $schedule_Lists = findAllSchedulesByPatientID($patient['id']);
+      if ($schedule_Lists && !in_array("No rows found in the 'schedule' table.", $schedule_Lists)) {
+        foreach ($schedule_Lists as $schedule_List) {
+          if ($schedule_List['id'] == $scheduleId && $patient['id'] === $schedule_List['patient_id']) {
+            // Check if the current date is the same as the last date displayed
+            
+            ?>
                                                             <div class="col-12 mt-3">
                                                                 <ul class="appointment-list">
                                                                     <li class="time-slot time-parent-hour">
-                                                                        <span>8:00 AM</span>
+                                                                        <?php
+                                                                        if ($schedule_List['date'] !== $lastDate) {
+              // Display the date
+              ?>
+                                                                        <span><?php echo $schedule_List['date']; ?></span>
+                                                                        <?php
+              $lastDate = $schedule_List['date'];
+            }
+                                                                        ?>
+
                                                                         <span><i class="fa-solid fa-circle"></i></span>
                                                                     </li>
                                                                     <li class="appointments ">
                                                                         <span class="long-span"></span>
                                                                         <ul>
-                                                                            <li class="appointment" data-details="Jane Doe, 8:20-9:00 AM, Follow-up">
-                                                                                <span class="appointment-short-details d-flex "> <i class="fa-solid fa-circle"></i> <span class="time time-child-hour">8:20</span> </span>
 
-
-                                                                            </li>
                                                                             <li class="appointment" data-details="John Smith, 8:00-8:20 AM, Consultation">
 
 
                                                                                 <span class="appointment-short-details d-flex ">
 
                                                                                     <i class="text-success fa-solid fa-circle"></i>
-                                                                                    <span class="time time-child-hour"><b>8:00</b></span>
-                                                                                    <span class="name mx-3">John Smith</span>
+                                                                                    <span class="time time-child-hour"><b><?php echo $schedule_List['time_from'].' - '. $schedule_List['time_to'] ?></b></span>
+                                                                                    <span class="name mx-3"><?php echo $patient['name']; ?></span>
 
                                                                                     <span class="ms-auto">
-                                                                                        <span class="mx-2 text-secondary">Upcoming </span>
+                                                                                        <span class="mx-2 text-secondary"><?php echo $schedule_List['status']; ?> </span>
                                                                                         <i class="border p-1 text-primary fa-solid fa-angle-down"></i>
                                                                                     </span>
 
@@ -462,144 +496,35 @@ $currentDate = date('j, F Y');
 
 
                                                                                 <div class="appointment-details">
-
-
-
-
-
-
                                                                                     <ul>
-                                                                                        <li><b>Patient:</b> John Smith</li>
-                                                                                        <li><b>Time:</b> 8:00 AM - 8:20 AM</li>
-                                                                                        <li><b>Purpose:</b> Consultation</li>
-                                                                                        <li></li>
-                                                                                        <li></li>
+                                                                                        <li><b>Patient:</b> <?php echo $patient['name']; ?><?php
+                                                                                        if($patient['gender']=="Male"){
+                                                                                        ?>
+                                                                                        <small><span class="p-1  rounded-0  text-primary">(Male)</span></small>
+                                                                                        <?php } else { ?>
+                                                                                        <small><span class="p-1  rounded-0  text-danger">(Female)</span></small>
+                                                                                        <?php } ?></li>
+                                                                                        
+                                                                                        <li><b>Time:</b> <?php echo $schedule_List['time_from'].' - '. $schedule_List['time_to'] ?></li>
+                                                                                        <li><b>Purpose:</b> <?php echo $schedule_List['purpose']; ?></li>
+                                                                                        <li><b>Type:</b> <?php echo $schedule_List['type']; ?></li>
+                                                                                        <li><b>Status:</b> <?php echo $schedule_List['status']; ?></li>
                                                                                     </ul>
 
-                                                                                    <div class="edit-function d-flex align-items-center mt-1 border border-start-0  border-end-0  border-bottom-0 p-2">
 
-                                                                                        <a class="border p-1 px-2 mx-1 text-danger"><i class="fa-regular fa-trash-can"></i></a>
-                                                                                        <a class="border p-1 px-2 mx-1 btn-primary"><i class="fa-regular fa-user"></i></a>
-                                                                                        <a class="border p-1 px-2 mx-1 btn-primary" data-bs-toggle="modal" data-bs-target="#updateAppointmentModal"><i class="fa-regular fa-pen-to-square"></i></a>
-                                                                                        <a class="btn cust-bg-color1 ms-auto">Begin Appointement</a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </li>
-
-                                                                            <li class="appointment" data-details="Panna Doe, 8:20-9:00 AM, Follow-up">
-                                                                                <span class="appointment-short-details d-flex "> <i class="fa-solid fa-circle"></i> <span class="time time-child-hour">8:30</span> </span>
-
-
-                                                                            </li>
-
-                                                                        </ul>
-                                                                    </li>
-                                                                    <li class="time-slot time-parent-hour">
-                                                                        <span>9:00 AM</span>
-                                                                        <span><i class="fa-solid fa-circle"></i></span>
-                                                                    </li>
-                                                                    <li class="appointments ">
-                                                                        <span class="long-span"></span>
-                                                                        <ul>
-                                                                            <li class="appointment" data-details="Jane Doe, 8:20-9:00 AM, Follow-up">
-                                                                                <span class="appointment-short-details d-flex "> <i class="fa-solid fa-circle"></i> <span class="time time-child-hour">9:00</span> </span>
-
-
-                                                                            </li>
-                                                                            <li class="appointment" data-details="John Smith, 9:30-10:00 AM, Consultation">
-
-
-                                                                                <span class="appointment-short-details d-flex ">
-
-                                                                                    <i class="text-success fa-solid fa-circle"></i>
-                                                                                    <span class="time time-child-hour"><b>9:30</b></span>
-                                                                                    <span class="name mx-3">Jack Will</span>
-
-                                                                                    <span class="ms-auto">
-                                                                                        <span class="mx-2 text-secondary">patients </span>
-                                                                                        <i class="border p-1 text-primary fa-solid fa-angle-down"></i>
-                                                                                    </span>
-
-
-                                                                                </span>
-
-
-                                                                                <div class="appointment-details">
-
-
-                                                                                    
-                                                                                    
-
-
-
-
-                                                                                    <ul>
-                                                                                        <li><b>Patient:</b> Jack Will</li>
-                                                                                        <li><b>Time:</b> 9:30 AM - 10:00 AM</li>
-                                                                                        <li><b>Purpose:</b> Consulting Meeting</li>
-                                                                                        <li></li>
-                                                                                        <li></li>
-                                                                                    </ul>
-
-                                                                                    <div class="edit-function d-flex align-items-center mt-1 border border-start-0  border-end-0  border-bottom-0 p-2">
-
-                                                                                        <a class="border p-1 px-2 mx-1 text-danger"><i class="fa-regular fa-trash-can"></i></a>
-                                                                                        <a class="border p-1 px-2 mx-1 btn-primary"><i class="fa-regular fa-user"></i></a>
-                                                                                        <a class="border p-1 px-2 mx-1 btn-primary" data-bs-toggle="modal" data-bs-target="#updateAppointmentModal"><i class="fa-regular fa-pen-to-square"></i></a>
-                                                                                        <a class="btn cust-bg-color1 ms-auto">Begin Appointement</a>
-                                                                                    </div>
                                                                                 </div>
                                                                             </li>
 
 
 
                                                                         </ul>
+                                                                        
                                                                     </li>
-                                                                    <li class="time-slot time-parent-hour">
-                                                                        <span>10:00 AM</span>
-                                                                        <span><i class="fa-solid fa-circle"></i></span>
-                                                                    </li>
-                                                                    <li class="appointments ">
-                                                                        <span class="long-span"></span>
-                                                                        <ul>
-                                                                            <li class="appointment">
-                                                                                <span class="appointment-short-details d-flex "> <i class="fa-solid fa-circle"></i> <span class="time time-child-hour">10:00</span> </span>
 
-
-                                                                            </li>
-
-                                                                            <li class="appointment">
-                                                                                <span class="appointment-short-details d-flex "> <i class="fa-solid fa-circle"></i> <span class="time time-child-hour">10:30</span> </span>
-
-
-                                                                            </li>
-
-                                                                        </ul>
-                                                                    </li>
-                                                                    <li class="time-slot time-parent-hour">
-                                                                        <span>11:00 AM</span>
-                                                                        <span><i class="fa-solid fa-circle"></i></span>
-                                                                    </li>
-                                                                    <li class="appointments ">
-                                                                        <span class="long-span"></span>
-                                                                        <ul>
-                                                                            <li class="appointment">
-                                                                                <span class="appointment-short-details d-flex "> <i class="fa-solid fa-circle"></i> <span class="time time-child-hour">11:00</span> </span>
-
-
-                                                                            </li>
-
-                                                                            <li class="appointment">
-                                                                                <span class="appointment-short-details d-flex "> <i class="fa-solid fa-circle"></i> <span class="time time-child-hour">11:30</span> </span>
-
-
-                                                                            </li>
-
-                                                                        </ul>
-                                                                    </li>
                                                                 </ul>
 
                                                             </div>
+                                                            <?php } } } } } }?>
                                                         </div>
                                                     </div>
                                                 </div>
