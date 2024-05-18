@@ -289,8 +289,22 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
 
                             <div class="col-md-12">
                                 <label for="appointment_name" class="form-label">Appointment name</label>
-                                <input type="text" class="form-control" id="appointment_name">
+                                <select id="patient_name" class="form-control" name="selected_patient_id" id="appointment_name">
+                                    <option selected>Select Your Patient</option>
+                                    <?php
+                                    if (!empty($patients_of_care_giver)) {
+                                        // Iterate through each patient
+                                        foreach ($patients_of_care_giver as $patient) {
+                                            if ($patient['care_giver_id'] == $care_giver_id) {
+                                                // Output the option for each patient
+                                                echo '<option value="'.$patient['id'].'" >' . $patient['name'] . '</option>';
+//                                                echo '<input hidden name="selected_patient_id" type="number" value="'.$patient['id'].'"/>';
 
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                </select>
                             </div>
 
                             <div class="col-md-12">
@@ -301,36 +315,52 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
 
 
 
-                            <div class="col-6">
-                                <label for="fromtime" class="form-label">Time Duration</label>
-                                <input type="time" class="form-control" id="fromtime">
-
-                            </div>
-                            <div class="col-6">
-                                <label for="totime" class="form-label mb-4"></label>
-                                <input type="time" class="form-control" id="totime">
-
-                            </div>
+                            
 
                             <div class="col-12">
                                 <label for="fromtime" class="form-label">Type</label>
 
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="type" id="Online">
-                                    <label class="form-check-label" for="Online">
-                                        Online
-                                    </label>
+                                <div class="d-flex align-items-center">
+
+                                    <div class="form-check mx-1">
+                                        <input class="form-check-input" type="radio" name="type" id="Online">
+                                        <label class="form-check-label" for="Online">
+                                            Online
+                                        </label>
+                                    </div>
+                                    <div class="form-check mx-1">
+                                        <input class="form-check-input" type="radio" name="type" id="Offline" checked>
+                                        <label class="form-check-label" for="Offline">
+                                            Offline
+                                        </label>
+                                    </div>
+
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="type" id="Offline" checked>
-                                    <label class="form-check-label" for="Offline">
-                                        Offline
-                                    </label>
-                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="fromtime" class="form-label">Time Duration</label>
+                               <div class="row">
+                                    <div class="col-6">
+                                        <input type="time" class="form-control" id="fromtime">
+
+                                    </div>
+                                    
+                                    <div class="col-6">
+                                        <input type="time" class="form-control" id="totime">
+
+                                    </div>
+
+
+
+                                    <div class="col-12 time_duration" id="time_duration"></div>
+                               </div>
 
                             </div>
+                            <div class="col-12">
+                                <label for="schedule_date" class="form-label">Date</label>
+                                <input type="date" class="form-control" name="schedule_date" id="schedule_date">
 
-
+                            </div>
 
                             <div class="col-12">
                                 <button class="btn cust-bg-color1" type="submit">Submit</button>
@@ -381,68 +411,67 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
         });
 
 
+   
         $(document).ready(function() {
-            $('#appointmentForm').submit(function(e) {
-                // Prevent the form from submitting
-                e.preventDefault();
+    $('#appointmentForm').submit(function(e) {
+        // Prevent the form from submitting
+        e.preventDefault();
 
-                // Remove any existing error messages
-                $('.error-message').remove();
+        // Remove any existing error messages
+        $('.error-message').remove();
 
-                var isValid = true;
+        var isValid = true;
 
-                // Validate appointment name
-                var appointmentName = $('#appointment_name').val().trim();
-                if (appointmentName === "") {
-                    $('#appointment_name').after('<div class="error-message text-danger">Please enter the appointment name</div>');
-                    isValid = false;
-                }
+        // Validate appointment name
+        var appointmentName = $('#patient_name').val().trim();
+        if (appointmentName === "" || appointmentName === "Select Your Patient") {
+            $('#patient_name').after('<div class="error-message text-danger">Please select a patient</div>');
+            isValid = false;
+        }
 
-                // Validate purpose
-                var purpose = $('#purpose').val().trim();
-                if (purpose === "") {
-                    $('#purpose').after('<div class="error-message text-danger">Please enter the purpose</div>');
-                    isValid = false;
-                }
+        // Validate purpose
+        var purpose = $('#purpose').val().trim();
+        if (purpose === "") {
+            $('#purpose').after('<div class="error-message text-danger">Please enter the purpose</div>');
+            isValid = false;
+        }
 
-                // Validate time duration
-                var fromTime = $('#fromtime').val();
-                var toTime = $('#totime').val();
-                if (fromTime === "") {
-                    $('#fromtime').after('<div class="error-message text-danger">Please enter the start time</div>');
-                    isValid = false;
-                }
-                if (toTime === "") {
-                    $('#totime').after('<div class="error-message text-danger">Please enter the end time</div>');
-                    isValid = false;
-                }
-                if (fromTime !== "" && toTime !== "" && fromTime >= toTime) {
-                    $('#totime').after('<div class="error-message text-danger">End time must be after start time</div>');
-                    isValid = false;
-                }
+        // Validate schedule date
+        var scheduleDate = $('#schedule_date').val().trim();
+        if (scheduleDate === "") {
+            $('#schedule_date').after('<div class="error-message text-danger">Please enter the date</div>');
+            isValid = false;
+        }
 
-                // Validate type
-                var type = $('input[name="type"]:checked').length;
-                if (type === 0) {
-                    $('input[name="type"]').parent().last().after('<div class="error-message text-danger">Please select a type</div>');
-                    isValid = false;
-                }
+        // Validate time duration
+        var fromTime = $('#fromtime').val();
+        var toTime = $('#totime').val();
+        if (fromTime === "" || toTime === "") {
+            $('#fromtime').after('<div class="error-message text-danger">Please enter both start and end time</div>');
+            isValid = false;
+        } else if (fromTime >= toTime) {
+            $('#totime').after('<div class="error-message text-danger">End time must be after start time</div>');
+            isValid = false;
+        }
 
-                // If all validation passes, submit the form
-                if (isValid) {
-                    this.submit();
-                }
-            });
+        // Validate type
+        var type = $('input[name="type"]:checked').length;
+        if (type === 0) {
+            $('#type-label').after('<div class="error-message text-danger">Please select a type</div>'); // Assuming you have an element with id "type-label"
+            isValid = false;
+        }
 
-            // Remove error message on input change
-            $('input').on('input change', function() {
-                $(this).next('.error-message').remove();
-            });
+        // If all validation passes, submit the form
+        if (isValid) {
+            this.submit();
+        }
+    });
 
-            $('input[name="type"]').on('change', function() {
-                $('.error-message').remove();
-            });
-        });
+    // Remove error message on input change
+    $('input, select').on('input change', function() {
+        $(this).next('.error-message').remove();
+    });
+});
 
     </script>
 
