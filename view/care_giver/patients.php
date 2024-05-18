@@ -7,6 +7,7 @@ global $routes, $backend_routes, $image_routes;
 require '../../routes.php';
 require '../../utils/system_functions.php';
 require '../../model/patientRepo.php';
+require '../../model/care_giverRepo.php';
 
 
 $Login_page = $routes['login'];
@@ -45,6 +46,11 @@ if(isset($_GET['patient_id'])) {
     // Check if patient details are fetched successfully
 
 }
+
+
+$care_giver_data = findCareGiverByUserID($care_giver_id);
+$currentDate = date('j, F Y');
+
 
 
 ?>
@@ -115,7 +121,7 @@ if(isset($_GET['patient_id'])) {
                     <div class="mt-auto w-100">
                         <div class="mx-2 d-flex justify-content-center ">
                             <div class="user-title-box text-center d-lg-none d-block">
-                                <label class="cust-color1">Tofayal Ahmed</label><br>
+                                <label class="cust-color1"></label><br>
                                 <h6><b>Care Givers</b></h6>
 
                             </div>
@@ -148,8 +154,8 @@ if(isset($_GET['patient_id'])) {
                                 <div class="d-flex justify-content-center align-items-center">
                                     <div class="mx-2 d-flex justify-content-center ">
                                         <div class="user-title-box text-center d-lg-block d-none">
-                                            <label class="cust-color1">Tofayal Ahmed</label><br>
-                                            <h6><b>Care GIvers</b></h6>
+                                            <label class="cust-color1"><?php echo $care_giver_data['name']; ?></label><br>
+                                            <h6><b>Care Givers</b></h6>
 
                                         </div>
 
@@ -157,7 +163,7 @@ if(isset($_GET['patient_id'])) {
                                     <div class="mx-2">
                                         <div class="date border p-1 px-2 d-lg-block d-none">
 
-                                            <label>12,March 2024</label>
+                                            <label><?php echo $currentDate; ?></label>
                                         </div>
                                     </div>
                                     <div class="mx-2">

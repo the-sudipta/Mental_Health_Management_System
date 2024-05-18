@@ -7,6 +7,7 @@ global $routes, $backend_routes, $image_routes;
 require '../../routes.php';
 require '../../utils/system_functions.php';
 require '../../model/patientRepo.php';
+require '../../model/care_giverRepo.php';
 require '../../utils/calculationProvider.php';
 
 
@@ -48,6 +49,10 @@ $total_male_patients = getTotal_MALE_PatientCountByCareGiverID($care_giver_id);
 $total_female_patients = getTotal_FEMALE_PatientCountByCareGiverID($care_giver_id);
 $online_schedule_percentage_change = getOnlineSchedulePercentageChange($care_giver_id);
 $offline_schedule_percentage_change = getOfflineSchedulePercentageChange($care_giver_id);
+
+$care_giver_data = findCareGiverByUserID($care_giver_id);
+$currentDate = date('j, F Y');
+
 
 
 ?>
@@ -111,7 +116,7 @@ $offline_schedule_percentage_change = getOfflineSchedulePercentageChange($care_g
                     <div class="mt-auto w-100">
                         <div class="mx-2 d-flex justify-content-center ">
                             <div class="user-title-box text-center d-lg-none d-block">
-                                <label class="cust-color1">Tofayal Ahmed</label><br>
+                                <label class="cust-color1"><?php echo $care_giver_data['name']; ?></label><br>
                                 <h6><b>Care Givers</b></h6>
 
                             </div>
@@ -120,7 +125,7 @@ $offline_schedule_percentage_change = getOfflineSchedulePercentageChange($care_g
                         <div class="mx-2 text-center">
                             <div class="date m-2 d-lg-none d-block">
 
-                                <label>12,March 2024</label>
+                                <label><?php echo $currentDate; ?></label>
                             </div>
                         </div>
                     </div>
@@ -144,7 +149,7 @@ $offline_schedule_percentage_change = getOfflineSchedulePercentageChange($care_g
                                 <div class="d-flex justify-content-center align-items-center">
                                     <div class="mx-2 d-flex justify-content-center ">
                                         <div class="user-title-box text-center d-lg-block d-none">
-                                            <label class="cust-color1">Tofayal Ahmed</label><br>
+                                            <label class="cust-color1"><?php echo $care_giver_data['name']; ?></label><br>
                                             <h6><b>Care Giver</b></h6>
 
                                         </div>
@@ -153,7 +158,7 @@ $offline_schedule_percentage_change = getOfflineSchedulePercentageChange($care_g
                                     <div class="mx-2">
                                         <div class="date border p-1 px-2 d-lg-block d-none">
 
-                                            <label>12,March 2024</label>
+                                            <label><?php echo $currentDate; ?></label>
                                         </div>
                                     </div>
                                     <div class="mx-2">

@@ -47,6 +47,48 @@ function findCareGiverByUserID($id)
     }
 }
 
+function findCareGiverNameByUserID($id)
+{
+    $conn = db_conn();
+    $selectQuery = 'SELECT name FROM `care_giver` WHERE `user_id` = ?';
+
+    try {
+        $stmt = $conn->prepare($selectQuery);
+
+        // Check if the prepare statement was successful
+        if (!$stmt) {
+            throw new Exception("Prepare statement failed: " . $conn->error);
+        }
+
+        // Bind the parameter
+        $stmt->bind_param("i", $id);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Get the result
+        $result = $stmt->get_result();
+
+        // Fetch the user as an associative array
+        $user = $result->fetch_assoc();
+
+        // Check for an empty result set
+        if (!$user) {
+            throw new Exception("No care_giver found with current user ID: " . $id);
+        }
+
+        // Close the statement
+        $stmt->close();
+
+        return $user;
+    } catch (Exception $e) {
+        echo "care_giverRepo Error = " . $e->getMessage();
+        return null;
+    } finally {
+        // Close the database connection
+        $conn->close();
+    }
+}
 
 function findCareGiverByID($id)
 {
