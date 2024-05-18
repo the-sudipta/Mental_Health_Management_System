@@ -89,13 +89,18 @@ function getOfflineScheduleCountByThePatientsAddedByTheCareGiver($care_giver_id)
 
 function getTotalPatientCountByCareGiverID($care_giver_id): int
 {
+    $patients = null;
     // Step 1: Fetch all the Patients from patients table by Care Giver ID
     $patients = findAllPatientsByCareGiverID($care_giver_id);
 
-    // Step 2: Count the Number of Rows found
-    $totalPatientCount = count($patients);
+    if($patients !== null){
+        // Step 2: Count the Number of Rows found
+        $totalPatientCount = count($patients);
 
-    return $totalPatientCount;
+        return $totalPatientCount;
+    }else{
+        return 0;
+    }
 }
 
 function getTotal_MALE_PatientCountByCareGiverID($care_giver_id): int
