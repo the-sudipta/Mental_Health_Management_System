@@ -507,6 +507,8 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                                                                 <div class="appointment-details">
 
 
+                                                                                    
+                                                                                    
 
 
 
