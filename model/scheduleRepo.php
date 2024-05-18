@@ -235,6 +235,48 @@ function deleteSchedule($id) {
     }
 }
 
+function deleteAllSchedulesByPatientID($patient_id)
+{
+    $conn = db_conn();
+
+    // Construct the SQL query
+    $deleteQuery = "DELETE FROM `schedule` WHERE patient_id = ?";
+
+    try {
+        // Prepare the statement
+        $stmt = $conn->prepare($deleteQuery);
+
+        // Check if the prepare statement was successful
+        if (!$stmt) {
+            throw new Exception("Prepare statement failed: " . $conn->error);
+        }
+
+        // Bind parameter
+        $stmt->bind_param('i', $patient_id);
+
+        // Execute the query
+        if (!$stmt->execute()) {
+            throw new Exception("Execution failed: " . $stmt->error);
+        }
+
+        // Return true if the delete is successful
+        return true;
+    } catch (Exception $e) {
+        // Handle the exception, you might want to log it or return false
+        echo "Error deleting records: " . $e->getMessage();
+        return false;
+    } finally {
+        // Close the statement
+        if ($stmt) {
+            $stmt->close();
+        }
+
+        // Close the database connection
+        $conn->close();
+    }
+}
+
+
 function createSchedule($date, $time, $type, $status) {
 
     $conn = db_conn();

@@ -84,7 +84,7 @@ function findProgressByID($id)
 function findAllProgressesByPatientID($id)
 {
     $conn = db_conn();
-    $selectQuery = 'SELECT * FROM `progress` WHERE `patient_id` = '.$id;
+    $selectQuery = 'SELECT * FROM `progress` WHERE `patient_id` = ' . $id . ' ORDER BY `id` ASC';
 
     try {
         $result = $conn->query($selectQuery);
@@ -196,6 +196,49 @@ function deleteProgress($id) {
         $conn->close();
     }
 }
+
+
+function deleteAllProgressesByPatientID($patient_id)
+{
+    $conn = db_conn();
+
+    // Construct the SQL query
+    $deleteQuery = "DELETE FROM `progress` WHERE patient_id = ?";
+
+    try {
+        // Prepare the statement
+        $stmt = $conn->prepare($deleteQuery);
+
+        // Check if the prepare statement was successful
+        if (!$stmt) {
+            throw new Exception("Prepare statement failed: " . $conn->error);
+        }
+
+        // Bind parameter
+        $stmt->bind_param('i', $patient_id);
+
+        // Execute the query
+        if (!$stmt->execute()) {
+            throw new Exception("Execution failed: " . $stmt->error);
+        }
+
+        // Return true if the delete is successful
+        return true;
+    } catch (Exception $e) {
+        // Handle the exception, you might want to log it or return false
+        echo "Error deleting records: " . $e->getMessage();
+        return false;
+    } finally {
+        // Close the statement
+        if ($stmt) {
+            $stmt->close();
+        }
+
+        // Close the database connection
+        $conn->close();
+    }
+}
+
 
 function createProgress($mood, $medication_adherence, $therapy_attended, $patient_id, $date) {
 
