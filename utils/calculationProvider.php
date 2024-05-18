@@ -156,18 +156,25 @@ function getOnlineSchedulePercentageChange($care_giver_id): string
 
         // Fetch All the Schedules by each patient id and count 'Online' schedules for the current and previous month
         foreach ($patients as $patient) {
+            $schedules = null;
             $schedules = findAllSchedulesByPatientID($patient['id']);
-            foreach ($schedules as $schedule) {
-                $scheduleDate = new DateTime($schedule['date']);
-                $scheduleYear = $scheduleDate->format('Y');
-                $scheduleMonth = $scheduleDate->format('m');
+            if($schedules !== null){
+                foreach ($schedules as $schedule) {
+                   if(isset($schedule)){
+                       $scheduleDate = new DateTime($schedule['date']);
+                       $scheduleYear = $scheduleDate->format('Y');
+                       $scheduleMonth = $scheduleDate->format('m');
 
-                if ($schedule['type'] === 'Online') {
-                    if ($scheduleYear == $currentYear && $scheduleMonth == $currentMonth) {
-                        $currentMonthCount++;
-                    } elseif ($scheduleYear == $previousYear && $scheduleMonth == $previousMonth) {
-                        $previousMonthCount++;
-                    }
+                       if(isset($schedule['type'])){
+                           if ($schedule['type'] === 'Online') {
+                               if ($scheduleYear == $currentYear && $scheduleMonth == $currentMonth) {
+                                   $currentMonthCount++;
+                               } elseif ($scheduleYear == $previousYear && $scheduleMonth == $previousMonth) {
+                                   $previousMonthCount++;
+                               }
+                           }
+                       }
+                   }
                 }
             }
         }
