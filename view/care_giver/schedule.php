@@ -211,6 +211,7 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                                                 // Check if data is fetched successfully
                                                                 // Check if data is fetched successfully
                                                                 if (!empty($patients_of_care_giver)) {
+                                                                    $rowCounter = 1;
                                                                     // Loop through each patient
                                                                     foreach ($patients_of_care_giver as $index => $patient) {
 //                                                                        echo '<h1 style="color: #dc3545">'.$patient['id'].'</h1>';
@@ -225,7 +226,7 @@ $patients_of_care_giver = findAllPatientsByCareGiverID($care_giver_id);
                                                                                 if ($patient['id'] === $schedule_List['patient_id']) {
 //                                                                                    echo '<h1 style="color: #0f1b9d"> DATE = ' .$schedule_List['date'].'</h1>';
                                                                                     echo "<tr>";
-                                                                                    echo "<td>" . ($index + 1) . "</td>"; // Increment index to start from 1
+                                                                                    echo "<td>" .$rowCounter++ . "</td>"; // Increment index to start from 1
                                                                                     echo "<td>" . htmlspecialchars($patient['name']) . "</td>";
                                                                                     echo "<td>" . htmlspecialchars($schedule_List['status']) . "</td>";
                                                                                     echo "<td>" . htmlspecialchars($schedule_List['type']) . "</td>";
