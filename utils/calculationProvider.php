@@ -23,21 +23,35 @@ require_once __DIR__ . '/../model/userRepo.php';
 function getOnlineScheduleCountByThePatientsAddedByTheCareGiver($care_giver_id): int
 {
     // Step 1: Fetch all the Patients from patients table by Care Giver ID
+    $patients = null;
     $patients = findAllPatientsByCareGiverID($care_giver_id);
-    $onlineScheduleCount = 0;
+    if($patients !== null){
+        $onlineScheduleCount = 0;
 
-    // Step 2: Fetch All the Schedules by each patient id and count 'Online' schedules
-    foreach ($patients as $patient) {
-        $schedules = findAllSchedulesByPatientID($patient['id']);
-        foreach ($schedules as $schedule) {
-            if ($schedule['type'] === 'Online') {
-                $onlineScheduleCount++;
+        // Step 2: Fetch All the Schedules by each patient id and count 'Online' schedules
+        foreach ($patients as $patient) {
+            $schedules = findAllSchedulesByPatientID($patient['id']);
+            if(isset($schedules)){
+                foreach ($schedules as $schedule) {
+                    if(isset($schedule['type'])){
+                        if ($schedule['type'] === 'Online') {
+                            $onlineScheduleCount++;
+                        }
+                    }else{
+                        return 0;
+                    }
+                }
+            }else{
+                return 0;
             }
         }
+
+        // Step 3: Return the total count
+        return $onlineScheduleCount;
+    }else{
+        return 0;
     }
 
-    // Step 3: Return the total count
-    return $onlineScheduleCount;
 }
 
 function getOfflineScheduleCountByThePatientsAddedByTheCareGiver($care_giver_id): int
