@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2024 at 06:26 PM
+-- Generation Time: May 18, 2024 at 09:37 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -40,7 +40,9 @@ CREATE TABLE `care_giver` (
 --
 
 INSERT INTO `care_giver` (`id`, `name`, `gender`, `phone`, `user_id`) VALUES
-(2, 'Test Name', 'Male', '01931117419', 1);
+(2, 'Test Name', 'Male', '01931117419', 1),
+(3, 'test Name', 'Male', '01931117419', 15),
+(4, 'R sdad', 'Male', '01010101010', 16);
 
 -- --------------------------------------------------------
 
@@ -65,14 +67,16 @@ CREATE TABLE `patient` (
 --
 
 INSERT INTO `patient` (`id`, `name`, `age`, `phone`, `care_giver_id`, `gender`, `medication`, `diagnosis`, `date`) VALUES
-(1, 'John Doe', '35', '+1234567890', 1, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
-(2, 'Jane Smith', '28', '+1987654321', 1, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
-(3, 'Alice Johnson', '45', '+1122334455', 1, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
+(1, 'John Doe', '35', '12345678903112', 1, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
+(2, 'Jane Smith', '28', '119876543214', 1, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
+(3, 'Alice Johnson', '45', '121122334455', 1, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
 (4, 'Bob Williams', '40', '1555666777', 1, 'Male', 'Death', 'Head Pain', '2024-05-17'),
-(5, 'Emma Brown', '30', '+1444333222', 1, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
+(5, 'Emma Browny', '30', '121444333222', 1, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
 (6, 'Michael Davis', '50', '+1777888999', 2, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
 (8, 'William Taylor', '38', '+1999888777', 3, 'Male', 'Napa', 'Head Pain', '2024-05-17'),
-(9, 'Sophia Martinez', '42', '+1223344556', 5, 'Female', 'Napa', 'Head Pain', '2024-05-17');
+(9, 'Sophia Martinez', '42', '+1223344556', 5, 'Female', 'Napa', 'Head Pain', '2024-05-17'),
+(19, 'Test Night Edited', '22', '0101010555555', 1, 'Male', 'Test Night', 'Test Night', '2024-05-18'),
+(20, 'Test Day', '55', '010101012223344', 1, 'Male', 'Test Day', 'Test Day', '2024-05-18');
 
 -- --------------------------------------------------------
 
@@ -112,7 +116,9 @@ INSERT INTO `progress` (`id`, `mood`, `medication_adherence`, `therapy_attended`
 (16, 'Very Happy', 'Excellent', '1111', 2, '2026-06-25'),
 (18, 'Not Good 😔', 'Irregular', '3', 2, '2023-12-28'),
 (19, 'Sad 😐', 'Poor', '12', 3, '2024-05-23'),
-(20, 'Not Good 😔', 'Excellent', '500', 4, '2023-06-02');
+(20, 'Not Good 😔', 'Excellent', '500', 4, '2023-06-02'),
+(22, 'Not Good 😔', 'Irregular', '121', 19, '2024-05-20'),
+(23, 'Not Good 😔', 'Regular', '121', 20, '2024-05-19');
 
 -- --------------------------------------------------------
 
@@ -153,7 +159,9 @@ INSERT INTO `schedule` (`id`, `date`, `status`, `patient_id`, `type`, `purpose`,
 (25, '2024-05-31', 'Confirmed', 3, 'Online', 'Nutritional consultation', '15:30', '16:30'),
 (26, '2024-06-01', 'Pending', 26, 'Offline', 'Physical therapy', '17:00', '18:00'),
 (28, '2024-06-02', 'Pending', 28, 'Offline', 'Dietary advice', '20:00', '21:00'),
-(29, '2024-06-02', 'Confirmed', 1, 'Online', 'Yoga therapy', '21:30', '22:30');
+(29, '2024-06-02', 'Confirmed', 1, 'Online', 'Yoga therapy', '21:30', '22:30'),
+(30, '2024-05-20', 'Pending', 19, 'Online', 'Unknwon', '22:00', '23:00'),
+(31, '2024-05-20', 'Pending', 20, 'Online', 'Joking', '22:00', '23:00');
 
 -- --------------------------------------------------------
 
@@ -176,7 +184,9 @@ CREATE TABLE `symptom_track` (
 INSERT INTO `symptom_track` (`id`, `symptoms`, `date`, `patient_id`, `care_giver_id`) VALUES
 (11, 'Mood swings,\nChanges in appetite', '2024-05-17', 1, 1),
 (12, 'Fatigue or lack of energy,\nPhysical symptoms without medical cause ,(headaches, stomachaches, etc.),\nSuicidal thoughts or self-harming behaviors,', '2024-05-17', 9, 15),
-(13, 'Mood Swings, Sleep Disturbance, Difficulty Concentrating, Social Withdrawal, Suicidal Thoughts', '2024-05-16', 1, 1);
+(13, 'Mood Swings, Sleep Disturbance, Difficulty Concentrating, Social Withdrawal, Suicidal Thoughts', '2024-05-16', 1, 1),
+(15, 'Mood Swings, Changes In Appetite, Sleep Disturbance, Social Withdrawal, Fatigue or Lack of Energy, Physical Symptoms, Suicidal Thoughts', '2024-05-20', 19, 1),
+(16, 'Mood Swings, Changes In Appetite, Sleep Disturbance, Feelings of Hopelessness, Increased Irritability, Social Withdrawal', '2024-05-19', 20, 1);
 
 -- --------------------------------------------------------
 
@@ -226,7 +236,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `password`, `role`) VALUES
-(1, 'test1@gmail.com', '$2y$10$uN83Bkias/1SXpcD2EO0cug/9loaTAYnONIP3OHQpAro3Nz8vh1he', 'caregiver');
+(1, 'test1@gmail.com', '$2y$10$uN83Bkias/1SXpcD2EO0cug/9loaTAYnONIP3OHQpAro3Nz8vh1he', 'caregiver'),
+(15, 'testxxx@gmail.com', '$2y$10$AokMj/Zmu5gGRiIBvDA2duZZhwmHewb1TEiRLtOVufj9PUZoGiOJ2', 'caregiver'),
+(16, 'testxx1@gmail.com', '$2y$10$c9l10Oxkair.nDP34qq.W.jI/OKwwvhxvE7uDDM3tS3yF45GDq/hy', 'caregiver');
 
 --
 -- Indexes for dumped tables
@@ -282,31 +294,31 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `care_giver`
 --
 ALTER TABLE `care_giver`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `progress`
 --
 ALTER TABLE `progress`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `symptom_track`
 --
 ALTER TABLE `symptom_track`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `task`
@@ -318,7 +330,7 @@ ALTER TABLE `task`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
