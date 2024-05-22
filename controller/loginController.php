@@ -68,20 +68,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header("Location: {$care_giver_Dashboard_page}");
                 exit;
             } else {
-                // header("Location: {$Login_page}");
-                // exit;
+                header("Location: {$Login_page}");
+                exit;
             }
         } else {
             echo '<br>Returning to Login page because ID Password did not matched<br>';
-            // header("Location: {$Login_page}");
-            // exit;
+            header("Location: {$Login_page}");
+            exit;
 
         }
     } else {
         echo '<br>Returning to Login page because The data user provided is not properly validated like 
                 in password: 1-upper_case, 1-lower_case, 1-number, 1-special_character and at least 8 character long it must be provided <br>';
-        // header("Location: {$Login_page}");
-        // exit;
+        header("Location: {$Login_page}");
+        exit;
 
     }
 
