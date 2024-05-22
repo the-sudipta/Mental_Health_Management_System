@@ -12,9 +12,9 @@ function db_conn()
 {
     global $error_page;
     $servername = "localhost";
-    $username = "u899200555_car_dealers";
-    $password = "Car_Dealers#1";
-    $dbname = "u899200555_car_dealers";
+    $username = "u899200555_mental_health";
+    $password = "Mental_Health#1";
+    $dbname = "u899200555_mental_health";
 
     // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
