@@ -1,7 +1,7 @@
 RewriteEngine On
-RewriteBase /Mental_Health_Management_System/
+RewriteBase /
 
 # If the requested file does not exist, rewrite to index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.php [L]
+RewriteRule ^ default.php [L]
