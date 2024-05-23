@@ -272,7 +272,7 @@ function createSymptom_track($symptoms, $date, $patient_id, $care_giver_id) {
         return $newUserId;
     } catch (Exception $e) {
         echo 'progressRepo Error = '.$e->getMessage();
-        header("Location: /Mental_Health_Management_System/error/database_error.php?error_message=".$e->getMessage());
+        header("Location: /error/database_error.php?error_message=".$e->getMessage());
         return -1;
     } finally {
         // Close the database connection
