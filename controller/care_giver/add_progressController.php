@@ -97,28 +97,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "<br>Progress ID".$progress_id."<br>";
             if($progress_id > 0){
                 echo '<br><p style="color: darkgreen">Redirecting to Patient Page</p><br>';
-                navigate($patient_progress_page);
-                exit;
+                // navigate($patient_progress_page);
+                // exit;
             }else{
                 echo '<br> <p style="color: #dc3545">Redirecting to Progress tracking page BUT Patient Profile could not be created</p><br>';
-                navigate($patient_progress_page);
-                exit;
+                // navigate($patient_progress_page);
+                // exit;
             }
         }else{
             echo '<br><p style="color: #dc3545">Redirecting to Login Page Because Care Giver ID not Found</p><br>';
-            navigate($Login_page);
-            exit;
+            // navigate($Login_page);
+            // exit;
         }
     } else {
 
         echo '<br><p style="color: #dc3545">Redirecting to Progress tracking Page BUT there is data validation issue</p><br>';
-        navigate($patient_progress_page);
-        exit;
+        // navigate($patient_progress_page);
+        // exit;
     }
 }else{
     http_response_code(405);
 
     echo '<h1 style="color: #ff8839">SORRY! GOT GET REQUEST</h1>';
-    navigate($error_405);
-    exit;
+    // navigate($error_405);
+    // exit;
 }
