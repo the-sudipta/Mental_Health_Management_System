@@ -10,6 +10,19 @@ require_once __DIR__ . '/../model/scheduleRepo.php';
 require_once __DIR__ . '/../model/symptom_trackRepo.php';
 require_once __DIR__ . '/../model/userRepo.php';
 
+// echo  __DIR__ . '/system_functions.php' .'<br>';
+// echo  __DIR__ . '/../model/patientRepo.php'.'<br>';
+// echo  __DIR__ . '/../model/progressRepo.php'.'<br>';
+// echo  __DIR__ . '/../model/care_giverRepo.php'.'<br>';
+// echo  __DIR__ . '/../model/scheduleRepo.php'.'<br>';
+// echo  __DIR__ . '/../model/symptom_trackRepo.php'.'<br>';
+// echo  __DIR__ . '/../model/userRepo.php'.'<br>';
+
+
+
+
+
+
 
 //
 //$patient_data = findPatientByID(2);
@@ -22,70 +35,50 @@ require_once __DIR__ . '/../model/userRepo.php';
 
 function getOnlineScheduleCountByThePatientsAddedByTheCareGiver($care_giver_id): int
 {
-    // Step 1: Fetch all the Patients from patients table by Care Giver ID
-    $patients = null;
     $patients = findAllPatientsByCareGiverID($care_giver_id);
-    if($patients !== null){
-        $onlineScheduleCount = 0;
+    
+    $onlineScheduleCount = 0;
 
-        // Step 2: Fetch All the Schedules by each patient id and count 'Online' schedules
+    if ($patients !== null) {
         foreach ($patients as $patient) {
             $schedules = findAllSchedulesByPatientID($patient['id']);
-            if(isset($schedules)){
+            if ($schedules !== null) {
                 foreach ($schedules as $schedule) {
-                    if(isset($schedule['type'])){
-                        if ($schedule['type'] === 'Online') {
-                            $onlineScheduleCount++;
-                        }
-                    }else{
-                        return 0;
+                    if (isset($schedule['type']) && $schedule['type'] === 'Online') {
+                        $onlineScheduleCount++;
                     }
                 }
-            }else{
-                return 0;
             }
         }
-
-        // Step 3: Return the total count
-        return $onlineScheduleCount;
-    }else{
-        return 0;
     }
 
+    // Return the total count
+    return $onlineScheduleCount;
 }
 
 function getOfflineScheduleCountByThePatientsAddedByTheCareGiver($care_giver_id): int
 {
-    // Step 1: Fetch all the Patients from patients table by Care Giver ID
-    $patients = null;
     $patients = findAllPatientsByCareGiverID($care_giver_id);
-    if($patients !== null){
-        $onlineScheduleCount = 0;
 
-        // Step 2: Fetch All the Schedules by each patient id and count 'Online' schedules
+    $offlineScheduleCount = 0;
+
+    if ($patients !== null) {
         foreach ($patients as $patient) {
             $schedules = findAllSchedulesByPatientID($patient['id']);
-            if(isset($schedules)){
+            if ($schedules !== null) {
                 foreach ($schedules as $schedule) {
-                    if(isset($schedule['type'])){
-                        if ($schedule['type'] === 'Offline') {
-                            $onlineScheduleCount++;
-                        }
-                    }else{
-                        return 0;
+                    if (isset($schedule['type']) && $schedule['type'] === 'Offline') {
+                        $offlineScheduleCount++;
                     }
                 }
-            }else{
-                return 0;
             }
         }
-
-        // Step 3: Return the total count
-        return $onlineScheduleCount;
-    }else{
-        return 0;
     }
+
+    // Return the total count
+    return $offlineScheduleCount;
 }
+
 
 function getTotalPatientCountByCareGiverID($care_giver_id): int
 {
