@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7741055-bff5-4db2-8332-7c80f7ae3e90" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/care_giver/progress_tracking.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/care_giver/progress_tracking.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/care_giver/schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/care_giver/schedule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/care_giver/symptoms_tracking_behaviour.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/care_giver/symptoms_tracking_behaviour.php" afterDir="false" />
-    </list>
+    <list default="true" id="b7741055-bff5-4db2-8332-7c80f7ae3e90" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,6 +53,7 @@
       <workItem from="1716057080892" duration="74000" />
       <workItem from="1716057241195" duration="1797000" />
       <workItem from="1716059227886" duration="1390000" />
+      <workItem from="1716479249905" duration="12000" />
     </task>
     <servers />
   </component>
