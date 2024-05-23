@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 
-//* Mood Validation
+    //* Mood Validation
     $mood = $_POST['patient_mood'];
     if (empty($mood) || $mood === null || $mood === 'null') {
         $everythingOK = FALSE;
@@ -58,23 +58,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $everythingOK = TRUE;
     }
 
-//* Therapy Validation
+    //* Therapy Validation
     $therapy = $_POST['therapy'];
-    if (empty($therapy)) {
+
+    // Check if therapy is not set or is an empty string
+    if (!isset($therapy) || $therapy === '') {
         $everythingOK = FALSE;
         $everythingOKCounter += 1;
         echo "<br><p style='color: #dc3545'>Therapy Session Attended cannot be empty</p><br>";
-    }  elseif (!filter_var($therapy, FILTER_VALIDATE_INT)) {
+    } elseif (!filter_var($therapy, FILTER_VALIDATE_INT) && $therapy != '0') { 
+        // Check if therapy is not a valid integer and is not '0'
         $everythingOK = FALSE;
         $everythingOKCounter += 1;
-        echo "<br><p style='color: #dc3545'>Number of Therapy attended must be in integer only</p><br>";
-    }else {
-        echo "<br>Phone = ".$therapy."<br>";
+        echo "<br><p style='color: #dc3545'>Number of Therapy attended must be an integer</p><br>";
+    } else {
+        echo "<br>Therapy = " . $therapy . "<br>";
         $everythingOK = TRUE;
     }
 
-//    Date Validation
-    $date =  $_POST['date'];
+    // Date Validation
+    $date = $_POST['date'];
+
 
 
 
