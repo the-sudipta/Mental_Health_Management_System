@@ -12,7 +12,7 @@ A website that makes your car selling, easy!
 </a>
 
 <br/>
-<a href="https://car-shop-management-system.sudiptakumar.com">View Demo .</a>  
+<a href="https://mental-health-management-system.sudiptakumar.com/view/login.php">View Demo .</a>  
 <a href="https://github.com/the-sudipta/Mental_Health_Management_System/issues">Report Bug .</a>
 <a href="https://github.com/the-sudipta/Mental_Health_Management_System/issues">Request Feature</a>
 </p>
@@ -32,15 +32,15 @@ A website that makes your car selling, easy!
 
 ![Product Video Gif](https://github.com/the-sudipta/Mental_Health_Management_System/blob/main/DOCUMENTATIONS/images/Car%20Shop%20Management%20System.gif?raw=true)
 
-This project is a comprehensive car dealership management system designed for sellers, allowing them to 
-efficiently manage and operate their inventory through an integrated web platform. Upon logging in from the 
-login page, which includes a registration option, sellers are directed to their personalized homepage. Here, 
-they can showcase new, used, and rental cars, with functionalities to add or remove vehicles from each category. 
-Additionally, sellers have the capability to manage existing listings by editing car prices and quantities, as 
-well as halting the sale of any vehicle currently available on the site. The system also provides powerful 
-reporting tools, enabling sellers to generate detailed PDF reports on monthly or yearly sales, revenue, and 
-profit across new, used, and rental car transactions. This robust solution aims to streamline the selling 
-process, offering a seamless and user-friendly interface for car dealership management.
+<p align="justify">
+Amazon currently operates over 60 fulfillment centers across 15 states in India. These centers 
+have a combined storage capacity of more than 32 million cubic feet, facilitating efficient and 
+fast delivery of a wide range of products. This extensive network supports over 42,000 merchants 
+in regions like Karnataka, where Amazon has also opened its largest fulfillment center 
+(Amazon India) (TechStory). This infrastructure expansion highlights Amazon's 
+commitment to investing in local economies and providing numerous job opportunities across 
+the country (TechStory).
+</p>
 
 
 ### :hammer: Tech Stack / Built With
@@ -73,47 +73,51 @@ process, offering a seamless and user-friendly interface for car dealership mana
 <div align="center">
   <table>
     <tr>
-      <td>Seller Signup</td>
-      <td>Seller Login</td>
+      <td>Online Consultations</td>
+      <td>Offline Consultations</td>
     </tr>
     <tr>
-      <td>Show New Cars</td>
-      <td>Show All Cars</td>
+      <td>Total Patients</td>
+      <td>Total Male Patients</td>
     </tr>
     <tr>
-      <td>Show Sold Cars</td>
-      <td>Show Rented Cars</td>
+      <td>Total Female Patients</td>
+      <td>Task List</td>
     </tr>
     <tr>
-      <td>Show Used Cars</td>
-      <td>Show Car Requests</td>
+      <td>Upcoming Schedule</td>
+      <td>Add a Patient</td>
     </tr>
     <tr>
-      <td>Show Comments</td>
-      <td>Show Yearly Sales</td>
+      <td>List of Patients</td>
+      <td>Edit Patient Details</td>
     </tr>
     <tr>
-      <td>Show Profits</td>
-      <td>Show Revenue</td>
+      <td>Delete any Patient</td>
+      <td>Add Appointment</td>
     </tr>
     <tr>
-      <td>Show Total Sold Car Amount</td>
-      <td>Show Total Available Cars Number</td>
+      <td>List of Appointment</td>
+      <td>Delete Appointment</td>
     </tr>
     <tr>
-      <td>Add New Car</td>
-      <td>Delete a Car</td>
+      <td>Highlight the status</td>
+      <td>Download a Book</td>
     </tr>
     <tr>
-      <td>Edit Car Details</td>
-      <td>Show Car's Availability and Status</td>
+      <td>Add Progress</td>
+      <td>List of Progress</td>
     </tr>
     <tr>
-      <td>Accept Car Requests for Selling or Rent</td>
-      <td>Reject Car Requests for Selling or Rent</td>
+      <td>Add Symptoms</td>
+      <td rowspan="2">List of Symptoms</td>
+    </tr>
+    <tr>
+      <td>Show Static Emergency Contacts</td>
     </tr>
   </table>
 </div>
+
 
 
 
