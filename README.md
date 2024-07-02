@@ -30,7 +30,7 @@ A website that makes your car selling, easy!
 
  ## :star2: About The Project
 
-![Product Video Gif](https://github.com/the-sudipta/Mental_Health_Management_System/blob/main/DOCUMENTATIONS/images/Car%20Shop%20Management%20System.gif?raw=true)
+![Product Video Gif](https://github.com/the-sudipta/Mental_Health_Management_System/blob/main/DOCUMENTATIONS/images/Mental%20Health%20Management%20System.gif?raw=true)
 
 <p align="justify">
 Amazon currently operates over 60 fulfillment centers across 15 states in India. These centers 
