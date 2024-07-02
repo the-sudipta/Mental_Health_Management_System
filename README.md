@@ -171,7 +171,7 @@ git clone https://github.com/the-sudipta/Mental_Health_Management_System
 
 ## :wave: Contributing
 
-<a href="https://github.com/the-sudipta/Car_Shop_Management_System/graphs/contributors"> <img src="https://contrib.rocks/image?repo=Louis3797/awesome-readme-template" /> </a>
+<a href="https://github.com/the-sudipta/Mental_Health_Management_System/graphs/contributors"> <img src="https://contrib.rocks/image?repo=Louis3797/awesome-readme-template" /> </a>
 
 Contributions are always welcome!
 
