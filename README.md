@@ -1,7 +1,7 @@
 <br/>
 <div align="center">
 <a href="#">
-<img src="https://raw.githubusercontent.com/the-sudipta/Car_Shop_Management_System/main/DOCUMENTATIONS/images/Car%20Shop%20Management%20System.png" alt="Logo" width="100" height="100">
+<img src="https://raw.githubusercontent.com/the-sudipta/Mental_Health_Management_System/main/DOCUMENTATIONS/images/Mental%20Health%20Management%20System%20Logo.png" alt="Logo" width="130" height="100">
 </a>
 <h3 align="center">Mental Health Management System</h3>
 <p align="center">
@@ -30,7 +30,7 @@ A website that makes your car selling, easy!
 
  ## :star2: About The Project
 
-![Product Video Gif](https://github.com/the-sudipta/Car_Shop_Management_System/blob/main/DOCUMENTATIONS/images/Car%20Shop%20Management%20System.gif?raw=true)
+![Product Video Gif](https://github.com/the-sudipta/Mental_Health_Management_System/blob/main/DOCUMENTATIONS/images/Car%20Shop%20Management%20System.gif?raw=true)
 
 This project is a comprehensive car dealership management system designed for sellers, allowing them to 
 efficiently manage and operate their inventory through an integrated web platform. Upon logging in from the 
