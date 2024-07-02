@@ -147,12 +147,12 @@ To run this project, you will need to add the following environment variables to
 Download the project
 
 ```bash
-https://github.com/the-sudipta/Car_Shop_Management_System
+https://github.com/the-sudipta/Mental_Health_Management_System
 ```
 
 Clone the Repository
 ```bash
-git clone https://github.com/the-sudipta/Car_Shop_Management_System.git
+git clone https://github.com/the-sudipta/Mental_Health_Management_System
 ```
 
 
