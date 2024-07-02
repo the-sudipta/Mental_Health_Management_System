@@ -5,7 +5,7 @@
 </a>
 <h3 align="center">Mental Health Management System</h3>
 <p align="center">
-A website that makes your car selling, easy!
+Empowering Minds, Elevating Lives
 <br/>
 <a href="https://github.com/the-sudipta/Mental_Health_Management_System/raw/main/DOCUMENTATIONS/Project_Manual_Car_Shop_Management_System.pdf" download>
     <strong>Explore the docs »</strong>
